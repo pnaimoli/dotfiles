@@ -1,0 +1,43 @@
+#set bind-tty-special-chars off
+
+"\C-u":kill-whole-line
+"\C-k":forward-word
+"\C-j":backward-word
+"\C-l":kill-word
+"\C-h":backward-kill-word
+"\C-y":dump-variables
+"\C-p":dump-functions
+
+"\C-y":clear-screen
+
+# up & down arrow keys
+"\e[A":history-search-backward
+"\e[B":history-search-forward
+
+# op[UP] will show the last command that began with op
+#"":dynamic-complete-history
+
+set match-hidden-files off
+set completion-ignore-case on
+set show-all-if-ambiguous osh binn 
+set bell-style none
+  
+# turn on inline mode for tab completion
+"\t":menu-complete
+
+# add the missing slash when tab-completing symbolic links to directories
+set mark-symlinked-directories on
+
+#set page-completions off
+#set completion-query-items 100
+set mark-directories on
+#set visible-stats on
+#set meta-flag on
+#set input-meta on
+#set convert-meta off
+#set output-meta on
+
+$if Bash
+  Space: magic-space
+$endif
+
