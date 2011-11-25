@@ -5,7 +5,7 @@
 case "$-" in
 *i*)
 stty kill undef
-bind -f .inputrc
+bind -f ~/.inputrc
 stty erase ^?
 esac
 
