@@ -17,7 +17,6 @@ set -o pipefail
 shopt -s expand_aliases
 shopt -s checkwinsize
 shopt -s no_empty_cmd_completion
-shopt -s autocd
 
 #-------------------
 # Environment variables
@@ -70,7 +69,7 @@ export LESSCHARSET='latin1'
 export LESSOPEN='|/usr/bin/lesspipe.sh %s 2>&-'
 export LESS='--ignore-case --hilite-unread  --window=-4 --LONG-PROMPT -R -X -P%t?f%f :stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...' # Use this if lesspipe.sh exists.
 
-umask 002
+umask 022
 
 #--------------
 # Magic
@@ -86,7 +85,7 @@ umask 002
 #*)
 #    ;;
 #esac
-PROMPT_COMMAND='echo -ne "\e]0;" `basename $PWD` "\007"'
+#PROMPT_COMMAND='echo -ne "\e]0;" `basename $PWD` "\007"'
 
 #---------------
 # Shell Prompt

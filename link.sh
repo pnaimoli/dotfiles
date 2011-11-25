@@ -1,8 +1,8 @@
-ln -F -s .Rprofile ~/
-ln -F -s .bash_profile ~/
-ln -F -s .inputrc ~/
-ln -F -s .lesskey ~/
-ln -F -s .lesskey-in ~/
-ln -F -s .synergy.conf ~/
-ln -F -s .vimrc ~/
-ln -F -s .xmodmaprc ~/
+ln -f -s ~/pnaimoli-dotfiles/.Rprofile ~/
+ln -f -s ~/pnaimoli-dotfiles/.bash_profile ~/
+ln -f -s ~/pnaimoli-dotfiles/.inputrc ~/
+ln -f -s ~/pnaimoli-dotfiles/.lesskey ~/
+ln -f -s ~/pnaimoli-dotfiles/.lesskey-in ~/
+ln -f -s ~/pnaimoli-dotfiles/.synergy.conf ~/
+ln -f -s ~/pnaimoli-dotfiles/.vimrc ~/
+ln -f -s ~/pnaimoli-dotfiles/.xmodmaprc ~/
