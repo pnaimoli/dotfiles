@@ -61,6 +61,7 @@ alias mkdir='mkdir -p'
 alias R='R --no-save'
 #http://askubuntu.com/questions/20530/how-can-i-find-the-location-on-the-desktop-of-a-window-on-the-command-line
 alias winfo='xwininfo -id $(xprop -root | awk "/_NET_ACTIVE_WINDOW\(WINDOW\)/{print \$NF}")'
+alias myxargs='tr "\n" "\0" | xargs -0'
 
 # tailoring 'less'
 alias  more='less'
