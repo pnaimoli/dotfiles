@@ -20,7 +20,7 @@ set hid                   " don't auto-remove hidden buffers
 set history=50            " 50 commands stored in history
 set hlsearch              " highlight all search pattern matches
 set incsearch             " incremental search
-set isk+=%,#            " none of these should be word dividers
+set isk+=%,#              " none of these should be word dividers
 set linebreak             " enable smart linebreaking
 set matchtime=0           " prevent matching delay
 set ic                    " force case-sensitive
@@ -135,7 +135,7 @@ filetype plugin on
 
 " Also, set our tags path to be useful
 " find projects/atl/src projects/btrade/src -name "*.cc" -print -or -name "*.h" -print | etags -
-set tags=$HOME/TAGS
+set tags=$HOME/.TAGS
 
 " easy key to pop back from looking at a tag
 " noremap <silent> <C-[> :pop<CR>
