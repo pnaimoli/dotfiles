@@ -19,7 +19,10 @@ setDefaults(approx, method="constant", ties="ordered", rule=2)
 # Jupiter
 #########################################
 
-source("/home/peter/projects/btrade/src/scripts/jupiter/visualizeFxn.R")
+jupFile="/home/peter/projects/btrade/src/scripts/jupiter/visualizeFxn.R";
+if (file.exists(jupFile)) {
+    source(jupFile)
+}
 
 #########################################
 # Random
