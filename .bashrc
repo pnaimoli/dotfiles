@@ -38,7 +38,7 @@ export LSCOLORS="DxGxFxdxCxDxDxhbadExEx";
 #-------------------
 # Personnal Aliases
 #-------------------
-alias g='grep'
+alias g='egrep'
 alias p='pushd'
 alias o='popd'
 alias gub='grep --line-buffered'
