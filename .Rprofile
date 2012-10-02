@@ -4,6 +4,7 @@
 
 options(scipen=250)
 options(width=250)
+options(digits=10)
 options(repos="http://cran.stat.ucla.edu")
 
 #########################################
@@ -24,24 +25,34 @@ if (file.exists(jupFile)) {
     source(jupFile)
 }
 
+loadBidAskFile = function(filename, header=F) {
+    loadBidAskFrame(read.csv(filename, colClasses="numeric", header=header))
+}
+
+loadBidAskFrame = function(df) {
+    addObj(list(), c(
+        new("graphObject", contents=df[,c(1,2)], color="red", type="step11", scaleID=0, cex=1, useForYlimit=T),
+        new("graphObject", contents=df[,c(1,3)], color="red", type="step11", scaleID=0, cex=1, useForYlimit=T)))
+}
+
 #########################################
 # Random
 #########################################
 
 read.tables <- function(file.names, ...) {
-    do.call("rbind", lapply(file.names, function(fn) read.table(fn, ...)))
+    do.call("rbind", lapply(Sys.glob(file.names), function(fn) read.table(fn, ...)))
 }
 
 read.csvs <- function(file.names, header=F, ...) {
-    do.call("rbind", lapply(file.names, function(fn) read.csv(fn, header=header, ...)))
+    do.call("rbind", lapply(Sys.glob(file.names), function(fn) read.csv(fn, header=header, ...)))
 }
 
 read.ntables <- function(file.names, ...) {
-    read.tables(Sys.glob(file.names), colClasses=c("numeric"))
+    read.tables(file.names, colClasses=c("numeric"), ...)
 }
 
 read.ncsvs <- function(file.names, ...) {
-    read.csvs(Sys.glob(file.names), colClasses=c("numeric"))
+    read.csvs(file.names, colClasses=c("numeric"), ...)
 }
 
 evenBucketAgg = function(data, n, FUN = mean)

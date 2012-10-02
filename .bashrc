@@ -17,6 +17,7 @@ set -o pipefail
 shopt -s expand_aliases
 shopt -s checkwinsize
 shopt -s no_empty_cmd_completion
+shopt -s cmdhist
 
 #-------------------
 # Environment variables
@@ -38,7 +39,7 @@ export LSCOLORS="DxGxFxdxCxDxDxhbadExEx";
 #-------------------
 # Personnal Aliases
 #-------------------
-alias g='egrep'
+alias g='egrep --color=auto'
 alias p='pushd'
 alias o='popd'
 alias gub='grep --line-buffered'

@@ -3,11 +3,15 @@ if v:version < 700
   quit
 endif
 
+call pathogen#infect()
+call pathogen#helptags()
+
 let $VIMRC = '~/.vimrc'   " for portability
 set nocompatible          " use VIM as VIM, not VI
 
 syntax on                 " enable default syntax highlighting
 filetype on               " enable filetype detection
+
 
 set autoread              " auto read when a file is changed outside
 set background=dark       " hilight colors for a dark background
@@ -17,7 +21,7 @@ set guioptions+=LlRrb     " remove scrollbars - For some reason this hack
 set guioptions-=LlRrb     "  is necessary
 set guioptions-=T         " remove toolbar
 set hid                   " don't auto-remove hidden buffers
-set history=50            " 50 commands stored in history
+set history=1000          " 1000 commands stored in history
 set hlsearch              " highlight all search pattern matches
 set incsearch             " incremental search
 set isk+=%,#              " none of these should be word dividers
@@ -33,7 +37,7 @@ set showcmd               " show command on last line
 set showmatch             " briefly jump to matching bracket when bracket inserted
 set showmode              " show mode
 set smartcase             " overrides ignorecase if uppercase used
-"set tw=80                 " 80 character width
+set tw=0                  " set to 80 for atl style line width
 "set wrap                  "  text wrapping w/ above
 set wig=*.o,*.pyc         " Ignore these files for wildmenu completion
 set wildmenu              " Better command-line completion
@@ -109,8 +113,11 @@ endif
 " ===== TODO: Organize this at a later point =====
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " switch between .h and .cc file Easily
-map <F2> :e %:p:s,.h$,.X123X,:s,.cc$,.h,:s,.X123X$,.cc,<CR>
-" map <F3> :e %:p:s,.h$,.X123X,:s,.cc$,.h,:s,.X123X$,.cc,<CR>
+let g:alternateExtensions_cc = "he,h"
+let g:alternateExtensions_h = "cc,c"
+let g:alternateExtensions_he = "cc,c"
+let g:alternateRelativeFiles = 1
+noremap <silent> <F2> :A<CR>
 
 " supress cursor blinking
 " set guicursor+=a:blinkon0
@@ -118,6 +125,23 @@ map <F2> :e %:p:s,.h$,.X123X,:s,.cc$,.h,:s,.X123X$,.cc,<CR>
 " super paste
 "inoremap <C-V> <esc>:set paste<cr>mui<C-R>+<esc>mv'uV'v=:set nopaste<cr>
 vnoremap <S-C> "+y
+
+" default is '\', I prefer ','
+let mapleader=','
+
+" wow I'm lazy
+noremap ; :
+noremap : ;
+
+" be consistent with C and D
+nnoremap Y y$
+
+" visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+" jon likes this
+" nnoremap n nzz
 
 "nnoremap <silent> xx <Del>
 "nnoremap <silent> xc xph
@@ -141,8 +165,8 @@ set tags=$HOME/.TAGS
 " noremap <silent> <C-[> :pop<CR>
 
 " set up align =
-nmap ,= :Align =<CR>
-vmap ,= :Align =<CR>
+nnoremap <leader>= :Align =<CR>
+vnoremap <leader>= :Align =<CR>
 
 """""""""""""""""""""""""""""""""""""""
 " ===== Status Line configuration =====
@@ -162,8 +186,8 @@ set statusline+=%-14.(%l,%c%V%)\ %<%P      " offset
 """"""""""""""""""""""""""""""""""
 " ===== Edit & Reload .vimrc =====
 """"""""""""""""""""""""""""""""""
-nmap ,s :source $VIMRC
-nmap ,e :e $VIMRC
+nnoremap <leader>s :source $VIMRC
+nnoremap <leader>e :e $VIMRC
 
 """""""""""""""""""""""""""""""""""""""
 " ===== Visually pleasing effects =====
@@ -185,7 +209,7 @@ set list listchars=tab:\|_
 """"""""""""""""""""""""""""""""""
 " ===== Windows Style Saving =====
 """"""""""""""""""""""""""""""""""
-map <silent> <C-S> :if expand("%") == ""<CR>:browse confirm w<CR>:else<CR>:confirm w<CR>:endif<CR>
+noremap <silent> <C-S> :if expand("%") == ""<CR>:browse confirm w<CR>:else<CR>:confirm w<CR>:endif<CR>
 imap <c-s> <c-o><c-s>
 
 """"""""""""""""""""""""""""
@@ -200,20 +224,37 @@ nmap <c-l> <c-w>l
 " ===== Alternative navigation keys =====
 """""""""""""""""""""""""""""""""""""""""
 set whichwrap+=<,>,[,]
+
+" Wrapped lines goes down/up to next row, rather than next line in file.
 map j gj
 map k gk
-
-map <up> gk
+map <up> k
 imap <up> <C-O><up>
-map <down> gj
+map <down> j
 imap <down> <C-O><down>
 
 """"""""""""""""""""""""""""""""""
 " ===== Commenting utilities =====
 """""""""""""""""""""""""""""""""
-map <silent> ,# :s/^/#/<CR>
-map <silent> ,/ :s/^/\/\//<CR>
-map <silent> ,c :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR>
+noremap <silent> <leader>a :noh<CR>
+" these need to be functions because ranges are not allowed with 'let' commands
+fun! s:CoolComment(chars)
+    let @@=@/
+    exe "s@^@".a:chars."@"
+    let @/=@@
+endfun
+fun! s:ClearComment()
+    let @@=@/
+    try
+        exe "s@^//\\|^--\\|^> \\|^[#\"%!;]@@"
+    catch
+    endtry
+    let @/=@@
+endfun
+noremap <silent> <leader># :call <SID>CoolComment("#")<CR>
+noremap <silent> <leader>" :call <SID>CoolComment("\"")<CR>
+noremap <silent> <leader>/ :call <SID>CoolComment("//")<CR>
+noremap <silent> <leader>c :call <SID>ClearComment()<CR>
 
 """""""""""""""""""""""""""""""""""""
 " ====== Smart home navigation ======
@@ -228,75 +269,14 @@ endfun
 noremap <silent> <home> :call <SID>SmartHome()<CR>
 imap <home> <C-O><home>
 
-""""""""""""""""""""""""""
-" ===== Code folding =====
-""""""""""""""""""""""""""
-set foldmethod=syntax
-
-set foldtext=MyFoldText()
-function! MyFoldText()
-  let line = getline(v:foldstart)
-  if match( line, '^[ \t]*\(\/\*\|\/\/\)[*/\\]*[ \t]*$' ) == 0
-    let initial = substitute( line, '^\([ \t]\)*\(\/\*\|\/\/\)\(.*\)', '\1\2', '' )
-    let linenum = v:foldstart + 1
-    while linenum < v:foldend
-      let line = getline( linenum )
-      let comment_content = substitute( line, '^\([ \t\/\*]*\)\(.*\)$', '\2', 'g' )
-      if comment_content != ''
-        break
-      endif
-      let linenum = linenum + 1
-    endwhile
-    let sub = initial . ' ' . comment_content
-  else
-    let sub = line
-    let startbrace = substitute( line, '^.*{[ \t]\(.*\)*$', '\1{', 'g')
-    "if startbrace == '{'
-      let line = getline(v:foldend)
-      let endbrace = substitute( line, '^[ \t]*}\(.*\)$', '}', 'g')
-      if endbrace == '}'
-        let sub = sub.substitute( line, '^[ \t]*}\(.*\)$', ' ... }\1', 'g')
-      endif
-    "endif
-  endif
-  let n = v:foldend - v:foldstart + 1
-  let info = " " . n . " lines"
-  let sub = sub . "                                                                                                                  "
-  let num_w = getwinvar( 0, '&number' ) * getwinvar( 0, '&numberwidth' )
-  let fold_w = getwinvar( 0, '&foldcolumn' )
-  let sub = strpart( sub, 0, winwidth(0) - strlen( info ) - num_w - fold_w - 1 )
-  return sub . info
-endfunction
-
-vnoremap ;bc "ey:call CalcBC()<CR>
-function! CalcBC()
-  let has_equal = 0
-  " remove newlines and trailing spaces
-  let @e = substitute (@e, "\n", "", "g")
-  let @e = substitute (@e, '\s*$', "", "g")
-  " if we end with an equal, strip, and remember for output
-  if @e =~ "=$"
-    let @e = substitute (@e, '=$', "", "")
-    let has_equal = 1
-  endif
-  " sub common func names for bc equivalent
-  let @e = substitute (@e, '\csin\s*(', "s (", "")
-  let @e = substitute (@e, '\ccos\s*(', "c (", "")
-  let @e = substitute (@e, '\catan\s*(', "a (", "")
-  let @e = substitute (@e, "\cln\s*(", "l (", "")
-  " escape chars for shell
-  let @e = escape (@e, '*()')
-  " run bc, strip newline
-  let answer = substitute (system ("echo " . @e . " \| bc -l"), "\n", "", "")
-  " append answer or echo
-  if has_equal == 1
-    normal `>
-    exec "normal a" . answer
-  else
-    echo "answer = " . answer
-  endif
-endfunction
-
+"""""""""""""""""""""""""""""""""""""
+" ====== Abbreviations ======
+"""""""""""""""""""""""""""""""""""""
+" Could be in after/ftplugin/cpp.vim
+iab intmain int main (int argc, char **argv) {<CR>x;<CR>return 0;<CR>}<CR><C-O>?x;<CR><Del><Del>
+iab #d #define
+iab #i #include <><Left>
+iab #I #include ""<Left>
 
 """""""""""""""""""""""""""""""""""""""""""""
 " ===== To save current state on exit ===== "
@@ -304,77 +284,25 @@ endfunction
 "au vimrc BufWinLeave ?* mkview
 "au vimrc BufWinEnter ?* silent loadview
 
+"""""""""""""""""""""""""""""""""""""""""""""
+" ===== CommandT stuff ===== "
+"""""""""""""""""""""""""""""""""""""""""""""
+fun! s:MyCommandT()
+    let srcdir = substitute(getcwd(), "/src/.*", "/src", "")
+    exe ":CommandT" srcdir
+endfun
+noremap <silent> <leader>t :call <SID>MyCommandT()<CR>
+noremap <silent> <leader>t<CR> :call <SID>MyCommandT()<CR>
+
 """"""""""""""""""""""""""""""
 " ====== PLUGIN OPTIONS ======
 """"""""""""""""""""""""""""""
 
 " === SyntaxAttr === "
-noremap ,a :call SyntaxAttr()<CR>
+" Displays the syntax highlighting attributes of the character under the cursor; including syntax group (and what it's linked to, if linked), foreground/background colors (name and numeric equivallent), bold, underline, etc.
+noremap <leader>A :call SyntaxAttr()<CR>
 
 " === Rainbow Parenthesis === "
-command! Rain :call rainbow_parenthesis#Toggle()
+noremap <leader>R :call rainbow_parenthesis#Toggle()<CR>
 
-" === SuperTab
-" http://www.vim.org/scripts/script.php?script_id=1643
-" Use the tab key to do insert completion
-" let g:SuperTabDefaultCompletionTypeDiscovery = "&omnifunc:<C-X><C-O>,&completefunc:<C-X><C-U>"
 
-" === OmniCppComplete
-" http://www.vim.org/scripts/script.php?script_id=1520
-" Complete symbol names using tags database
-let OmniCpp_MayCompleteDot = 1
-let OmniCpp_MayCompleteArrow = 1
-let OmniCpp_MayCompleteScope = 1
-let OmniCpp_ShowPrototypeInAbbr = 1
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-
-" === TagList
-" http://vim-taglist.sourceforge.net/
-" Source code browser that shows tags in a source file
-"let Tlist_Auto_Highlight_Tag = 1
-"let Tlist_Auto_Open = 0
-"let Tlist_Show_One_File = 1
-"let Tlist_Display_Prototype = 1
-"noremap <silent> <F10> :TlistToggle<CR>
-
-" === MiniBufExpl
-" http://vim.sourceforge.net/scripts/script.php?script_id=159
-" Show open buffers along the top to enable quick switching of buffers
-" let g:miniBufExplMapCTabSwitchWindows = 1
-" let g:miniBufExplMapWindowNavVim = 1
-
-" === Source Explorer
-"let g:SrcExpl_refreshTime = 300
-"let g:SrcExpl_winHeight = 9
-"let g:SrcExpl_updateTags = 0
-"let g:SrcExpl_refreshKey = 0
-"let g:SrcExpl_gobackKey = "<C-b>"
-" let g:SrcExpl_searchLocalDef = 1
-" // In order to Aviod conflicts, the Source Explorer should know
-" // what plugins are using buffers. And you need add their bufnames
-" // into the list below according to the command ":buffers!"
-"  let g:SrcExpl_pluginList = [
-"         \ "__Tag_List__",
-"         \ "_NERD_tree_",
-"         \ "-MiniBufExplorer-",
-"         \ "Source_Explorer"
-"    \ ]
-
-"nmap <F11> :SrcExplToggle<CR>
-
-" === NERDTree
-" http://www.vim.org/scripts/script.php?script_id=1658
-" File system explorer
-"noremap <silent> <F12> :NERDTreeToggle $HOME/atl/src<CR>
-"let NERDTreeWinPos = "right"
-
-" === Toggle_words
-"imap <C-T> <C-O>:ToggleWord<CR>
-"nmap <C-T> :ToggleWord<CR>
-"vmap <C-T> <ESC>:ToggleWord<CR>
-
-" ======== Other helpful plugins without customization ========
-" a.vim - switches between .cc and .h files
-" cscope_maps.vim - CScope mappings
-" doxygen-support.vim - doxygen comment templates
-" vcscvs + vcscommand  - cvs integration
