@@ -30,7 +30,7 @@ export MALLOC_OPTIONS='J'
 export PYTHONDONTWRITEBYTECODE='1'
 export PYTHONUNBUFFERED='1'
 export LESSKEY='~/.lesskey'
-export HISTIGNORE='&: *:l:ll:history*'
+export HISTIGNORE='&: *:l:ll:history*:ls:cd:clear:..:...:....:p:dirs:1:2:3:4:5:6:7:8:9'
 export HISTTIMEFORMAT='%F %T '
 export CVS_RSH="ssh"
 export CLICOLOR="yes"
@@ -40,15 +40,14 @@ export LSCOLORS="DxGxFxdxCxDxDxhbadExEx";
 # Personnal Aliases
 #-------------------
 alias g='egrep --color=auto'
-alias p='pushd'
-alias o='popd'
+alias p='popd'
 alias gub='grep --line-buffered'
 alias h='history 25'
 alias bc='bc -l'
 alias j='jobs -l'
-alias ls='ls -F'
-alias la='ls -alF'
-alias ll='ls -lF'
+alias ls='\ls -F'
+alias la='\ls -alF'
+alias ll='\ls -lF'
 alias l='ll'
 alias lll='ll'
 alias llll='ll'
@@ -60,6 +59,26 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias mkdir='mkdir -p'
+alias d='dirs -v'
+alias 1='cd `dirs -l +1`; dirs -v'
+alias 2='cd `dirs -l +2`; dirs -v'
+alias 3='cd `dirs -l +3`; dirs -v'
+alias 4='cd `dirs -l +4`; dirs -v'
+alias 5='cd `dirs -l +5`; dirs -v'
+alias 6='cd `dirs -l +6`; dirs -v'
+alias 7='cd `dirs -l +7`; dirs -v'
+alias 8='cd `dirs -l +8`; dirs -v'
+alias 9='cd `dirs -l +9`; dirs -v'
+alias 10='cd `dirs -l +10`; dirs -v'
+alias 11='cd `dirs -l +11`; dirs -v'
+alias 12='cd `dirs -l +12`; dirs -v'
+alias 13='cd `dirs -l +13`; dirs -v'
+alias 14='cd `dirs -l +14`; dirs -v'
+alias 15='cd `dirs -l +15`; dirs -v'
+alias 16='cd `dirs -l +16`; dirs -v'
+alias 17='cd `dirs -l +17`; dirs -v'
+alias 18='cd `dirs -l +18`; dirs -v'
+alias 19='cd `dirs -l +19`; dirs -v'
 alias R='R --no-save'
 #http://askubuntu.com/questions/20530/how-can-i-find-the-location-on-the-desktop-of-a-window-on-the-command-line
 alias winfo='xwininfo -id $(xprop -root | awk "/_NET_ACTIVE_WINDOW\(WINDOW\)/{print \$NF}")'
@@ -193,3 +212,29 @@ function swap()         # swap 2 filenames around
     mv $TMPFILE "$2"
 }
 
+function cd()
+{
+   MAX=20
+   LEN=${#DIRSTACK[@]}
+
+   if [ $# -eq 0 ] || [ "$1" = "-" ]; then
+      builtin cd "$@"
+      pushd -n $OLDPWD > /dev/null
+   else
+      pushd "$@" > /dev/null || return 1
+   fi
+
+   if [ $LEN -gt 1 ]; then
+      for i in `jot - 1 $LEN`; do
+         eval p=~$i
+         if [ "$p" = "$PWD" ]; then
+            popd -n +$i > /dev/null
+            break
+         fi
+      done
+   fi
+
+   if [ $LEN -ge $MAX ]; then
+      popd -n -0 > /dev/null
+   fi
+}
