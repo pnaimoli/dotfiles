@@ -83,6 +83,7 @@ alias R='R --no-save'
 #http://askubuntu.com/questions/20530/how-can-i-find-the-location-on-the-desktop-of-a-window-on-the-command-line
 alias winfo='xwininfo -id $(xprop -root | awk "/_NET_ACTIVE_WINDOW\(WINDOW\)/{print \$NF}")'
 alias myxargs='tr "\n" "\0" | xargs -0'
+alias shuf="perl -MList::Util=shuffle -e'print shuffle<>'"
 
 # tailoring 'less'
 alias  more='less'
@@ -113,12 +114,13 @@ umask 022
 # Shell Prompt
 #---------------
 
-red="\[\e[0;31m\]"
-RED="\[\e[1;31m\]"
-BLUE="\[\e[1;34m\]"
-CYAN="\[\e[1;36m\]"
-PURPLE="\[\e[1;35m\]"
-NC="\[\e[0m\]"      # No Color
+red=$'\e[0;31m'
+RED=$'\e[1;31m'
+BLUE=$'\e[1;34m'
+CYAN=$'\e[1;36m'
+PURPLE=$'\e[1;35m'
+GREEN=$'\e[1;32m'
+NONE=$'\e[0m'
 
 function TRAPEXIT()
 {
@@ -136,10 +138,12 @@ function TRAPUSR2()
 trap TRAPUSR2 USR2
 
 if [[ "$(whoami)" != "peter" ]]; then
-    UNAME="\u@"
+    UNAME=$'\u@'
 fi
 
-export PS1="${PURPLE}[${RED}${UNAME}${CYAN}\h${PURPLE}]$NC \[\e[1;32m\]\w${NC} > "
+#export PS1="${get_exit_status}${PURPLE}[${RED}${UNAME}${CYAN}\h${PURPLE}]$NC \[\e[1;32m\]\w${NC} > "
+export PS1='`if [ $? -eq 0 ];then echo -n "\[${GREEN}\]^_^";else echo -n "\[${RED}\]x_x";fi;echo -n "\[${PURPLE}\][\[${RED}\]"; if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi; echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
+
 
 #-----------------------------------
 # File & strings related functions:
