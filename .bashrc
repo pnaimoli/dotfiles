@@ -39,6 +39,7 @@ export LSCOLORS="DxGxFxdxCxDxDxhbadExEx";
 #-------------------
 # Personnal Aliases
 #-------------------
+alias sb='source ~/.bashrc'
 alias g='egrep --color=auto'
 alias p='popd'
 alias gub='grep --line-buffered'
