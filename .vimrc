@@ -196,7 +196,10 @@ if has('gui_running')
     colorscheme advantage
     hi SpaceError guibg=#FF8800
     match SpaceError /\s\+$/
-    set guifont=Fixed\ 13
+    if has("macunix")
+    else
+        set guifont=Fixed\ 13
+    endif
 endif
 
 " highlight FoldColumn  gui=bold    guifg=grey65     guibg=Grey90
