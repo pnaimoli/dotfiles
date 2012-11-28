@@ -24,6 +24,7 @@ set bell-style none
   
 # turn on inline mode for tab completion
 "\t":menu-complete
+"\e[Z": "\e-1\C-i" # shift-tab
 
 # add the missing slash when tab-completing symbolic links to directories
 set mark-symlinked-directories on
