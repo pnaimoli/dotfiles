@@ -126,14 +126,14 @@ PURPLE=$'\e[1;35m'
 GREEN=$'\e[1;32m'
 NONE=$'\e[0m'
 
-function TRAPEXIT()
-{
+#function TRAPEXIT()
+#{
 #    if [ "$TERM" == "xterm" ]
 #    then
 #        echo -e "\e[1;31mStop su'ing me!!\e[0m"
 #    fi
-}
-trap TRAPEXIT EXIT
+#}
+#trap TRAPEXIT EXIT
 
 function TRAPUSR2()
 {
