@@ -23,6 +23,7 @@ shopt -s cmdhist
 # Environment variables
 #-------------------
 
+#export BASH_ENV='~/.bashrc' # so piping to 'bash' doesn't require 'bash -l'
 export VIMDIR='~/.vim/'
 export EDITOR='vim'
 export CVSEDITOR='vim'
@@ -39,6 +40,7 @@ export LSCOLORS="DxGxFxdxCxDxDxhbadExEx";
 #-------------------
 # Personnal Aliases
 #-------------------
+alias vi='vim'
 alias sb='source ~/.bashrc'
 alias g='egrep --color=auto'
 alias p='popd'
@@ -85,6 +87,7 @@ alias R='R --no-save'
 alias winfo='xwininfo -id $(xprop -root | awk "/_NET_ACTIVE_WINDOW\(WINDOW\)/{print \$NF}")'
 alias myxargs='tr "\n" "\0" | xargs -0'
 alias shuf="perl -MList::Util=shuffle -e'print shuffle<>'"
+alias findvis="find . \( ! -regex '.*/\..*' \)"
 
 # tailoring 'less'
 alias  more='less'
@@ -242,4 +245,13 @@ function cd()
    if [ $LEN -ge $MAX ]; then
       popd -n -0 > /dev/null
    fi
+}
+
+# https://chris-lamb.co.uk/2010/04/22/locating-source-any-python-module/
+function cdp () {
+cd "$(python -c "import sys, imp, os
+path = sys.path
+for i in '${1}'.split('.'): path = [imp.find_module(i,path)[1],]
+path = path[0] if os.path.isdir(path[0]) else os.path.dirname(path[0])
+print path")"
 }
