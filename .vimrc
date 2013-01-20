@@ -14,7 +14,6 @@ filetype on               " enable filetype detection
 
 
 set autoread              " auto read when a file is changed outside
-set background=dark       " hilight colors for a dark background
 set backspace=2           " Allow backspacing over indents, line breaks, and start of insert
 set guioptions-=m         " remove menu bar
 set guioptions+=LlRrb     " remove scrollbars - For some reason this hack
@@ -192,6 +191,7 @@ nnoremap <leader>e :e $VIMRC
 """""""""""""""""""""""""""""""""""""""
 " ===== Visually pleasing effects =====
 """""""""""""""""""""""""""""""""""""""
+set background=dark       " hilight colors for a dark background
 if has('gui_running')
     colorscheme advantage
     hi SpaceError guibg=#FF8800
@@ -199,6 +199,10 @@ if has('gui_running')
     if has("macunix")
     else
         set guifont=Fixed\ 13
+    endif
+else
+    if has("macunix")
+        set background=light
     endif
 endif
 
