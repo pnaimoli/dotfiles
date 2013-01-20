@@ -12,7 +12,6 @@ set nocompatible          " use VIM as VIM, not VI
 syntax on                 " enable default syntax highlighting
 filetype on               " enable filetype detection
 
-
 set autoread              " auto read when a file is changed outside
 set backspace=2           " Allow backspacing over indents, line breaks, and start of insert
 set guioptions-=m         " remove menu bar
@@ -36,11 +35,13 @@ set showcmd               " show command on last line
 set showmatch             " briefly jump to matching bracket when bracket inserted
 set showmode              " show mode
 set smartcase             " overrides ignorecase if uppercase used
+set vb                    " prevent bells from showing up
 set tw=0                  " set to 80 for atl style line width
 "set wrap                  "  text wrapping w/ above
 set wig=*.o,*.pyc         " Ignore these files for wildmenu completion
 set wildmenu              " Better command-line completion
-set wildmode=longest:full " Makes tab completion smarter
+set wildmode=longest:list,full " Makes tab completion smarter
+set wildignorecase        " Make tab completion case insensitive
 set winheight=3           " Never let a window be less than 3 lines
 set winminheight=3        " Never let a window be less than 3 lines
 
