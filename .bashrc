@@ -125,10 +125,10 @@ NONE=$'\e[0m'
 
 function TRAPEXIT()
 {
-    if [ "$TERM" == "xterm" ]
-    then
-        echo -e "\e[1;31mStop su'ing me!!\e[0m"
-    fi
+#    if [ "$TERM" == "xterm" ]
+#    then
+#        echo -e "\e[1;31mStop su'ing me!!\e[0m"
+#    fi
 }
 trap TRAPEXIT EXIT
 
