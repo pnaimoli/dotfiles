@@ -233,7 +233,12 @@ function cd()
    fi
 
    if [ $LEN -gt 1 ]; then
-      for i in `jot - 1 $LEN`; do
+      seqcommand="seq"
+      which seq 1>/dev/null 2>&-1
+      if [ $? -ne 0 ]; then
+         seqcommand="jot -"
+      fi
+      for i in `$seqcommand 1 $LEN`; do
          eval p=~$i
          if [ "$p" = "$PWD" ]; then
             popd -n +$i > /dev/null

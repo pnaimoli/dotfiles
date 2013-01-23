@@ -41,7 +41,9 @@ set tw=0                  " set to 80 for atl style line width
 set wig=*.o,*.pyc         " Ignore these files for wildmenu completion
 set wildmenu              " Better command-line completion
 set wildmode=longest:list,full " Makes tab completion smarter
-set wildignorecase        " Make tab completion case insensitive
+if exists("&wildignorecase")
+    set wildignorecase        " Make tab completion case insensitive
+endif
 set winheight=3           " Never let a window be less than 3 lines
 set winminheight=3        " Never let a window be less than 3 lines
 
