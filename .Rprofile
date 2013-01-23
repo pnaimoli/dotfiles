@@ -39,12 +39,27 @@ loadBidAskFrame = function(df) {
 # Random
 #########################################
 
+read.emptytable <- function(filename, ...) {
+    df = try(read.table(filename, ...))
+    if (inherits(df, 'try-error') &&
+        attr(df, "condition")$message == "no lines available in input")
+    {
+        return(NULL)
+    }
+    return(df)
+}
+
+nonEmptyGlob <- function(g) {
+    files = Sys.glob(g)
+    return(files[file.info(files)$size>0])
+}
+
 read.tables <- function(file.names, ...) {
-    do.call("rbind", lapply(Sys.glob(file.names), function(fn) read.table(fn, ...)))
+    do.call("rbind", lapply(nonEmptyGlob(file.names), function(fn) read.table(fn, ...)))
 }
 
 read.csvs <- function(file.names, header=F, ...) {
-    do.call("rbind", lapply(Sys.glob(file.names), function(fn) read.csv(fn, header=header, ...)))
+    do.call("rbind", lapply(nonEmptyGlob(file.names), function(fn) read.csv(fn, header=header, ...)))
 }
 
 read.ntables <- function(file.names, ...) {
