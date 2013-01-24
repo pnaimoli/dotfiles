@@ -2,9 +2,9 @@
 
 "\C-u":kill-whole-line
 "\C-k":forward-word
-"\C-j":backward-word
+"\C-h":backward-word
 "\C-l":kill-word
-"\C-h":backward-kill-word
+"\C-g":backward-kill-word
 "\C-y":dump-variables
 "\C-p":dump-functions
 
