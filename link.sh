@@ -7,3 +7,4 @@ ln -f -s ~/pnaimoli-dotfiles/.synergy.conf ~/
 ln -f -s ~/pnaimoli-dotfiles/.vimrc ~/
 ln -f -s ~/pnaimoli-dotfiles/.gvimrc ~/
 ln -f -s ~/pnaimoli-dotfiles/.xmodmaprc ~/
+ln -f -s ~/pnaimoli-dotfiles/.vim ~/
