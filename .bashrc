@@ -92,7 +92,7 @@ alias findvis="find . \( ! -regex '.*/\..*' \)"
 # tailoring 'less'
 alias  more='less'
 export PAGER=less
-export LESSCHARSET='latin1'
+#export LESSCHARSET='latin1'  # this causes problems
 export LESSOPEN='|/usr/bin/lesspipe.sh %s 2>&-'
 export LESS='--ignore-case --hilite-unread  --window=-4 --LONG-PROMPT -R -X -P%t?f%f :stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...' # Use this if lesspipe.sh exists.
 
