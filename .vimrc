@@ -36,8 +36,6 @@ set showmatch             " briefly jump to matching bracket when bracket insert
 set showmode              " show mode
 set smartcase             " overrides ignorecase if uppercase used
 set vb                    " prevent bells from showing up
-set tw=0                  " set to 80 for atl style line width
-"set wrap                  "  text wrapping w/ above
 set wig=*.o,*.pyc         " Ignore these files for wildmenu completion
 set wildmenu              " Better command-line completion
 set wildmode=longest:list,full " Makes tab completion smarter
@@ -46,6 +44,12 @@ if exists("&wildignorecase")
 endif
 set winheight=3           " Never let a window be less than 3 lines
 set winminheight=3        " Never let a window be less than 3 lines
+
+if exists("+colorcolumn")
+    "set tw=0                 " set to 80 for atl style line width
+    "set wrap                  "  text wrapping w/ above
+    set colorcolumn=81
+endif
 
 set autoindent            " indent like the last line, by default
 set cindent               " indent for c syntax
@@ -63,14 +67,15 @@ set tabstop=4             " tabs = 4 spaces
 if has('autocmd')
     augroup vimrc
     au!
-    " Set up CPP specific autocommands
-    au FileType c,cpp,cc setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,f://
 
     au BufRead,BufNewFile *.{c,cpp,cc,he,h}   set ft=cpp
     au BufNewFile,BufRead *.{r,R}             set ft=r
     au BufNewFile,BufRead *.{sig,reg,freq}    set ft=config
     au BufNewFile,BufRead *.{conf,config}     set ft=config
 
+
+    " Set up CPP specific autocommands
+    au FileType c,cpp,cc,h,he setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,bO:///,O://
     " When entering a buffer, cd to the file's directory
     autocmd BufEnter * :cd %:p:h
 

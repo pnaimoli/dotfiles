@@ -28,6 +28,7 @@ export VIMDIR='~/.vim/'
 export EDITOR='vim'
 export CVSEDITOR='vim'
 export MALLOC_OPTIONS='J'
+export MALLOC_CONF='junk:true'
 export PYTHONDONTWRITEBYTECODE='1'
 export PYTHONUNBUFFERED='1'
 export LESSKEY='~/.lesskey'
@@ -36,6 +37,16 @@ export HISTTIMEFORMAT='%F %T '
 export CVS_RSH="ssh"
 export CLICOLOR="yes"
 export LSCOLORS="DxGxFxdxCxDxDxhbadExEx";
+
+# Set appropriate ls alias
+case $(uname -s) in
+    Darwin|FreeBSD)
+        alias ls="ls -hFG"
+    ;;
+    Linux)
+        alias ls="ls --color -hF"
+    ;;
+esac
 
 #-------------------
 # Personnal Aliases
@@ -48,9 +59,8 @@ alias gub='grep --line-buffered'
 alias h='history 25'
 alias bc='bc -l'
 alias j='jobs -l'
-alias ls='\ls -F'
-alias la='\ls -alF'
-alias ll='\ls -lF'
+alias ll='ls -l'
+alias la='ll -a'
 alias l='ll'
 alias lll='ll'
 alias llll='ll'

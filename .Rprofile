@@ -11,10 +11,12 @@ options(repos="http://cran.stat.ucla.edu")
 # Defaults
 #########################################
 
+try({
 require(Defaults)
 require(utils)
 require(stats)
 setDefaults(approx, method="constant", ties="ordered", rule=2)
+})
 
 #########################################
 # Jupiter
