@@ -68,16 +68,17 @@ if has('autocmd')
     augroup vimrc
     au!
 
-    au BufRead,BufNewFile *.{c,cpp,cc,he,h}   set ft=cpp
+    au BufNewFile,BufRead *.{c,cpp,cc,he,h}   set ft=cpp
     au BufNewFile,BufRead *.{r,R}             set ft=r
     au BufNewFile,BufRead *.{sig,reg,freq}    set ft=config
     au BufNewFile,BufRead *.{conf,config}     set ft=config
 
-
     " Set up CPP specific autocommands
+    au BufNewFile,BufRead *.{c,cpp,cc,he,h}   set ft=cpp
     au FileType c,cpp,cc,h,he setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,bO:///,O://
     " When entering a buffer, cd to the file's directory
     autocmd BufEnter * :cd %:p:h
+    autocmd BufEnter * execute ':setlocal path=' . origpath . ',' . substitute(expand('%:p:h'), '/src/.*', '/src', '')
 
     " Magic!!!
     autocmd FuncUndefined * exe 'runtime autoload/' . expand('<afile>') . '.vim'
@@ -156,10 +157,12 @@ vnoremap > >gv
 "nnoremap <silent> xb "_yiw:.s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<cr><c-o>/\w\+\_W\+<CR><c-l>:nohlsearch<CR>
 
 " Set up directories to search when cd'ing
-set cdpath=.,$HOME,$HOME/atl,$HOME/atl/src,/,/home
+" set cdpath=.,$HOME,$HOME/atl,$HOME/atl/src,/,/home
 
 "Set up path to search for .h files
-set path=.,$HOME/projects/atl/src,$HOME/projects/atl/fbsd7/include,$HOME/projects/atrade/src
+let origpath='.,/usr/local/include,/usr/include'
+set path=origpath
+" build -Ibuild/gccext -Ibuild/include -Irepo/build -Irepo/build/gccext -Irepo/build/include -I/usr/local/include
 
 " Load filetype plugins
 filetype plugin on
