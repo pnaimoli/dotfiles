@@ -35,6 +35,8 @@ set showcmd               " show command on last line
 set showmatch             " briefly jump to matching bracket when bracket inserted
 set showmode              " show mode
 set smartcase             " overrides ignorecase if uppercase used
+set timeoutlen=1000       " vvvvvvvvvv This and the line below are to make
+set ttimeoutlen=0         " <Esc> in visual mode work immediately. Side Effects?
 set vb                    " prevent bells from showing up
 set wig=*.o,*.pyc         " Ignore these files for wildmenu completion
 set wildmenu              " Better command-line completion
