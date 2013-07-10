@@ -3635,13 +3635,6 @@
 			<key>Text</key>
 			<string>7D2136FD-4A82-4821-9E44-48BE91434C41</string>
 		</dict>
-		<key>0x74-0x100000</key>
-		<dict>
-			<key>Action</key>
-			<integer>25</integer>
-			<key>Text</key>
-			<string>New Tab (Current Profile)</string>
-		</dict>
 		<key>0x9-0x40000</key>
 		<dict>
 			<key>Action</key>
@@ -3808,21 +3801,23 @@
 	</dict>
 	<key>NSUserKeyEquivalents</key>
 	<dict>
-		<key>New Window</key>
-		<string>nil</string>
+		<key>New Tab</key>
+		<string>@~$t</string>
+		<key>New Tab with Current Profile</key>
+		<string>@t</string>
 	</dict>
 	<key>NSWindow Frame Preferences</key>
-	<string>516 268 924 485 0 0 1440 878 </string>
+	<string>428 261 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>530 561 384 129 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>4 439 1436 439 0 0 1440 878 </string>
+	<string>5 1 1434 876 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>4 476 572 399 0 0 1440 878 </string>
+	<string>5 477 572 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>4 476 572 399 0 0 1440 878 </string>
+	<string>6 477 572 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>6 1 1433 875 0 0 1440 878 </string>
+	<string>4 0 1436 878 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
 	<string>5 3 1434 872 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
@@ -3854,6 +3849,8 @@
 			<string></string>
 			<key>AWDS Window Option</key>
 			<string>No</string>
+			<key>Allow Title Reporting</key>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -4013,6 +4010,8 @@
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
+			<key>Background Image Is Tiled</key>
+			<false/>
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
@@ -4022,7 +4021,7 @@
 			<key>Blinking Cursor</key>
 			<true/>
 			<key>Blur</key>
-			<false/>
+			<true/>
 			<key>Blur Radius</key>
 			<real>7.9978413581848145</real>
 			<key>Bold Color</key>
@@ -4560,7 +4559,7 @@
 			<key>Terminal Type</key>
 			<string>xterm</string>
 			<key>Transparency</key>
-			<real>0.6984444260597229</real>
+			<real>0.10777782648801804</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
@@ -4569,6 +4568,10 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Canonical Parser</key>
+			<false/>
+			<key>Use Italic Font</key>
+			<false/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -9076,11 +9079,11 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>http://iterm2.googlecode.com/svn/trunk/appcasts/testing.xml</string>
+	<string>http://iterm2.com/appcasts/testing.xml</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-05-10T21:43:38Z</date>
+	<date>2013-07-04T02:00:26Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -9105,6 +9108,8 @@
 	<false/>
 	<key>TmuxDashboardLimit</key>
 	<integer>10</integer>
+	<key>ToolbarVisible</key>
+	<false/>
 	<key>ToolbeltTools</key>
 	<array>
 		<string>Profiles</string>
@@ -12325,6 +12330,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20130319</string>
+	<string>1.0.0.20130622</string>
 </dict>
 </plist>
