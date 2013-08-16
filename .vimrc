@@ -123,11 +123,13 @@ endif
 " ===== TODO: Organize this at a later point =====
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " switch between .h and .cc file Easily
-let g:alternateExtensions_cc = "he,h"
+let g:alternateExtensions_cc = "h,h"
 let g:alternateExtensions_h = "cc,c"
 let g:alternateExtensions_he = "cc,c"
 let g:alternateRelativeFiles = 1
 noremap <silent> <F2> :A<CR>
+
+noremap <leader>w :set wrap!<CR>
 
 " supress cursor blinking
 " set guicursor+=a:blinkon0
@@ -310,9 +312,11 @@ iab #I #include ""<Left>
 """""""""""""""""""""""""""""""""""""""""""""
 " ===== CommandT stuff ===== "
 """""""""""""""""""""""""""""""""""""""""""""
-fun! s:MyCommandT()
-    let srcdir = substitute(getcwd(), "/src/.*", "/src", "")
+function! s:MyCommandT()
+    set wildignore=*/conf*,Doxygen*,linux*,fbsd8*,last*
+    let srcdir = substitute(getcwd(), "/[^/]*/src/.*", "", "")
     exe ":CommandT" srcdir
+    set wildignore=''
 endfun
 noremap <silent> <leader>t :call <SID>MyCommandT()<CR>
 noremap <silent> <leader>t<CR> :call <SID>MyCommandT()<CR>
@@ -397,3 +401,48 @@ function! BufOnly(buffer, bang)
     endif
 
 endfunction
+
+"""""""""""""""""""""""""""""""""""""""
+" ====== Better Buffer Switching ======
+"""""""""""""""""""""""""""""""""""""""
+function! BufSel(pattern)
+    let buflist = []
+    let bufcount = bufnr("$")
+    let currbufnr = 1
+
+    " assume if there's a /, then it's a path and just open it
+    if (match(a:pattern, "/") > -1)
+        exe ":bu " . a:pattern
+        return
+    endif
+
+    while currbufnr <= bufcount
+        if(buflisted(currbufnr))
+            let currbufname = fnamemodify(bufname(currbufnr),":t")
+            let curmatch = tolower(currbufname)
+            let patmatch = tolower(a:pattern)
+            if(match(curmatch, patmatch) > -1)
+                call add(buflist, currbufnr)
+            endif
+        endif
+        let currbufnr = currbufnr + 1
+    endwhile
+    if(len(buflist) > 1)
+        for bufnum in buflist
+            echo bufnum . ":      ". bufname(bufnum)
+        endfor
+        let desiredbufnr = input("Enter buffer number: ")
+        if(strlen(desiredbufnr) != 0)
+            exe ":bu ". desiredbufnr
+        endif
+    elseif (len(buflist) == 1)
+        exe ":bu " . get(buflist,0)
+    else
+        echo "No matching buffers"
+    endif
+endfunction
+
+command! -nargs=1 -complete=buffer Bs :call BufSel("<args>")
+
+cabbr b Bs
+cabbr bs Bs

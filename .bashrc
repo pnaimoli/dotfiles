@@ -52,6 +52,7 @@ esac
 # Personnal Aliases
 #-------------------
 alias vi='vim'
+alias view='vim -R'
 alias sb='source ~/.bashrc'
 alias g='egrep --color=auto'
 alias p='popd'
@@ -72,7 +73,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias mkdir='mkdir -p'
-alias d='dirs -v | gawk "{print \$1,\$2,\$1}" | column -t | gawk "{ if((getline nextLine) > 0) {print \"\033[1;33m\" \$0 \"\n\033[1;34m\" nextLine} else {print \"\033[1;33m\" \$0} }"; echo -en "\e[0m"'
+alias d='(dirs -v | gawk "{print \$1,\$2,\$1}" | column -t | gawk "{ if((getline nextLine) > 0) {print \"\033[1;33m\" \$0 \"\n\033[1;34m\" nextLine} else {print \"\033[1;33m\" \$0} }"; echo -en "\e[0m")'
 alias 1='cd `dirs -l +1`; d'
 alias 2='cd `dirs -l +2`; d'
 alias 3='cd `dirs -l +3`; d'
