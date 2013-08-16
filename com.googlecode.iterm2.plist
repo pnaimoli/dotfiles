@@ -3813,24 +3813,26 @@
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>530 561 384 129 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>4 0 1436 878 0 0 1440 878 </string>
+	<string>4 479 572 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>722 0 718 439 0 0 1440 878 </string>
+	<string>722 0 718 878 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>725 477 572 399 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 3</key>
 	<string>4 0 1436 878 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 3</key>
+	<string>6 1 1433 875 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>5 3 1434 872 0 0 1440 878 </string>
+	<string>722 476 572 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
-	<string>4 475 572 399 0 0 1440 878 </string>
+	<string>4 0 1436 878 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
-	<string>4 61 717 815 0 0 1440 878 </string>
+	<string>4 477 572 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 7</key>
 	<string>666 30 585 398 0 0 1440 878 </string>
 	<key>NeverWarnAboutShortLivedSessions_02552216-B071-4D97-9F75-852140D4319E</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_7D2136FD-4A82-4821-9E44-48BE91434C41</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_B212FB25-DE96-44E1-8451-FFD444401126</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_CEDF72B6-6F15-4CFE-8163-8AD8F7542566</key>
 	<true/>
@@ -6077,6 +6079,8 @@
 			<string></string>
 			<key>AWDS Window Option</key>
 			<string>No</string>
+			<key>Allow Title Reporting</key>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -6236,6 +6240,8 @@
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
+			<key>Background Image Is Tiled</key>
+			<false/>
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
@@ -6264,7 +6270,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh -t" npnl /home/voltron/btrade/last/bin/mypnl.py etf</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/btrade/last/bin/mypnl.py etf</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -6792,6 +6798,10 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Canonical Parser</key>
+			<false/>
+			<key>Use Italic Font</key>
+			<false/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -6816,6 +6826,8 @@
 			<string></string>
 			<key>AWDS Window Option</key>
 			<string>No</string>
+			<key>Allow Title Reporting</key>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -6975,6 +6987,8 @@
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
+			<key>Background Image Is Tiled</key>
+			<false/>
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
@@ -7003,7 +7017,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh -t" npnl /home/voltron/btrade/last/bin/mypnl.py everyone</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/btrade/last/bin/mypnl.py everyone</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -7531,6 +7545,10 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Canonical Parser</key>
+			<false/>
+			<key>Use Italic Font</key>
+			<false/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -7555,6 +7573,8 @@
 			<string></string>
 			<key>AWDS Window Option</key>
 			<string>No</string>
+			<key>Allow Title Reporting</key>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -7714,6 +7734,8 @@
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
+			<key>Background Image Is Tiled</key>
+			<false/>
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
@@ -7742,7 +7764,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh -t" npnl /home/voltron/btrade/last/bin/mypnl.py misc</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/btrade/last/bin/mypnl.py misc</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -8270,6 +8292,10 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Canonical Parser</key>
+			<false/>
+			<key>Use Italic Font</key>
+			<false/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -8294,6 +8320,8 @@
 			<string></string>
 			<key>AWDS Window Option</key>
 			<string>No</string>
+			<key>Allow Title Reporting</key>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -8453,6 +8481,8 @@
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
+			<key>Background Image Is Tiled</key>
+			<false/>
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
@@ -8481,7 +8511,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh -t" npnl /home/voltron/btrade/last/bin/mypnl.py us</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/btrade/last/bin/mypnl.py us</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -9009,6 +9039,10 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Canonical Parser</key>
+			<false/>
+			<key>Use Italic Font</key>
+			<false/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -9085,7 +9119,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-07-13T16:35:32Z</date>
+	<date>2013-08-06T23:49:02Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
