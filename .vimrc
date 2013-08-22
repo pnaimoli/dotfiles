@@ -145,9 +145,6 @@ let mapleader=','
 noremap ; :
 noremap : ;
 
-" training!  Use Ctrl-C instead
-inoremap <esc>   <NOP>
-
 " be consistent with C and D
 nnoremap Y y$
 
