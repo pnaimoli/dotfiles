@@ -51,6 +51,7 @@ esac
 #-------------------
 # Personnal Aliases
 #-------------------
+alias bell='echo -ne "\a"'
 alias vi='vim'
 alias view='vim -R'
 alias sb='source ~/.bashrc'
@@ -98,7 +99,7 @@ alias R='R --no-save'
 alias winfo='xwininfo -id $(xprop -root | gawk "/_NET_ACTIVE_WINDOW\(WINDOW\)/{print \$NF}")'
 alias myxargs='tr "\n" "\0" | xargs -0'
 alias shuf="perl -MList::Util=shuffle -e'print shuffle<>'"
-alias findvis="find . \( ! -regex '.*/\..*' \)"
+alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
 
 # tailoring 'less'
 alias  more='less'

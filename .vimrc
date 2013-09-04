@@ -311,7 +311,7 @@ iab #I #include ""<Left>
 """""""""""""""""""""""""""""""""""""""""""""
 function! s:MyCommandT()
     set wildignore=*/conf*,Doxygen*,linux*,fbsd8*,last*
-    let srcdir = substitute(getcwd(), "/[^/]*/src/.*", "", "")
+    let srcdir = substitute(getcwd(), '/trunk\([^/]*\)/.*', '/trunk\1/', '')
     exe ":CommandT" srcdir
     set wildignore=''
 endfun
