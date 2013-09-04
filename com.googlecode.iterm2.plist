@@ -3813,15 +3813,15 @@
 	<key>NSWindow Frame SUStatusFrame</key>
 	<string>530 561 384 129 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>4 479 572 399 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 1</key>
-	<string>722 0 718 878 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 2</key>
 	<string>4 0 1436 878 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>93 253 572 399 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 2</key>
+	<string>6 478 572 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>6 1 1433 875 0 0 1440 878 </string>
+	<string>4 476 572 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>722 476 572 399 0 0 1440 878 </string>
+	<string>4 0 1436 878 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
 	<string>4 0 1436 878 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
@@ -4025,7 +4025,7 @@
 			<key>Blinking Cursor</key>
 			<true/>
 			<key>Blur</key>
-			<false/>
+			<true/>
 			<key>Blur Radius</key>
 			<real>7.9978413581848145</real>
 			<key>Bold Color</key>
@@ -4600,6 +4600,8 @@
 			<string></string>
 			<key>AWDS Window Option</key>
 			<string>No</string>
+			<key>Allow Title Reporting</key>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -4759,6 +4761,8 @@
 				<key>Red Component</key>
 				<real>0.87450981140136719</real>
 			</dict>
+			<key>Background Image Is Tiled</key>
+			<false/>
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
@@ -5316,6 +5320,10 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Canonical Parser</key>
+			<false/>
+			<key>Use Italic Font</key>
+			<false/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -5340,6 +5348,8 @@
 			<string></string>
 			<key>AWDS Window Option</key>
 			<string>No</string>
+			<key>Allow Title Reporting</key>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -5499,6 +5509,8 @@
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
+			<key>Background Image Is Tiled</key>
+			<false/>
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
@@ -5885,7 +5897,7 @@
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
-			<string>peterbsd (ssh)</string>
+			<string>shalgo6 (ssh)</string>
 			<key>Non Ascii Font</key>
 			<string>Monaco 12</string>
 			<key>Non-ASCII Anti Aliased</key>
@@ -6055,6 +6067,10 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<true/>
+			<key>Use Canonical Parser</key>
+			<false/>
+			<key>Use Italic Font</key>
+			<false/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
@@ -6270,7 +6286,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/btrade/last/bin/mypnl.py etf</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py etf</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -7017,7 +7033,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/btrade/last/bin/mypnl.py everyone</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py everyone</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -7764,7 +7780,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/btrade/last/bin/mypnl.py misc</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py misc</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -8511,7 +8527,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/btrade/last/bin/mypnl.py us</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py us</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -9119,7 +9135,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-08-06T23:49:02Z</date>
+	<date>2013-09-04T16:05:30Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
