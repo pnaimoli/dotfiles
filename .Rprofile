@@ -16,6 +16,7 @@ require(Defaults)
 require(utils)
 require(stats)
 setDefaults(approx, method="constant", ties="ordered", rule=2)
+setDefaults(page, method="print")
 })
 
 #########################################
