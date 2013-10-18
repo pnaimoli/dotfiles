@@ -42,6 +42,8 @@ loadBidAskFrame = function(df) {
 # Random
 #########################################
 
+bell <- function() { cat("\a") }
+
 read.emptytable <- function(filename, ...) {
     df = try(read.table(filename, ...))
     if (inherits(df, 'try-error') &&

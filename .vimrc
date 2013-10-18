@@ -131,8 +131,6 @@ let g:alternateExtensions_he = "cc,c"
 let g:alternateRelativeFiles = 1
 noremap <silent> <F2> :A<CR>
 
-noremap <leader>w :set wrap!<CR>
-
 " supress cursor blinking
 " set guicursor+=a:blinkon0
 
@@ -142,6 +140,8 @@ vnoremap <S-C> "+y
 
 " default is '\', I prefer ','
 let mapleader=','
+
+noremap <leader>w :set wrap!<CR>
 
 " wow I'm lazy
 noremap ; :
@@ -318,7 +318,6 @@ function! s:MyCommandT()
     set wildignore=''
 endfun
 noremap <silent> <leader>t :call <SID>MyCommandT()<CR>
-noremap <silent> <leader>t<CR> :call <SID>MyCommandT()<CR>
 
 """"""""""""""""""""""""""""""
 " ====== PLUGIN OPTIONS ======
