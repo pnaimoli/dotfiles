@@ -18,3 +18,6 @@ brew cask install seashore
 brew cask install rstudio
 brew cask install kindle
 brew cask install firefox
+#brew cask install little-snitch
+brew cask install lastpass-universal
+brew cask install iterm2
