@@ -91,7 +91,11 @@ umask 022
 #--------------
 
 export AUTOJUMP_IGNORE_CASE=1
-[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+if hash brew 2>/dev/null; then
+    [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+else
+    [[ -s ~/.autojump/etc/profile.d/autojump.bash ]] && . ~/.autojump/etc/profile.d/autojump.bash
+fi
 
 alias ..='cd ..'
 alias ...='cd ../..'
