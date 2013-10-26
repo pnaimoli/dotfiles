@@ -2,6 +2,8 @@
 # install brew stuff
 brew install macvim
 brew install mosh
+brew install autojump
+brew install gawk
 brew tap phinze/homebrew-cask
 brew install brew-cask
 
@@ -21,3 +23,4 @@ brew cask install firefox
 #brew cask install little-snitch
 brew cask install lastpass-universal
 brew cask install iterm2
+brew cask install ksdiff
