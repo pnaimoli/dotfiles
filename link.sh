@@ -1,4 +1,5 @@
 ln -f -s ~/pnaimoli-dotfiles/.Rprofile ~/
+ln -f -s ~/pnaimoli-dotfiles/.bashrc_mac ~/
 ln -f -s ~/pnaimoli-dotfiles/.bash_profile ~/
 ln -f -s ~/pnaimoli-dotfiles/.inputrc ~/
 ln -f -s ~/pnaimoli-dotfiles/.lesskey ~/
