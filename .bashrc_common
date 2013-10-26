@@ -94,7 +94,7 @@ export AUTOJUMP_IGNORE_CASE=1
 if hash brew 2>/dev/null; then
     [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
 else
-    [[ -s ~/.autojump/etc/profile.d/autojump.bash ]] && . ~/.autojump/etc/profile.d/autojump.bash
+    [[ -s ~/.autojump/etc/profile.d/autojump.sh ]] && . ~/.autojump/etc/profile.d/autojump.sh
 fi
 
 alias ..='cd ..'
