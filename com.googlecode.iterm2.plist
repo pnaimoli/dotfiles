@@ -3782,52 +3782,25 @@
 		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
 		hAErATGG
 		</data>
-		<string>302</string>
+		<string>198</string>
 	</array>
 	<key>NSTableView Hidden Columns KeyBingingTable</key>
 	<array/>
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
-	<key>NSToolbar Configuration Terminal Toolbar</key>
-	<dict>
-		<key>TB Display Mode</key>
-		<integer>1</integer>
-		<key>TB Icon Size Mode</key>
-		<integer>1</integer>
-		<key>TB Is Shown</key>
-		<integer>0</integer>
-		<key>TB Size Mode</key>
-		<integer>1</integer>
-	</dict>
 	<key>NSUserKeyEquivalents</key>
 	<dict>
-		<key>New Tab</key>
-		<string>@~$t</string>
 		<key>New Tab with Current Profile</key>
 		<string>@t</string>
-		<key>Reset</key>
-		<string>@~^</string>
 	</dict>
 	<key>NSWindow Frame Preferences</key>
-	<string>428 261 924 485 0 0 1440 878 </string>
-	<key>NSWindow Frame SUStatusFrame</key>
-	<string>530 561 384 129 0 0 1440 878 </string>
+	<string>269 162 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>4 0 1436 878 0 0 1440 878 </string>
+	<string>559 197 492 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>93 253 572 399 0 0 1440 878 </string>
+	<string>722 476 492 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>6 478 572 399 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 3</key>
-	<string>4 476 572 399 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 4</key>
-	<string>4 0 1436 878 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 5</key>
-	<string>4 0 1436 878 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 6</key>
-	<string>4 477 572 399 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 7</key>
-	<string>666 30 585 398 0 0 1440 878 </string>
+	<string>204 45 492 399 0 0 1440 878 </string>
 	<key>NeverWarnAboutShortLivedSessions_02552216-B071-4D97-9F75-852140D4319E</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_7D2136FD-4A82-4821-9E44-48BE91434C41</key>
@@ -3840,7 +3813,7 @@
 	<array>
 		<dict>
 			<key>ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
 			<key>AWDS Pane Option</key>
@@ -4408,7 +4381,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>DejaVuSansMono 12</string>
+			<string>Monaco 10</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -5155,7 +5128,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>DejaVuSansMono 12</string>
+			<string>Monaco 10</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -5335,7 +5308,7 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
 			<key>AWDS Pane Option</key>
@@ -5903,7 +5876,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>DejaVuSansMono 12</string>
+			<string>Monaco 10</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -6082,7 +6055,7 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
 			<key>AWDS Pane Option</key>
@@ -6650,7 +6623,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>DejaVuSansMono 12</string>
+			<string>Monaco 10</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -6829,7 +6802,7 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
 			<key>AWDS Pane Option</key>
@@ -7397,7 +7370,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>DejaVuSansMono 12</string>
+			<string>Monaco 10</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -7576,7 +7549,7 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
 			<key>AWDS Pane Option</key>
@@ -8144,7 +8117,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>DejaVuSansMono 12</string>
+			<string>Monaco 10</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -8323,7 +8296,7 @@
 		</dict>
 		<dict>
 			<key>ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>AWDS Pane Directory</key>
 			<string></string>
 			<key>AWDS Pane Option</key>
@@ -8891,7 +8864,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>DejaVuSansMono 12</string>
+			<string>Monaco 10</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -9128,6 +9101,8 @@
 	<integer>8</integer>
 	<key>RightOption</key>
 	<integer>3</integer>
+	<key>SUAutomaticallyUpdate</key>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
@@ -9135,7 +9110,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-09-04T16:05:30Z</date>
+	<date>2013-10-26T18:18:16Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -12382,6 +12357,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20130624</string>
+	<string>1.0.0.20130622</string>
 </dict>
 </plist>
