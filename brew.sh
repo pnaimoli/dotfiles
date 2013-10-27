@@ -24,3 +24,4 @@ brew cask install firefox
 brew cask install lastpass-universal
 brew cask install iterm2
 brew cask install ksdiff
+brew cask install github
