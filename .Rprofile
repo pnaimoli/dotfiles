@@ -22,21 +22,21 @@ setDefaults(page, method="print")
 #########################################
 # Jupiter
 #########################################
-
-jupFile="/home/peter/projects/btrade/src/scripts/jupiter/visualizeFxn.R";
-if (file.exists(jupFile)) {
-    source(jupFile)
-}
-
-loadBidAskFile = function(filename, header=F) {
-    loadBidAskFrame(read.csv(filename, colClasses="numeric", header=header))
-}
-
-loadBidAskFrame = function(df) {
-    addObj(list(), c(
-        new("graphObject", contents=df[,c(1,2)], color="red", type="step11", scaleID=0, cex=1, useForYlimit=T),
-        new("graphObject", contents=df[,c(1,3)], color="red", type="step11", scaleID=0, cex=1, useForYlimit=T)))
-}
+# Jupiter isn't really used anymore
+#jupFile="/home/peter/projects/btrade/src/scripts/jupiter/visualizeFxn.R";
+#if (file.exists(jupFile)) {
+#    source(jupFile)
+#}
+#
+#loadBidAskFile = function(filename, header=F) {
+#    loadBidAskFrame(read.csv(filename, colClasses="numeric", header=header))
+#}
+#
+#loadBidAskFrame = function(df) {
+#    addObj(list(), c(
+#        new("graphObject", contents=df[,c(1,2)], color="red", type="step11", scaleID=0, cex=1, useForYlimit=T),
+#        new("graphObject", contents=df[,c(1,3)], color="red", type="step11", scaleID=0, cex=1, useForYlimit=T)))
+#}
 
 #########################################
 # Random
