@@ -4,6 +4,10 @@ brew install macvim
 brew install mosh
 brew install autojump
 brew install gawk
+brew install bash
+brew install wireshark
+brew install doxygen
+
 brew tap phinze/homebrew-cask
 brew install brew-cask
 
@@ -25,3 +29,10 @@ brew cask install lastpass-universal
 brew cask install iterm2
 brew cask install ksdiff
 brew cask install github
+brew cask install multibit
+#brew cask install witch
+brew cask install x-quartz
+
+# must be after x-quartz
+brew tap homebrew/science
+brew install gfortran R
