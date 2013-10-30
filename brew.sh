@@ -7,6 +7,7 @@ brew install gawk
 brew install bash
 brew install wireshark
 brew install doxygen
+brew install svn
 
 brew tap phinze/homebrew-cask
 brew install brew-cask
