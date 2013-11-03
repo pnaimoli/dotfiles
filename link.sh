@@ -1,10 +1,10 @@
-ln -f -s ~/pnaimoli-dotfiles/.Rprofile ~/
-ln -f -s ~/pnaimoli-dotfiles/.bash_profile ~/
-ln -f -s ~/pnaimoli-dotfiles/.inputrc ~/
-ln -f -s ~/pnaimoli-dotfiles/.lesskey ~/
-ln -f -s ~/pnaimoli-dotfiles/.lesskey-in ~/
-ln -f -s ~/pnaimoli-dotfiles/.synergy.conf ~/
-ln -f -s ~/pnaimoli-dotfiles/.vimrc ~/
-ln -f -s ~/pnaimoli-dotfiles/.gvimrc ~/
-ln -f -s ~/pnaimoli-dotfiles/.vim ~/
-ln -s ~/pnaimoli-dotfiles/.bashrc_mac ~/.bashrc
+ln -f -s ~/dotfiles/.Rprofile ~/
+ln -f -s ~/dotfiles/.bash_profile ~/
+ln -f -s ~/dotfiles/.inputrc ~/
+ln -f -s ~/dotfiles/.lesskey ~/
+ln -f -s ~/dotfiles/.lesskey-in ~/
+ln -f -s ~/dotfiles/.synergy.conf ~/
+ln -f -s ~/dotfiles/.vimrc ~/
+ln -f -s ~/dotfiles/.gvimrc ~/
+ln -f -s ~/dotfiles/.vim ~/
+ln -s ~/dotfiles/.bashrc_mac ~/.bashrc
