@@ -33,6 +33,7 @@ brew cask install github
 brew cask install multibit
 #brew cask install witch
 brew cask install x-quartz
+brew cask install day-o
 
 # must be after x-quartz
 brew tap homebrew/science
