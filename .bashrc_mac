@@ -1,4 +1,4 @@
-source ~/pnaimoli-dotfiles/.bashrc_common
+source ~/dotfiles/.bashrc_common
 
 alias bsd='ssh -Y peterbsd'
 alias s3='ssh -Y shalgo3'
