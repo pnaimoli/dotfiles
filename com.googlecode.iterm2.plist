@@ -3794,13 +3794,17 @@
 		<string>@t</string>
 	</dict>
 	<key>NSWindow Frame Preferences</key>
-	<string>269 162 924 485 0 0 1440 878 </string>
+	<string>263 249 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>559 197 492 399 0 0 1440 878 </string>
+	<string>4 476 492 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>722 476 492 399 0 0 1440 878 </string>
+	<string>724 477 492 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>204 45 492 399 0 0 1440 878 </string>
+	<string>4 476 492 399 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 3</key>
+	<string>4 0 1436 878 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 4</key>
+	<string>5 3 1435 872 0 0 1440 878 </string>
 	<key>NeverWarnAboutShortLivedSessions_02552216-B071-4D97-9F75-852140D4319E</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_7D2136FD-4A82-4821-9E44-48BE91434C41</key>
@@ -4017,7 +4021,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client shalgo6</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client shalgo6.hudson-trading.com</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -5512,7 +5516,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>ssh -Y shalgo6</string>
+			<string>ssh -Y shalgo6.hudson-trading.com</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -6259,7 +6263,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py etf</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl.hudson-trading.com /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py etf</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -7006,7 +7010,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py everyone</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl.hudson-trading.com /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py everyone</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -7753,7 +7757,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py misc</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl.hudson-trading.com /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py misc</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -8500,7 +8504,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py us</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" npnl.hudson-trading.com /home/voltron/trunk/fbsd8/bin/btrade/mypnl.py us</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -9090,7 +9094,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/peter/pnaimoli-dotfiles</string>
+	<string>/Users/peter/.dotfiles</string>
 	<key>PromptOnClose</key>
 	<true/>
 	<key>PromptOnQuit</key>
@@ -9110,7 +9114,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-10-26T18:18:16Z</date>
+	<date>2013-11-11T23:54:18Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -12357,6 +12361,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20130622</string>
+	<string>1.0.0.20131109</string>
 </dict>
 </plist>
