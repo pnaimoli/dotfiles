@@ -9,6 +9,7 @@ brew install wireshark
 brew install doxygen
 brew install svn
 brew install cowsay
+brew install gs imagemagick
 
 brew tap phinze/homebrew-cask
 brew install brew-cask
@@ -16,8 +17,8 @@ brew install brew-cask
 # install casks
 brew cask install google-chrome
 brew cask install adium
-brew cask install size-up
-#brew cask install silverlight
+brew cask install sizeup
+brew cask install silverlight
 brew cask install dropbox
 brew cask install steam
 brew cask install vlc
