@@ -80,8 +80,10 @@ if has('autocmd')
     au FileType c,cpp,cc,h,he setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,bO:///,O://
     " When entering a buffer, cd to the file's directory
     if isdirectory(expand('%:p:h'))
-        autocmd BufEnter * :cd %:p:h
-        autocmd BufEnter * execute ':setlocal path=' . origpath . ',' . substitute(expand('%:p:h'), '/src/.*', '/src', '')
+        autocmd BufEnter * silent! lcd %:p:h
+        autocmd BufEnter * execute ':setlocal path=' . origpath . ',' .
+\           substitute(substitute(expand('%:p:h'), '/src/.*', '/src', ''),
+\                      ' ', '\\ ', 'g')
     endif
 
     " Magic!!!

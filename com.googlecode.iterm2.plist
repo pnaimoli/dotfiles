@@ -3733,6 +3733,8 @@
 	<false/>
 	<key>HideActivityIndicator</key>
 	<true/>
+	<key>HideMenuBarInFullscreen</key>
+	<true/>
 	<key>HideScrollbar</key>
 	<false/>
 	<key>HideTab</key>
@@ -3764,7 +3766,7 @@
 	<key>MaxVertically</key>
 	<false/>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/pnaimoli-dotfiles</string>
+	<string>~/Documents</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -3796,15 +3798,17 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>263 249 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>4 476 492 399 0 0 1440 878 </string>
+	<string>4 1 1436 876 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>724 477 492 399 0 0 1440 878 </string>
+	<string>6 477 492 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>4 476 492 399 0 0 1440 878 </string>
+	<string>6 0 1434 878 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>4 0 1436 878 0 0 1440 878 </string>
+	<string>4 477 492 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>5 3 1435 872 0 0 1440 878 </string>
+	<string>5 1 1435 876 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 5</key>
+	<string>5 477 492 399 0 0 1440 878 </string>
 	<key>NeverWarnAboutShortLivedSessions_02552216-B071-4D97-9F75-852140D4319E</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_7D2136FD-4A82-4821-9E44-48BE91434C41</key>
@@ -9056,6 +9060,8 @@
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
+	<key>PMPrintingExpandedStateForPrint2</key>
+	<false/>
 	<key>PassOnControlClick</key>
 	<false/>
 	<key>PasteFromClipboard</key>
@@ -9114,7 +9120,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-11-11T23:54:18Z</date>
+	<date>2013-11-22T13:33:50Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -12361,6 +12367,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20131109</string>
+	<string>1.0.0.20131116</string>
 </dict>
 </plist>

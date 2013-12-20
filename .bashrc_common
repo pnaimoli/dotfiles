@@ -36,15 +36,18 @@ export HISTIGNORE='&: *:l:ll:history*:ls:cd:clear:..:...:....:p:dirs:1:2:3:4:5:6
 export HISTTIMEFORMAT='%F %T '
 export CVS_RSH="ssh"
 export CLICOLOR="yes"
-export LSCOLORS="DxGxFxdxCxDxDxhbadExEx";
 
 # Set appropriate ls alias
 case $(uname -s) in
-    Darwin|FreeBSD)
-        alias ls="ls -hFG"
+    FreeBSD)
+        export LSCOLORS="DxGxFxdxCxDxDxhbadExEx"
+        alias ls="ls -hFG -D '%Y%m%d %T'"
+    ;;
+    Darwin)
+        alias ls="gls -hFG --color --time-style='+%Y%m%d %T'"
     ;;
     Linux)
-        alias ls="ls --color -hF"
+        alias ls="ls -hFG --color --time-style='+%Y%m%d %T'"
     ;;
 esac
 
