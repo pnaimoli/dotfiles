@@ -17,6 +17,8 @@ brew install doxygen
 brew install svn
 brew install cowsay
 brew install gs imagemagick
+brew install p7zip
+brew install coreutils
 
 # install casks
 brew cask install adium
