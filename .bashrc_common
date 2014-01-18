@@ -89,7 +89,6 @@ export LESSKEY='~/.lesskey'
 #export LESSCHARSET='latin1'  # this causes problems
 export LESSOPEN='|$HOME/.dotfiles/lesspipe.sh %s 2>&-'
 export LESS='--ignore-case --hilite-unread  --window=-4 --LONG-PROMPT -R -X -P%t?f%f :stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...' # Use this if lesspipe.sh exists.
-
 umask 022
 
 ##--------------
