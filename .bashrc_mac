@@ -4,6 +4,5 @@ alias bsd='ssh -Y infralab19'
 
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/games/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/share/python:~/source/joseph/scripts:~/source/.remote/versioned/bin
 export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl -w"
-export FIGNORE=DS_Store
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

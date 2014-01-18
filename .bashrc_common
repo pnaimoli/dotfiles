@@ -38,6 +38,7 @@ export HISTIGNORE='&: *:l:ll:history*:ls:cd:clear:..:...:....:p:dirs:1:2:3:4:5:6
 export HISTTIMEFORMAT='%F %T '
 export CVS_RSH="ssh"
 export CLICOLOR="yes"
+export FIGNORE=DS_Store
 
 # Set appropriate ls alias
 case $(uname -s) in
