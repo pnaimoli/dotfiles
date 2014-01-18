@@ -1,12 +1,8 @@
 source ~/.dotfiles/.bashrc_common
 
-alias bsd='ssh -Y peterbsd'
-alias s3='ssh -Y shalgo3'
-alias v='mvim -v'
-alias vi='mvim -v'
-alias vim='mvim -v'
+alias bsd='ssh -Y infralab19'
 
-export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/games/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/share/python
-export EDITOR='mvim -v'
+export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/games/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/share/python:~/source/joseph/scripts:~/.remote/versioned/bin
+export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl -w"
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

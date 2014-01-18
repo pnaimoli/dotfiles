@@ -26,11 +26,12 @@ shopt -s cmdhist
 #export BASH_ENV='~/.bashrc' # so piping to 'bash' doesn't require 'bash -l'
 export PATH=/usr/local/share/git-core/contrib/workdir:$PATH
 export VIMDIR='~/.vim/'
-export EDITOR='vim'
-export CVSEDITOR='vim'
 if [ -z "$SCHED_JID" ]; then
+  export MALLOC_OPTIONS='J'
   export MALLOC_CONF=junk:true
 fi
+export EDITOR='emacs'
+export CVSEDITOR='emacs'
 export PYTHONDONTWRITEBYTECODE='1'
 export PYTHONUNBUFFERED='1'
 export HISTIGNORE='&: *:l:ll:history*:ls:cd:clear:..:...:....:p:dirs:1:2:3:4:5:6:7:8:9'
@@ -171,20 +172,20 @@ function TRAPUSR2()
 }
 trap TRAPUSR2 USR2
 
-if [[ "$(whoami)" != "peter" ]]; then
+if [[ "$(whoami)" != "joseph" ]]; then
     UNAME=$'\u@'
 fi
 
 function parse_git_branch () {
     git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1/"
 }
- 
+
 function parse_git_color () {
     if [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
     then
         echo -e "$NO_COLOUR"
     elif [ -z "`git status --porcelain 2> /dev/null`" ]
-    then 
+    then
         echo -e "$GREEN"
     elif [ -z "`git status --porcelain 2> /dev/null | grep -v -E "^[MARCD]  .*$"`" ]
     then
@@ -193,13 +194,13 @@ function parse_git_color () {
         echo -e "$RED"
     fi
 }
- 
+
 function parse_git_status () {
     if [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
     then
         echo -e ""
     elif [ -z "`git status --porcelain 2> /dev/null`" ]
-    then 
+    then
         echo -e "(`parse_git_branch`)"
     elif [ -z "`git status --porcelain 2> /dev/null | grep -v -E "^[MARCD]  .*$"`" ]
     then
