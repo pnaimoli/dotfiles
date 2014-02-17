@@ -157,6 +157,31 @@ PURPLE=$'\e[1;35m'
 GREEN=$'\e[1;32m'
 NONE=$'\e[0m'
 
+
+function parse_git_dirty {
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+}
+
+function parse_git_branch {
+  GITCOLOR=$NONE
+  if [[ $(git status --porcelain 2> /dev/null | grep "^\?\?") ]]
+    then
+      GITCOLOR=$RED;
+    else
+      if [[ "$(git diff-files | wc -l)" -ne "0" ]]
+      then
+        GITCOLOR=$YELLOW
+      else
+        if [[ $(git status --porcelain 2> /dev/null | wc -l) -ne "0" ]]
+        then
+          GITCOLOR=$GREEN
+        fi
+      fi
+  fi
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/(${GITCOLOR}\1${NONE})/"
+}
+
+
 #function TRAPEXIT()
 #{
 #    if [ "$TERM" == "xterm" ]
@@ -222,6 +247,9 @@ echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
 
 PS1=$PS1_git
 
+if [ -f ~/.dotfiles/.git-completion.bash ]; then
+  . ~/.dotfiles/.git-completion.bash
+fi
 
 #-----------------------------------
 # File & strings related functions:
