@@ -168,7 +168,7 @@ function parse_git_branch {
     then
       GITCOLOR=$RED;
     else
-      if [[ "$(git diff-files | wc -l)" -ne "0" ]]
+      if [[ "$(git diff-files 2> /dev/null | wc -l)" -ne "0" ]]
       then
         GITCOLOR=$YELLOW
       else
