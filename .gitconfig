@@ -1,2 +1,5 @@
 [core]
 	excludesfile = ~/.dotfiles/.gitignore_global
+[user]
+	name = Peter Naimoli
+	email = peter@hudson-trading.com

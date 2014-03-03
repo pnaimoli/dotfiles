@@ -318,8 +318,12 @@ iab #I #include ""<Left>
 " ===== CommandT stuff ===== "
 """""""""""""""""""""""""""""""""""""""""""""
 function! s:MyCommandT()
-    set wildignore=*/conf/*,Doxygen*,linux*,fbsd8*,last*
-    let srcdir = substitute(getcwd(), '/trunk\([^/]*\)/.*', '/trunk\1/', '')
+    if match(getcwd(), '/trunk.*', '')
+        set wildignore=*/conf/*,Doxygen*,linux*,fbsd8*,last*
+        let srcdir = substitute(getcwd(), '/trunk\([^/]*\)/.*', '/trunk\1/', '')
+    elseif match(getcwd(), '/algo.*', '')
+        let srcdir = substitute(getcwd(), '/algo\([^/]*\)/.*', '/algo\1/', '')
+    endif
     exe ":CommandT" srcdir
     set wildignore=''
 endfun
