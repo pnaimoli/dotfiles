@@ -19,6 +19,7 @@ brew install cowsay
 brew install gs imagemagick
 brew install p7zip
 brew install coreutils
+#brew install tuntap
 
 # install casks
 brew cask install adium
@@ -42,6 +43,9 @@ brew cask install vlc
 brew cask install witch
 brew cask install xquartz
 #brew cask install little-snitch
+brew cask install nvalt
+brew cask install android-file-transfer
+brew cask install pycharm-ce
 
 # must be after x-quartz
 brew tap homebrew/science
