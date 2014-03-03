@@ -136,12 +136,16 @@ noremap <silent> <F2> :A<CR>
 " supress cursor blinking
 " set guicursor+=a:blinkon0
 
+" default is '\', I prefer ','
+let mapleader=','
+
 " super paste
 "inoremap <C-V> <esc>:set paste<cr>mui<C-R>+<esc>mv'uV'v=:set nopaste<cr>
 vnoremap <S-C> "+y
 
-" default is '\', I prefer ','
-let mapleader=','
+nnoremap <leader>p :set invpaste paste?<CR>
+set pastetoggle=<leader>p
+set showmode
 
 noremap <leader>w :set wrap!<CR>
 

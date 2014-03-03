@@ -27,8 +27,9 @@ shopt -s cmdhist
 export VIMDIR='~/.vim/'
 export EDITOR='vim'
 export CVSEDITOR='vim'
-export MALLOC_OPTIONS='J'
-export MALLOC_CONF='junk:true'
+if [ -z "$SCHED_JID" ]; then
+  export MALLOC_CONF=junk:true
+fi
 export PYTHONDONTWRITEBYTECODE='1'
 export PYTHONUNBUFFERED='1'
 export LESSKEY='~/.lesskey'

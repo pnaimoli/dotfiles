@@ -1,0 +1,5 @@
+.warppipe
+*.sw?
+*.pyc
+*.pyo
+.idea
