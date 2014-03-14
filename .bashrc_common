@@ -24,6 +24,7 @@ shopt -s cmdhist
 #-------------------
 
 #export BASH_ENV='~/.bashrc' # so piping to 'bash' doesn't require 'bash -l'
+export PATH=/usr/local/share/git-core/contrib/workdir:$PATH
 export VIMDIR='~/.vim/'
 export EDITOR='vim'
 export CVSEDITOR='vim'
