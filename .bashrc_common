@@ -83,6 +83,7 @@ alias myxargs='tr "\n" "\0" | xargs -0'
 alias shuf="perl -MList::Util=shuffle -e'print shuffle<>'"
 alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
 
+
 # tailoring 'less'
 alias  more='less'
 export PAGER=less
@@ -127,6 +128,10 @@ alias 16='cd `dirs -l +16`; d'
 alias 17='cd `dirs -l +17`; d'
 alias 18='cd `dirs -l +18`; d'
 alias 19='cd `dirs -l +19`; d'
+
+export r='/scratchq/joseph/remote'
+export a='/scratchq/joseph/archived'
+export p='/scratchq/joseph/pipeout'
 
 #--------------
 # Magic
