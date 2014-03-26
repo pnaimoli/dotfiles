@@ -86,8 +86,8 @@ if has('autocmd')
 \                      ' ', '\\ ', 'g')
     endif
 
-    " Magic!!!
-    autocmd FuncUndefined * exe 'runtime autoload/' . expand('<afile>') . '.vim'
+"    " Magic!!!
+"    autocmd FuncUndefined * exe 'runtime autoload/' . expand('<afile>') . '.vim'
 
     " Auto source the vimrc file when it is saved
     au! BufWritePost [\._]vimrc source $VIMRC
@@ -317,17 +317,29 @@ iab #I #include ""<Left>
 """""""""""""""""""""""""""""""""""""""""""""
 " ===== CommandT stuff ===== "
 """""""""""""""""""""""""""""""""""""""""""""
-function! s:MyCommandT()
-    if match(getcwd(), '/trunk.*', '')
-        set wildignore=*/conf/*,Doxygen*,linux*,fbsd8*,last*
-        let srcdir = substitute(getcwd(), '/trunk\([^/]*\)/.*', '/trunk\1/', '')
-    elseif match(getcwd(), '/algo.*', '')
-        let srcdir = substitute(getcwd(), '/algo\([^/]*\)/.*', '/algo\1/', '')
-    endif
-    exe ":CommandT" srcdir
-    set wildignore=''
-endfun
-noremap <silent> <leader>t :call <SID>MyCommandT()<CR>
+"function! s:MyCommandT()
+"    if match(getcwd(), '/trunk.*', '')
+"        set wildignore=*/conf/*,Doxygen*,linux*,fbsd8*,last*
+"        let srcdir = substitute(getcwd(), '/trunk\([^/]*\)/.*', '/trunk\1/', '')
+"    elseif match(getcwd(), '/algo.*', '')
+"        let srcdir = substitute(getcwd(), '/algo\([^/]*\)/.*', '/algo\1/', '')
+"    endif
+"    exe ":CommandT" srcdir
+"    set wildignore=''
+"endfun
+"noremap <silent> <leader>t :call <SID>MyCommandT()<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""
+" ===== CtrlP stuff ===== "
+"""""""""""""""""""""""""""""""""""""""""""""
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '(Doxygen*|linux*|fbsd8*|last)$',
+    \ 'link': 'pipeline',
+    \ }
+"    \ 'file': '\v\.(exe|so|dll)$',
 
 """"""""""""""""""""""""""""""
 " ====== PLUGIN OPTIONS ======
