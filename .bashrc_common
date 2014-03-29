@@ -33,7 +33,6 @@ if [ -z "$SCHED_JID" ]; then
 fi
 export PYTHONDONTWRITEBYTECODE='1'
 export PYTHONUNBUFFERED='1'
-export LESSKEY='~/.lesskey'
 export HISTIGNORE='&: *:l:ll:history*:ls:cd:clear:..:...:....:p:dirs:1:2:3:4:5:6:7:8:9'
 export HISTTIMEFORMAT='%F %T '
 export CVS_RSH="ssh"
@@ -85,8 +84,9 @@ alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
 # tailoring 'less'
 alias  more='less'
 export PAGER=less
+export LESSKEY='~/.lesskey'
 #export LESSCHARSET='latin1'  # this causes problems
-export LESSOPEN='|/usr/bin/lesspipe.sh %s 2>&-'
+export LESSOPEN='|$HOME/.dotfiles/lesspipe.sh %s 2>&-'
 export LESS='--ignore-case --hilite-unread  --window=-4 --LONG-PROMPT -R -X -P%t?f%f :stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...' # Use this if lesspipe.sh exists.
 
 umask 022

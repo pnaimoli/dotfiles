@@ -335,6 +335,7 @@ iab #I #include ""<Left>
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
+set wildignore=*btrade/conf/*
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '(Doxygen*|linux*|fbsd8*|last)$',
     \ 'link': 'pipeline',
