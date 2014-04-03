@@ -3,7 +3,7 @@ source ~/.dotfiles/.bashrc_common
 alias bsd='ssh -Y infralab19'
 alias rmount='remote.py --mount ~/Documents/stuff --at /Volumes/Source'
 
-export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/games/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/share/python:~/source/joseph/scripts:~/source/.remote/versioned/bin
+export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/games/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:~/source/joseph/scripts:~/source/.remote/versioned/bin
 export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl -w"
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
