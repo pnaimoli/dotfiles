@@ -8,4 +8,5 @@ ln -f -s ~/.dotfiles/.lesskey-in ~/
 ln -f -s ~/.dotfiles/.synergy.conf ~/
 ln -f -s ~/.dotfiles/.vim ~/
 ln -f -s ~/.dotfiles/.vimrc ~/
+ln -f -s ~/.dotfiles/.tmux.conf ~/
 ln -s ~/.dotfiles/.bashrc_mac ~/.bashrc
