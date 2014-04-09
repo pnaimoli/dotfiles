@@ -217,12 +217,12 @@ function parse_git_color () {
         echo -e "$NO_COLOUR"
     elif [ -z "`git status --porcelain 2> /dev/null`" ]
     then
-        echo -e "$GREEN"
+        echo -e "$NO_COLOUR"
     elif [ -z "`git status --porcelain 2> /dev/null | grep -v -E "^[MARCD]  .*$"`" ]
     then
-        echo -e "$YELLOW"
+        echo -e "$GREEN"
     else
-        echo -e "$RED"
+        echo -e "$YELLOW"
     fi
 }
 
@@ -243,12 +243,12 @@ function parse_git_status () {
 
 PS1_git='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
 echo -n "\[${PURPLE}\][\[${RED}\]";
-if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi;
+if [[ "$(whoami)" != "joseph" ]]; then echo -n "\[${RED}\]\u@"; fi;
 echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w \[\$(parse_git_color)\]\$(parse_git_status)\[${NONE}\] > "`'
 
 PS1_normal='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
 echo -n "\[${PURPLE}\][\[${RED}\]";
-if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi;
+if [[ "$(whoami)" != "joseph" ]]; then echo -n "\[${RED}\]\u@"; fi;
 echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
 
 PS1=$PS1_git
