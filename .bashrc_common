@@ -217,7 +217,7 @@ function parse_git_color () {
         echo -e "$NO_COLOUR"
     elif [ -z "`git status --porcelain 2> /dev/null`" ]
     then
-        echo -e "$NO_COLOUR"
+        echo -e "$NONE"
     elif [ -z "`git status --porcelain 2> /dev/null | grep -v -E "^[MARCD]  .*$"`" ]
     then
         echo -e "$GREEN"
