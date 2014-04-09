@@ -1,4 +1,4 @@
-# pnaimoli's dotfiles
+# joe's dotfiles
 
 ## install
 
