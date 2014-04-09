@@ -214,7 +214,7 @@ function parse_git_branch () {
 function parse_git_color () {
     if [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
     then
-        echo -e "$NO_COLOUR"
+        echo -e "$NONE"
     elif [ -z "`git status --porcelain 2> /dev/null`" ]
     then
         echo -e "$NONE"
@@ -226,30 +226,10 @@ function parse_git_color () {
     fi
 }
 
-function parse_git_status () {
-    if [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
-    then
-        echo -e ""
-    elif [ -z "`git status --porcelain 2> /dev/null`" ]
-    then
-        echo -e "(`parse_git_branch`)"
-    elif [ -z "`git status --porcelain 2> /dev/null | grep -v -E "^[MARCD]  .*$"`" ]
-    then
-        echo -e "{`parse_git_branch`}"
-    else
-        echo -e "<`parse_git_branch`>"
-    fi
-}
-
 PS1_git='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]:^)"; else echo -n "\[${RED}\]ಠ_ಠ"; fi;
 echo -n "\[${PURPLE}\][\[${RED}\]";
 if [[ "$(whoami)" != "joseph" ]]; then echo -n "\[${RED}\]\u@"; fi;
-echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w \[\$(parse_git_color)\]($(parse_git_branch))\[${NONE}\] > "`'
-
-PS1_normal='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
-echo -n "\[${PURPLE}\][\[${RED}\]";
-if [[ "$(whoami)" != "joseph" ]]; then echo -n "\[${RED}\]\u@"; fi;
-echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
+echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w \[\$(parse_git_color)\]$(parse_git_branch)\[${NONE}\] > "`'
 
 PS1=$PS1_git
 
