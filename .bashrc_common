@@ -244,7 +244,7 @@ function parse_git_status () {
 PS1_git='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
 echo -n "\[${PURPLE}\][\[${RED}\]";
 if [[ "$(whoami)" != "joseph" ]]; then echo -n "\[${RED}\]\u@"; fi;
-echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w \[\$(parse_git_color)\]\$(parse_git_status)\[${NONE}\] > "`'
+echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w \[\$(parse_git_color)\]($(parse_git_branch))\[${NONE}\] > "`'
 
 PS1_normal='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
 echo -n "\[${PURPLE}\][\[${RED}\]";
