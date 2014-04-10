@@ -225,7 +225,7 @@ echo -n "\[${PURPLE}\][\[${RED}\]";
 if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi;
 echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
 
-PS1=$PS1_normal
+PS1=$PS1_git
 
 
 #-----------------------------------
