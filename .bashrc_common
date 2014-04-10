@@ -180,7 +180,10 @@ function parse_git_branch () {
 }
  
 function parse_git_color () {
-    if [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
+    if [[ $string == /scratch/* ]]
+    then
+        echo -e "$NO_COLOUR"
+    elif [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
     then
         echo -e "$NO_COLOUR"
     elif [ -z "`git status --porcelain 2> /dev/null`" ]
@@ -195,7 +198,10 @@ function parse_git_color () {
 }
  
 function parse_git_status () {
-    if [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
+    if [[ $string == /scratch/* ]]
+    then
+        echo -e ""
+    elif [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
     then
         echo -e ""
     elif [ -z "`git status --porcelain 2> /dev/null`" ]
