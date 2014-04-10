@@ -9,4 +9,5 @@ ln -f -s ~/.dotfiles/.synergy.conf ~/
 ln -f -s ~/.dotfiles/.vim ~/
 ln -f -s ~/.dotfiles/.vimrc ~/
 ln -f -s ~/.dotfiles/.tmux.conf ~/
+ln -f -s ~/.dotfiles/.pydistutils.cfg ~/
 ln -s ~/.dotfiles/.bashrc_mac ~/.bashrc
