@@ -14,6 +14,7 @@ filetype on               " enable filetype detection
 
 set autoread              " auto read when a file is changed outside
 set backspace=2           " Allow backspacing over indents, line breaks, and start of insert
+set encoding=utf-8        " powerline only works with this w/o mosh
 set guioptions-=m         " remove menu bar
 set guioptions+=LlRrb     " remove scrollbars - For some reason this hack
 set guioptions-=LlRrb     "  is necessary
