@@ -10,4 +10,5 @@ ln -f -s ~/.dotfiles/.vim ~/
 ln -f -s ~/.dotfiles/.vimrc ~/
 ln -f -s ~/.dotfiles/.tmux.conf ~/
 ln -f -s ~/.dotfiles/.pydistutils.cfg ~/
+ln -f -s ~/.dotfiles/config ~/.config
 ln -s ~/.dotfiles/.bashrc_mac ~/.bashrc

@@ -194,16 +194,16 @@ vnoremap <leader>= :Align =<CR>
 " ===== Status Line configuration =====
 """""""""""""""""""""""""""""""""""""""
 set laststatus=2                           " always show a status line
-set statusline=
-set statusline+=%2*%-3.3n%0*               " buffer number
-set statusline+=%1*%f%0*                   " filename
-set statusline+=%h%5*%m%r%w%0*             " flags
-set statusline+=[
-set statusline+=%{strlen(&ft)?&ft:'none'}, " filetype
-set statusline+=%{&fileformat}]            " file format
-set statusline+=%=                         " right align
-set statusline+=%2*0x%-8B\                 " current char
-set statusline+=%-14.(%l,%c%V%)\ %<%P      " offset
+"set statusline=
+"set statusline+=%2*%-3.3n%0*               " buffer number
+"set statusline+=%1*%f%0*                   " filename
+"set statusline+=%h%5*%m%r%w%0*             " flags
+"set statusline+=[
+"set statusline+=%{strlen(&ft)?&ft:'none'}, " filetype
+"set statusline+=%{&fileformat}]            " file format
+"set statusline+=%=                         " right align
+"set statusline+=%2*0x%-8B\                 " current char
+"set statusline+=%-14.(%l,%c%V%)\ %<%P      " offset
 
 """"""""""""""""""""""""""""""""""
 " ===== Edit & Reload .vimrc =====
@@ -341,6 +341,13 @@ let g:ctrlp_custom_ignore = {
     \ 'link': 'pipeline',
     \ }
 "    \ 'file': '\v\.(exe|so|dll)$',
+
+"""""""""""""""""""""""""""""""""""""""""""""
+" ===== Powerline stuff ===== "
+"""""""""""""""""""""""""""""""""""""""""""""
+"let g:Powerline_theme='short'
+"let g:Powerline_colorscheme='solarized256_dark'
+let g:Powerline_colorscheme='solarized'
 
 """"""""""""""""""""""""""""""
 " ====== PLUGIN OPTIONS ======
