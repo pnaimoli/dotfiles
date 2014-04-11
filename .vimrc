@@ -342,13 +342,6 @@ let g:ctrlp_custom_ignore = {
     \ }
 "    \ 'file': '\v\.(exe|so|dll)$',
 
-"""""""""""""""""""""""""""""""""""""""""""""
-" ===== Powerline stuff ===== "
-"""""""""""""""""""""""""""""""""""""""""""""
-"let g:Powerline_theme='short'
-"let g:Powerline_colorscheme='solarized256_dark'
-let g:Powerline_colorscheme='solarized'
-
 """"""""""""""""""""""""""""""
 " ====== PLUGIN OPTIONS ======
 """"""""""""""""""""""""""""""
