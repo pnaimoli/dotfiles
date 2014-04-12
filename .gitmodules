@@ -7,3 +7,6 @@
 [submodule ".vim/bundle-available/ctrlp.vim"]
 	path = vim/bundle-available/ctrlp.vim
 	url = https://github.com/kien/ctrlp.vim.git
+[submodule "iTerm-2-Color-Themes"]
+	path = iTerm-2-Color-Themes
+	url = https://github.com/baskerville/iTerm-2-Color-Themes.git
