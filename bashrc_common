@@ -14,6 +14,7 @@ esac
 #-------------------
 
 set -o pipefail
+set -o ignoreeof
 shopt -s expand_aliases
 shopt -s checkwinsize
 shopt -s no_empty_cmd_completion
@@ -236,7 +237,7 @@ if [[ -n $TMUX ]]
 then
     function precmd () {
 #        tmux set -q status-left "[#S] #P $(pwd)"
-        tmux set -q set-titles-string "$(basename `pwd`) (#{pane_current_command})"
+        tmux set -q set-titles-string "$(basename `pwd` | perl -pe "s/^(.{7}).*(.{7})$/\$1..\$2/") (#{pane_current_command})"
     }
 fi
 

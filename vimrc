@@ -229,6 +229,8 @@ if has('gui_running')
 else
     if has("macunix")
         set background=light
+    else
+        colorscheme neon
     endif
 endif
 
