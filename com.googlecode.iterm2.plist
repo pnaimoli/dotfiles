@@ -4029,7 +4029,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client shalgo6.hudson-trading.com -- tmux new-session</string>
+			<string>env MOSH_TITLE_NOPREFIX=1 /usr/local/bin/mosh --client=/usr/local/bin/mosh-client shalgo6.hudson-trading.com -- tmux new-session</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -6041,7 +6041,7 @@
 				<string>hrt</string>
 			</array>
 			<key>Terminal Type</key>
-			<string>xterm</string>
+			<string>xterm-256color</string>
 			<key>Transparency</key>
 			<real>0.14133228361606598</real>
 			<key>Triggers</key>
@@ -12361,7 +12361,7 @@
 		</array>
 	</dict>
 	<key>WindowNumber</key>
-	<false/>
+	<true/>
 	<key>WindowStyle</key>
 	<integer>0</integer>
 	<key>WordCharacters</key>
