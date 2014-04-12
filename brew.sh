@@ -8,7 +8,8 @@ brew upgrade brew-cask
 
 # install brew stuff
 brew install macvim
-brew install mosh
+brew install mobile-shell
+#brew upgrade --HEAD mobile-shell
 brew install autojump
 brew install gawk
 brew install bash
@@ -20,7 +21,8 @@ brew install gs imagemagick
 brew install p7zip
 brew install coreutils
 #brew install tuntap
-brew install reattach-to-user-namespace
+#brew install reattach-to-user-namespace
+brew install hg
 
 # install casks
 brew cask install adium
