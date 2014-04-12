@@ -42,6 +42,8 @@ set vb                    " prevent bells from showing up
 set wig=*.o,*.pyc         " Ignore these files for wildmenu completion
 set wildmenu              " Better command-line completion
 set wildmode=longest:list,full " Makes tab completion smarter
+set mouse=a               " enable mouse usage
+"set ttymouse=xterm        " enable mouse usage
 if exists("&wildignorecase")
     set wildignorecase        " Make tab completion case insensitive
 endif
