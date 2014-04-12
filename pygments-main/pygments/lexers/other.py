@@ -36,7 +36,8 @@ __all__ = ['BrainfuckLexer', 'BefungeLexer', 'RedcodeLexer', 'MOOCodeLexer',
            'ECLLexer', 'UrbiscriptLexer', 'OpenEdgeLexer', 'BroLexer',
            'MscgenLexer', 'KconfigLexer', 'VGLLexer', 'SourcePawnLexer',
            'RobotFrameworkLexer', 'PuppetLexer', 'NSISLexer', 'RPMSpecLexer',
-           'CbmBasicV2Lexer', 'AutoItLexer', 'RexxLexer', 'APLLexer']
+           'CbmBasicV2Lexer', 'AutoItLexer', 'RexxLexer', 'APLLexer',
+           'SchedLexer']
 
 
 class ECLLexer(RegexLexer):
@@ -3882,5 +3883,38 @@ class APLLexer(RegexLexer):
             # ====
             (u'[⍺⍵⍶⍹∇:]', Name.Builtin.Pseudo),
             (r'[{}]', Keyword.Type),
+        ],
+    }
+
+
+class SchedLexer(RegexLexer):
+    name = 'Sched'
+    aliases = ['sched']
+    filenames = ['*.sched']
+
+    tokens = {
+        'root': [
+            (r'^ *(\S+ *)(\S+ *)(\S+ *)',
+                bygroups(Number, Number, Number),
+                'status'
+                ),
+        ],
+        'status': [
+            (r'Finished', String, 'machine'),
+            (r'Cancelled|Canceled', String, 'machine'),
+            (r'Error', Error, 'machine'),
+            (r'Running', String, 'machine'),
+        ],
+        'machine': [
+            (r' *\S+', Keyword, 'time'),
+        ],
+        'time': [
+            (r' *\S+', String.Double, 'user'),
+        ],
+        'user': [
+            (r' *\S+', Keyword.Constant, 'cmd'),
+        ],
+        'cmd': [
+            (r' *\S+', Text),
         ],
     }

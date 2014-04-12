@@ -4,8 +4,10 @@ case "$1" in
    *.ad[asb]|*.asm|*.inc|*.[ch]|*.[ch]pp|*.[ch]xx|*.cc|*.hh|\
    *.lsp|*.l|*.pas|*.p|*.xml|*.xps|*.xsl|*.axp|*.ppd|*.pov|\
    *.diff|*.patch|*.py|*.rb|*.sql|*.ebuild|*.eclass)
-      pygmentize "$1" ;;
+      pygments-main/pygmentize "$1" ;;
    *.conf)
-      pygmentize -l ini "$1" ;;
+      pygments-main/pygmentize -l ini "$1" ;;
+   *.sched)
+      pygments-main/pygmentize -f 256 -O style=monokai "$1" ;;
    *) exit 0;;
 esac
