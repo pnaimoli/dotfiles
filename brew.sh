@@ -20,6 +20,7 @@ brew install gs imagemagick
 brew install p7zip
 brew install coreutils
 #brew install tuntap
+brew install reattach-to-user-namespace
 
 # install casks
 brew cask install adium
