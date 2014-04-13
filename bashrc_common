@@ -81,7 +81,6 @@ alias winfo='xwininfo -id $(xprop -root | gawk "/_NET_ACTIVE_WINDOW\(WINDOW\)/{p
 alias myxargs='tr "\n" "\0" | xargs -0'
 alias shuf="perl -MList::Util=shuffle -e'print shuffle<>'"
 alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
-alias sless="~/.dotfiles/pygments-main/pygmentize -l sched -f 256 -O style=monokai | less"
 
 # tailoring 'less'
 alias  more='less'
