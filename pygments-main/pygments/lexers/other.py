@@ -3900,10 +3900,9 @@ class SchedLexer(RegexLexer):
                 ),
         ],
         'status': [
-            (r'Finished', String, 'machine'),
-            (r'Cancelled|Canceled', String, 'machine'),
-            (r'Error', Error, 'machine'),
-            (r'Running', String, 'machine'),
+            (r'Finished', Name.Function, 'machine'),
+            (r'Canceled|Suspended|Error', Operator, 'machine'),
+            (r'Running', Text, 'machine'),
         ],
         'machine': [
             (r' *\S+', Keyword, 'time'),
@@ -3918,3 +3917,12 @@ class SchedLexer(RegexLexer):
             (r' *\S+', Text),
         ],
     }
+
+    def analyse_text(text):
+        if not any([status in text for status in
+                    ["Canceled", "Suspended", "Error", "Finished", "Running"]]):
+            return 0.0
+        if not any([machine in text for machine in
+                    ["fangorn-", "hobbit-", "istar", "valar"]]):
+            return 0.0
+        return 1.0

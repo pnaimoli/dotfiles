@@ -8,7 +8,7 @@
 
 # This program can be used as a .lessfilter for the less pager to auto-color less's output
 
-lexer=`pygmentize -N "$1"`
+lexer=`~/.dotfiles/pygments-main/pygmentize -N "$1"`
 file_common_opts="--brief --dereference --uncompress"
 if [ "$lexer" = "text" ]; then
   unset lexer
@@ -58,7 +58,7 @@ encoding=`file --mime-encoding $file_common_opts "$1"`
 
 if [ -n "$lexer" ]; then
     # FIXME: Specify input encoding rather than output encoding https://bitbucket.org/birkenfeld/pygments-main/issue/800
-    zcat "$1" | pygmentize -O encoding=$encoding,outencoding=UTF-8 $PYGMENTIZE_OPTS -l $lexer
+    zcat -f "$1" | ~/.dotfiles/pygments-main/pygmentize -f 256 -O encoding=$encoding,outencoding=UTF-8,style=monokai -l $lexer
     exit 0
 fi
 
