@@ -2,7 +2,7 @@
 	path = powerline-fonts
 	url = https://github.com/Lokaltog/powerline-fonts
 [submodule ".vim/bundle-available/powerline"]
-	path = vim/bundle-available/powerline
+	path = powerline
 	url = https://github.com/Lokaltog/powerline.git
 [submodule ".vim/bundle-available/ctrlp.vim"]
 	path = vim/bundle-available/ctrlp.vim

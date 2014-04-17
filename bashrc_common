@@ -127,21 +127,11 @@ alias 17='cd `dirs -l +17`; d'
 alias 18='cd `dirs -l +18`; d'
 alias 19='cd `dirs -l +19`; d'
 
-#--------------
-# Magic
-#--------------
-
-#http://www.davidpashley.com/articles/xterm-titles-with-bash.html
-#case "$TERM" in
-#xterm*|rxvt*)
-#    set -o functrace
-#    trap 'echo -ne "\e]0;" `basename $PWD` "\007"' DEBUG
-#    PS1="\e]0;\s\007$PS1"
-#    ;;
-#*)
-#    ;;
-#esac
-#PROMPT_COMMAND='echo -ne "\e]0;" `basename $PWD` "\007"'
+function TRAPUSR2()
+{
+    source ~/.bashrc
+}
+trap TRAPUSR2 USR2
 
 #---------------
 # Shell Prompt
@@ -156,153 +146,16 @@ PURPLE=$'\e[1;35m'
 GREEN=$'\e[1;32m'
 NONE=$'\e[0m'
 
-#function TRAPEXIT()
-#{
-#    if [ "$TERM" == "xterm" ]
-#    then
-#        echo -e "\e[1;31mStop su'ing me!!\e[0m"
-#    fi
-#}
-#trap TRAPEXIT EXIT
-
-function TRAPUSR2()
-{
-    source ~/.bashrc
-}
-trap TRAPUSR2 USR2
-
-if [[ "$(whoami)" != "peter" ]]; then
-    UNAME=$'\u@'
-fi
-
-function parse_git_branch () {
-    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1/"
-}
- 
-function parse_git_color () {
-    if [[ $string == /scratch/* ]]
-    then
-        echo -e "$NO_COLOUR"
-    elif [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
-    then
-        echo -e "$NO_COLOUR"
-    elif [ -z "`git status --porcelain 2> /dev/null`" ]
-    then 
-        echo -e "$GREEN"
-    elif [ -z "`git status --porcelain 2> /dev/null | grep -v -E "^[MARCD]  .*$"`" ]
-    then
-        echo -e "$YELLOW"
-    else
-        echo -e "$RED"
-    fi
-}
- 
-function parse_git_status () {
-    if [[ $string == /scratch/* ]]
-    then
-        echo -e ""
-    elif [ -n "`git status --porcelain 2>&1 | grep "fatal: Not a git repository"`" ]
-    then
-        echo -e ""
-    elif [ -z "`git status --porcelain 2> /dev/null`" ]
-    then 
-        echo -e "(`parse_git_branch`)"
-    elif [ -z "`git status --porcelain 2> /dev/null | grep -v -E "^[MARCD]  .*$"`" ]
-    then
-        echo -e "{`parse_git_branch`}"
-    else
-        echo -e "<`parse_git_branch`>"
-    fi
-}
-
-PS1_git='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
-echo -n "\[${PURPLE}\][\[${RED}\]";
-if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi;
-echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w \[\$(parse_git_color)\]\$(parse_git_status)\[${NONE}\] > "`'
-
-PS1_normal='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
-echo -n "\[${PURPLE}\][\[${RED}\]";
-if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi;
-echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
-
-PS1=$PS1_normal
-
-#-----------------------------------
-# preexec stuff
-#-----------------------------------
-source ~/.dotfiles/preexec.bash.txt
-
-if [[ -n $TMUX ]]
-then
-    function precmd () {
-#        tmux set -q status-left "[#S] #P $(pwd)"
-        tmux set -q set-titles-string "$(basename `pwd` | perl -pe "s/^(.{7}).*(.{7})$/\$1..\$2/") (#{pane_current_command})"
-    }
-fi
+source ~/.dotfiles/powerline/powerline/bindings/bash/powerline.sh
+#PS1='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
+#echo -n "\[${PURPLE}\][\[${RED}\]";
+#if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi;
+#echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
 
 
 #-----------------------------------
 # File & strings related functions:
 #-----------------------------------
-
-# Find a file with a pattern in name:
-function ff()
-{ find . -type f -iname '*'$*'*' -ls ; }
-
-# Find a file with pattern $1 in name and Execute $2 on it:
-function fe()
-{ find . -type f -iname '*'$1'*' -exec "${2:-file}" {} \;  ; }
-
-# find pattern in a set of filesand highlight them:
-function fstr()
-{
-    OPTIND=1
-    local case=""
-    local usage="fstr: find string in files.
-Usage: fstr [-i] \"pattern\" [\"filename pattern\"] "
-    while getopts :it opt
-    do
-        case "$opt" in
-        i) case="-i " ;;
-        *) echo "$usage"; return;;
-        esac
-    done
-    shift $(( $OPTIND - 1 ))
-    if [ "$#" -lt 1 ]; then
-        echo "$usage"
-        return;
-    fi
-    local SMSO=$(tput smso)
-    local RMSO=$(tput rmso)
-    find . -type f -name "${2:-*}" -print0 |
-    xargs -0 grep -sn ${case} "$1" 2>&- | \
-    sed "s/$1/${SMSO}\0${RMSO}/gI" | more
-}
-
-function cuttail() # Cut last n lines in file, 10 by default.
-{
-    nlines=${2:-10}
-    sed -n -e :a -e "1,${nlines}!{P;N;D;};N;ba" $1
-}
-
-function lowercase()  # move filenames to lowercase
-{
-    for file ; do
-        filename=${file##*/}
-        case "$filename" in
-        */*) dirname==${file%/*} ;;
-        *) dirname=.;;
-        esac
-        nf=$(echo $filename | tr A-Z a-z)
-        newname="${dirname}/${nf}"
-        if [ "$nf" != "$filename" ]; then
-            mv "$file" "$newname"
-            echo "lowercase: $file --> $newname"
-        else
-            echo "lowercase: $file not changed."
-        fi
-    done
-}
 
 function swap()         # swap 2 filenames around
 {
@@ -353,8 +206,21 @@ path = path[0] if os.path.isdir(path[0]) else os.path.dirname(path[0])
 print path")"
 }
 
+#-----------------------------------
+# preexec stuff
+#-----------------------------------
+#source ~/.dotfiles/preexec.bash.txt
+
+if [[ -n $TMUX ]]
+then
+    function precmd () {
+#        tmux set -q status-left "[#S] #P $(pwd)"
+        tmux set -q set-titles-string "$(basename `pwd` | perl -pe "s/^(.{7}).*(.{7})$/\$1..\$2/") (#{pane_current_command})"
+    }
+fi
+
 # This should be as close to the end as possible
 case "$-" in
 *i*)
-preexec_install
+#preexec_install
 esac
