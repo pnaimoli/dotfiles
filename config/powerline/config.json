@@ -24,7 +24,7 @@
 			}
 		},
 		"shell": {
-			"colorscheme": "default",
+			"colorscheme": "peter",
 			"theme": "default_leftonly",
 			"local_themes": {
 				"continuation": "continuation",
