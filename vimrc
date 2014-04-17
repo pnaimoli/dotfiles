@@ -34,7 +34,7 @@ set shortmess+=IA         " suppress intro and swap file messages
 set showbreak=>>          " show a > at each broken line
 set showcmd               " show command on last line
 set showmatch             " briefly jump to matching bracket when bracket inserted
-set showmode              " show mode
+set noshowmode            " no show mode
 set smartcase             " overrides ignorecase if uppercase used
 set timeoutlen=1000       " vvvvvvvvvv This and the line below are to make
 set ttimeoutlen=0         " <Esc> in visual mode work immediately. Side Effects?
@@ -149,7 +149,6 @@ vnoremap <S-C> "+y
 
 nnoremap <leader>p :set invpaste paste?<CR>
 set pastetoggle=<leader>p
-set showmode
 
 noremap <leader>w :set wrap!<CR>
 
