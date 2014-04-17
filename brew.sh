@@ -23,6 +23,7 @@ brew install coreutils
 #brew install tuntap
 #brew install reattach-to-user-namespace
 brew install hg
+brew install xpdf
 
 # install casks
 brew cask install adium
