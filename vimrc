@@ -77,10 +77,11 @@ if has('autocmd')
     au BufNewFile,BufRead *.{r,R}             set ft=r
     au BufNewFile,BufRead *.{sig,reg,freq}    set ft=config
     au BufNewFile,BufRead *.{conf,config}     set ft=config
+    au BufNewFile,BufRead *.slaqur            set filetype=yaml
 
     " Set up CPP specific autocommands
-    au BufNewFile,BufRead *.{c,cpp,cc,he,h}   set ft=cpp
     au FileType c,cpp,cc,h,he setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,bO:///,O://
+
     " When entering a buffer, cd to the file's directory
     if isdirectory(expand('%:p:h'))
         autocmd BufEnter * silent! lcd %:p:h
