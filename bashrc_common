@@ -130,25 +130,6 @@ function TRAPUSR2()
 }
 trap TRAPUSR2 USR2
 
-#---------------
-# Shell Prompt
-#---------------
-
-red=$'\e[0;31m'
-RED=$'\e[1;31m'
-YELLOW=$'\e[1;33m'
-BLUE=$'\e[1;34m'
-CYAN=$'\e[1;36m'
-PURPLE=$'\e[1;35m'
-GREEN=$'\e[1;32m'
-NONE=$'\e[0m'
-
-source ~/.dotfiles/powerline/powerline/bindings/bash/powerline.sh
-#PS1='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
-#echo -n "\[${PURPLE}\][\[${RED}\]";
-#if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi;
-#echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
-
 
 #-----------------------------------
 # File & strings related functions:
@@ -221,3 +202,23 @@ then
     preexec_install
     esac
 fi
+
+
+#---------------
+# Shell Prompt
+#---------------
+
+red=$'\e[0;31m'
+RED=$'\e[1;31m'
+YELLOW=$'\e[1;33m'
+BLUE=$'\e[1;34m'
+CYAN=$'\e[1;36m'
+PURPLE=$'\e[1;35m'
+GREEN=$'\e[1;32m'
+NONE=$'\e[0m'
+
+source ~/.dotfiles/powerline/powerline/bindings/bash/powerline.sh
+#PS1='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
+#echo -n "\[${PURPLE}\][\[${RED}\]";
+#if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi;
+#echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
