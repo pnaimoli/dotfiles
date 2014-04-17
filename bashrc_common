@@ -354,4 +354,7 @@ print path")"
 }
 
 # This should be as close to the end as possible
+case "$-" in
+*i*)
 preexec_install
+esac
