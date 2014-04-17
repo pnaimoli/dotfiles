@@ -19,9 +19,9 @@
 
 set match-hidden-files off
 set completion-ignore-case on
-set show-all-if-ambiguous osh binn 
+set show-all-if-ambiguous osh binn
 set bell-style none
-  
+
 # turn on inline mode for tab completion
 "\t":menu-complete
 "\e[Z": "\e-1\C-i" # shift-tab

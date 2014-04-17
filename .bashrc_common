@@ -226,12 +226,19 @@ function parse_git_color () {
     fi
 }
 
-PS1_git='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]:^)"; else echo -n "\[${RED}\]ಠ_ಠ"; fi;
-echo -n "\[${PURPLE}\][\[${RED}\]";
-if [[ "$(whoami)" != "joseph" ]]; then echo -n "\[${RED}\]\u@"; fi;
-echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w \[\$(parse_git_color)\]$(parse_git_branch)\[${NONE}\] > "`'
+#PS1_git='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]:^)"; else echo -n "\[${RED}\]ಠ_ಠ"; fi;
+#echo -n "\[${PURPLE}\][\[${RED}\]";
+#if [[ "$(whoami)" != "joseph" ]]; then echo -n "\[${RED}\]\u@"; fi;
+#echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w \[\$(parse_git_color)\]$(parse_git_branch)\[${NONE}\] > "`'
 
-PS1=$PS1_git
+#PS1=$PS1_git
+
+. ~/.dotfiles/powerline/powerline/bindings/bash/powerline.sh
+
+#-----------------------------------
+# Git completion:
+#-----------------------------------
+
 
 if [ -f ~/.dotfiles/.git-completion.bash ]; then
   . ~/.dotfiles/.git-completion.bash
