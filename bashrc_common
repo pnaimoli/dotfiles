@@ -32,8 +32,8 @@ export CVSEDITOR='vim'
 if [ -z "$SCHED_JID" ]; then
   export MALLOC_CONF=junk:true
 fi
-export PYTHONDONTWRITEBYTECODE='1'
-export PYTHONUNBUFFERED='1'
+#export PYTHONDONTWRITEBYTECODE='1'
+#export PYTHONUNBUFFERED='1'
 export HISTIGNORE='&: *:l:ll:history*:ls:cd:clear:..:...:....:p:dirs:1:2:3:4:5:6:7:8:9'
 export HISTTIMEFORMAT='%F %T '
 export CVS_RSH="ssh"
@@ -76,9 +76,6 @@ alias llllll='ll'
 alias which='type -all'
 alias mkdir='mkdir -p'
 alias R='R --no-save'
-#http://askubuntu.com/questions/20530/how-can-i-find-the-location-on-the-desktop-of-a-window-on-the-command-line
-alias winfo='xwininfo -id $(xprop -root | gawk "/_NET_ACTIVE_WINDOW\(WINDOW\)/{print \$NF}")'
-alias myxargs='tr "\n" "\0" | xargs -0'
 alias shuf="perl -MList::Util=shuffle -e'print shuffle<>'"
 alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
 
@@ -209,7 +206,7 @@ print path")"
 #-----------------------------------
 # preexec stuff
 #-----------------------------------
-#source ~/.dotfiles/preexec.bash.txt
+source ~/.dotfiles/preexec.bash.txt
 
 if [[ -n $TMUX ]]
 then
@@ -222,5 +219,5 @@ fi
 # This should be as close to the end as possible
 case "$-" in
 *i*)
-#preexec_install
+preexec_install
 esac
