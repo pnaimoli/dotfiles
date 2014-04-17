@@ -5,7 +5,7 @@
 options(scipen=250)
 options(width=250)
 options(digits=10)
-options(repos="http://cran.stat.ucla.edu")
+#options(repos="http://cran.stat.ucla.edu")
 
 #########################################
 # Defaults
