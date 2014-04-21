@@ -320,21 +320,6 @@ iab #I #include ""<Left>
 "au vimrc BufWinEnter ?* silent loadview
 
 """""""""""""""""""""""""""""""""""""""""""""
-" ===== CommandT stuff ===== "
-"""""""""""""""""""""""""""""""""""""""""""""
-"function! s:MyCommandT()
-"    if match(getcwd(), '/trunk.*', '')
-"        set wildignore=*/conf/*,Doxygen*,linux*,fbsd8*,last*
-"        let srcdir = substitute(getcwd(), '/trunk\([^/]*\)/.*', '/trunk\1/', '')
-"    elseif match(getcwd(), '/algo.*', '')
-"        let srcdir = substitute(getcwd(), '/algo\([^/]*\)/.*', '/algo\1/', '')
-"    endif
-"    exe ":CommandT" srcdir
-"    set wildignore=''
-"endfun
-"noremap <silent> <leader>t :call <SID>MyCommandT()<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""
 " ===== CtrlP stuff ===== "
 """""""""""""""""""""""""""""""""""""""""""""
 set runtimepath^=~/.vim/bundle/ctrlp.vim
@@ -344,8 +329,8 @@ set wildignore=*btrade/conf/*
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '(Doxygen*|linux*|fbsd8*|last)$',
     \ 'link': 'pipeline',
+    \ 'file': '\v\.(exe|so|dll|pyc)$',
     \ }
-"    \ 'file': '\v\.(exe|so|dll)$',
 
 """"""""""""""""""""""""""""""
 " ====== PLUGIN OPTIONS ======
