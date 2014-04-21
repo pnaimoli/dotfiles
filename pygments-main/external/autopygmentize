@@ -54,7 +54,12 @@ if [ "$lexer" = "text" ]; then
   esac
 fi
 
-encoding=`file --mime-encoding $file_common_opts "$1"`
+if [ -s $1 ]
+then
+    encoding=`file --mime-encoding $file_common_opts "$1"`
+else
+    encoding="us-ascii"
+fi
 
 if [ -n "$lexer" ]; then
     # FIXME: Specify input encoding rather than output encoding https://bitbucket.org/birkenfeld/pygments-main/issue/800
