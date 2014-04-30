@@ -38,6 +38,7 @@ set noshowmode            " no show mode
 set smartcase             " overrides ignorecase if uppercase used
 set timeoutlen=1000       " vvvvvvvvvv This and the line below are to make
 set ttimeoutlen=0         " <Esc> in visual mode work immediately. Side Effects?
+set t_Co=256              " 256 colors
 set vb                    " prevent bells from showing up
 set wig=*.o,*.pyc         " Ignore these files for wildmenu completion
 set wildmenu              " Better command-line completion

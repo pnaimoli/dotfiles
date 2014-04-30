@@ -13,6 +13,9 @@
 # up & down arrow keys
 "\e[A":history-search-backward
 "\e[B":history-search-forward
+"\e\[1~":beginning-of-line
+#"\e\[3~":delete-char
+"\e\[4~":end-of-line
 
 # op[UP] will show the last command that began with op
 #"":dynamic-complete-history
