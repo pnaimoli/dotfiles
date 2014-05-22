@@ -193,8 +193,10 @@ then
     source ~/.dotfiles/preexec.bash.txt
 
     function precmd () {
-#        tmux set -q status-left "[#S] #P $(pwd)"
-        tmux set -q set-titles-string "$(basename `pwd` | perl -pe "s/^(.{7}).*(.{7})$/\$1..\$2/") (#{pane_current_command})"
+        if tmux source-file /dev/null 2> /dev/null; then
+#            tmux set -q status-left "[#S] #P $(pwd)"
+            tmux set -q set-titles-string "$(basename `pwd` | perl -pe "s/^(.{7}).*(.{7})$/\$1..\$2/") (#{pane_current_command})"
+        fi
     }
 
     case "$-" in
