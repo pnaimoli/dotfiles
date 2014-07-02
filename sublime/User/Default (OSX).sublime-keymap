@@ -1,0 +1,70 @@
+[
+  { "keys": ["alt+up"], "command": "move", "args": {"by": "stops", "empty_line": true, "forward": false} },
+  { "keys": ["alt+down"], "command": "move", "args": {"by": "stops", "empty_line": true, "forward": true} },
+  { "keys": ["alt+shift+up"], "command": "move", "args": {"by": "stops", "empty_line": true, "forward": false, "extend": true} },
+  { "keys": ["alt+shift+down"], "command": "move", "args": {"by": "stops", "empty_line": true, "forward": true, "extend": true} },
+  { "keys": ["alt+left"], "command": "move", "args": {"by": "stops", "word_begin": true, "punct_begin": true, "forward": false } },
+  { "keys": ["alt+right"], "command": "move", "args": {"by": "stops",  "word_end":true, "punct_end": true, "forward": true } },
+	{ "keys": ["alt+shift+left"], "command": "move", "args": {"by": "stops", "word_begin": true, "punct_begin": true, "forward": false, "extend":true } },
+  { "keys": ["alt+shift+right"], "command": "move", "args": {"by": "stops", "word_end":true, "punct_end": true, "forward": true, "extend":true } },
+  { "keys": ["super+up"], "command": "move", "args": {"by": "pages", "forward": false} },
+  { "keys": ["super+down"], "command": "move", "args": {"by": "pages", "forward": true} },
+  { "keys": ["super+shift+up"], "command": "move", "args": {"by": "pages", "forward": false, "extend": true} },
+  { "keys": ["super+shift+down"], "command": "move", "args": {"by": "pages", "forward": true, "extend": true} },
+	{ "keys": ["super+right"], "command": "move_to", "args": {"to": "eol"} },
+	{ "keys": ["super+left"], "command": "move_to", "args": {"to": "bol"} },
+	{ "keys": ["super+shift+right"], "command": "move_to", "args": {"to": "eol", "extend": true} },
+	{ "keys": ["super+shift+left"], "command": "move_to", "args": {"to": "bol", "extend": true} },
+
+	{ "keys": ["super+r"],  "command": "build", "args": {"variant": "Run"} },
+	{ "keys": ["super+shift+b"], "command": "build" },
+
+	{ "keys": ["super+shift+s"], "command": "search_anywhere_from_input" },
+	{ "keys": ["super+shift+alt+s"], "command": "search_anywhere_from_selection" },
+
+	{ "keys": ["super+shift+n"], "command": "next_result" },
+	{ "keys": ["super+ctrl+a"], "command": "alignment" },
+
+	{ "keys": ["super+alt+up"], "command": "select_lines", "args": {"forward": false} },
+	{ "keys": ["super+alt+down"], "command": "select_lines", "args": {"forward": true} },
+
+    { "keys": ["ctrl+r"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
+
+	{ "keys": ["alt+o"], "command": "switch_file_plus", "args": {"extensions": ["cpp", "cxx", "cc", "c", "hpp", "hxx", "h", "ipp", "inl", "m", "mm"]} },
+    { "keys": ["alt+shift+o"],
+      "command": "switch_file_plus",
+      "args": {
+                "extensions": ["cpp", "cxx", "cc", "c", "hpp", "hxx", "h", "ipp", "inl", "m", "mm"],
+                "nextPane" : true
+       }
+    },
+    { "keys": ["shift+delete"], "command": "cut" },
+    { "keys": ["super+shift+."], "command": "jump_to_header"},
+    { "keys": ["super+k","super+c"], "command": "toggle_comment"},
+
+  // {
+  //   "command": "clang_goto_implementation",
+  //   "context": [{"key": "clang_supported_language"}],
+  //   "keys": ["super+shift+."]
+  // },
+  {
+    "command": "clang_go_back",
+    "context": [{"key": "clang_supported_language"}],
+    "keys": ["alt+left"]
+  },
+
+  { "keys": ["super+alt+right"], "command": "travel_to_pane", "args": {"direction": "right"} },
+  { "keys": ["super+alt+left"], "command": "travel_to_pane", "args": {"direction": "left"} },
+
+  { "keys": ["super+shift+,"], "command" : "toggle_format" },
+  { "keys": ["super+enter"], "command" : "continue_with_comment" },
+  { "keys": ["super+k", "super+k"], "command" : "doxygenize" },
+
+  { "keys": ["super+alt+left"], "command": "focus_neighboring_group", "args": {"forward": false} },
+  { "keys": ["super+alt+right"], "command": "focus_neighboring_group" },
+  { "keys": ["super+alt+shift+left"], "command": "move_to_neighboring_group", "args": {"forward": false} },
+  { "keys": ["super+alt+shift+right"], "command": "move_to_neighboring_group" },
+  { "keys": ["super+."], "command": "goto_definition" },
+  { "keys": ["super+,"], "command": "jump_back" },
+  { "keys": ["super+/"], "command": "jump_forward" }
+]

@@ -1,0 +1,87 @@
+<snippet>
+    <content><![CDATA[
+#! /usr/bin/env python
+# Confidential and Proprietary Information of Hudson River Trading LLC
+
+
+"""
+    ${1:description}
+"""
+
+import os
+import sys
+import argparse
+import datetime
+import subprocess
+import cPickle as pickle
+import getpass
+
+args = None
+
+def verbosePrint(message):
+    """ prints if -v """
+    global args
+    if args.verbose:
+        print message
+
+
+def runProcess(cmd, workingdir = os.getcwd()):
+    """ runs @cmd blocking and returns a tuple of exit code, stdout, stderr """
+    proc = subprocess.Popen(['/bin/sh', '-c', cmd],
+                            stderr=subprocess.PIPE,
+                            stdout=subprocess.PIPE,
+                            cwd=workingdir)
+    return_code = proc.wait()
+    return return_code, proc.stdout.read(), proc.stderr.read()
+
+
+def runProcessE(command, workingdir = os.getcwd()):
+    code, stdout, stderr = runProcess(command, workingdir)
+
+    if len(stderr) > 0:
+        raise Exception, stderr
+
+    return stdout
+
+
+def serializeDictionary(dict, path):
+    with open(path, 'wb') as output:
+        pickle.dump(dict, output)
+
+
+def deserializeDictionary(path):
+    with open(path, 'rb') as pkl_file:
+        return pickle.load(pkl_file)
+
+
+def _main():
+
+    # parse args
+    global args
+    parser = argparse.ArgumentParser()
+    parser.add_argument("path", help="root path in which to clean up white "
+                                     "space")
+    parser.add_argument("--verbose", "-v", help="verbose",
+                        action="store_true", default=False)
+
+    args = parser.parse_args()
+
+    return 0
+
+if __name__ == "__main__":
+    try:
+        sys.exit(_main())
+
+    except KeyboardInterrupt:
+        print >> sys.stderr, "\nInterrupted"
+        sys.exit(2)
+
+    except Exception as e:
+        print "exception: %s" % e
+        sys.exit(2)
+]]></content>
+    <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+    <tabTrigger>python</tabTrigger>
+    <!-- Optional: Set a scope to limit where the snippet will trigger -->
+    <!-- <scope>source.python</scope> -->
+</snippet>

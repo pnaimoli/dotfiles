@@ -1,0 +1,2476 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fix",
+				"fixedLine"
+			],
+			[
+				"rev",
+				"revisionsDict"
+			],
+			[
+				"lat",
+				"latestRevision"
+			],
+			[
+				"findO",
+				"findOwnersForFile"
+			],
+			[
+				"prin",
+				"printowners"
+			],
+			[
+				"revi",
+				"revisionsDict"
+			],
+			[
+				"line",
+				"linesChanged"
+			],
+			[
+				"lien",
+				"lineOwnersDict"
+			],
+			[
+				"lineOw",
+				"lineOwnersDict"
+			],
+			[
+				"lin",
+				"lineNumber"
+			],
+			[
+				"verb",
+				"verbosePrint"
+			],
+			[
+				"command",
+				"command_line"
+			],
+			[
+				"local",
+				"localize"
+			],
+			[
+				"getBund",
+				"getBundleName"
+			],
+			[
+				"curre",
+				"currentDir"
+			],
+			[
+				"sha",
+				"sharesGone"
+			],
+			[
+				"complete",
+				"completeReplay"
+			],
+			[
+				"inte",
+				"intToExtTIF"
+			],
+			[
+				"inter",
+				"internalTIF"
+			],
+			[
+				"As",
+				"AssentTIF"
+			],
+			[
+				"external",
+				"externalIDString"
+			],
+			[
+				"Connection",
+				"ConnectionChange"
+			],
+			[
+				"Tri",
+				"TripTDEX"
+			],
+			[
+				"logg",
+				"loggedIn"
+			],
+			[
+				"trad",
+				"tradeResponse"
+			],
+			[
+				"extToIn",
+				"extToIntTIF"
+			],
+			[
+				"extern",
+				"externalTIF"
+			],
+			[
+				"extTo",
+				"extToIntTIF"
+			],
+			[
+				"clo",
+				"connectAndReplay"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/tools/gcl",
+			"settings":
+			{
+				"buffer_size": 52473,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/test/cashy/CashyTestRunner_test.h",
+			"settings":
+			{
+				"buffer_size": 5573,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/joseph/scripts/test.conf/tripd.conf",
+			"settings":
+			{
+				"buffer_size": 57357,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/joseph/scripts/mk",
+			"settings":
+			{
+				"buffer_size": 8416,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/LIFFEOrder.h",
+			"settings":
+			{
+				"buffer_size": 12064,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/ESpeedDriver.h",
+			"settings":
+			{
+				"buffer_size": 3804,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/ESpeedDriver.cc",
+			"settings":
+			{
+				"buffer_size": 22816,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "#!/usr/bin/env python\nimport sys\nimport os\nsys.path.extend([\"%s/lib\" % os.path.dirname(os.path.realpath(__file__)),\"/mnt/shbuild1/fbsd8/450848a2cfff0f397ef181191d01baaf/bin/lib\",\"/abin/lib\"])\n# Confidential and Proprietary Information of Hudson River Trading LLC\n# Copyright (c) 2006-2009 The Chromium Authors. All rights reserved.\n# Use of this source code is governed by a BSD-style license that can be\n# found in the LICENSE file.\n\n\"\"\"Wrapper script around Rietveld's upload.py that groups files into\nchangelists.\"\"\"\n\nimport ConfigParser\nimport getpass\nimport hashlib\nimport os\nimport pwd\nimport random\nimport re\nimport shutil\nimport socket\nimport string\nimport subprocess\nimport sys\nimport tempfile\nimport traceback\nimport upload3 as upload\nimport urllib2\n\nimport breakpad\n\n# gcl now depends on gclient.\nfrom scm import SVN\nimport gclient_utils\n\n__version__ = '1.1.3'\n\n\nCODEREVIEW_SETTINGS = {\n  # Ideally, we want to set |CODE_REVIEW_SERVER| to a generic server like\n  # codereview.appspot.com and remove |CC_LIST| and |VIEW_VC|. In practice, we\n  # need these settings so developers making changes in directories such as\n  # Chromium's src/third_party/WebKit will send change lists to the correct\n  # server.\n  #\n  # To make gcl send reviews to a different server, check in a file named\n  # \"codereview.settings\" (see |CODEREVIEW_SETTINGS_FILE| below) to your\n  # project's base directory and add the following line to codereview.settings:\n  # CODE_REVIEW_SERVER: codereview.yourserver.org\n  #\n  # Default values.\n  \"CODE_REVIEW_SERVER\": \"web.hudson-trading.com:9010\",\n  \"CC_LIST\": \"\",\n  \"VIEW_VC\": \"revision=\",\n}\n\n# globals that store the root of the current repository and the directory where\n# we store information about changelists.\nREPOSITORY_ROOT = \"\"\n\n# Filename where we store repository specific information for gcl.\nCODEREVIEW_SETTINGS_FILE = \"codereview.settings\"\n\n# Warning message when the change appears to be missing tests.\nMISSING_TEST_MSG = \"Change contains new or modified methods, but no new tests!\"\n\n# Global cache of files cached in GetCacheDir().\nFILES_CACHE = {}\n\n# Conf file that contains designated reviewers\nDESIGNATED_REVIEWERS_CONF = \"/atl/live/conf/gclreviewers.conf\"\n\ndef CheckHomeForFile(filename):\n  \"\"\"Checks the users home dir for the existence of the given file.  Returns\n  the path to the file if it's there, or None if it is not.\n  \"\"\"\n  home_vars = ['HOME']\n  if sys.platform in ('cygwin', 'win32'):\n    home_vars.append('USERPROFILE')\n  for home_var in home_vars:\n    home = os.getenv(home_var)\n    if home != None:\n      full_path = os.path.join(home, filename)\n      if os.path.exists(full_path):\n        return full_path\n  return None\n\ndef UnknownFiles(extra_args):\n  \"\"\"Runs svn status and returns unknown files.\n\n  Any args in |extra_args| are passed to the tool to support giving alternate\n  code locations.\n  \"\"\"\n  return [item[1] for item in SVN.CaptureStatus(extra_args)\n          if item[0][0] == '?']\n\n\ndef GetRepositoryRoot():\n  \"\"\"Returns the top level directory of the current repository.\n\n  The directory is returned as an absolute path.\n  \"\"\"\n  global REPOSITORY_ROOT\n  if not REPOSITORY_ROOT:\n    REPOSITORY_ROOT = SVN.GetCheckoutRoot(os.getcwd())\n    if not REPOSITORY_ROOT:\n      raise gclient_utils.Error(\"gcl run outside of repository\")\n  return REPOSITORY_ROOT\n\n\ndef GetInfoDir():\n  \"\"\"Returns the directory where gcl info files are stored.\"\"\"\n  return os.path.join(GetRepositoryRoot(), '.svn', 'gcl_info')\n\n\ndef GetChangesDir():\n  \"\"\"Returns the directory where gcl change files are stored.\"\"\"\n  return os.path.join(GetInfoDir(), 'changes')\n\n\ndef GetCacheDir():\n  \"\"\"Returns the directory where gcl change files are stored.\"\"\"\n  return os.path.join(GetInfoDir(), 'cache')\n\n\ndef GetCachedFile(filename, max_age=60*60*24*3, use_root=False):\n  \"\"\"Retrieves a file from the repository and caches it in GetCacheDir() for\n  max_age seconds.\n\n  use_root: If False, look up the arborescence for the first match, otherwise go\n            directory to the root repository.\n\n  Note: The cache will be inconsistent if the same file is retrieved with both\n        use_root=True and use_root=False. Don't be stupid.\n  \"\"\"\n  global FILES_CACHE\n  if filename not in FILES_CACHE:\n    # Don't try to look up twice.\n    FILES_CACHE[filename] = None\n    # First we check if we have a cached version.\n    try:\n      cached_file = os.path.join(GetCacheDir(), filename)\n    except gclient_utils.Error:\n      return None\n    if (not os.path.exists(cached_file) or\n        os.stat(cached_file).st_mtime > max_age):\n      dir_info = SVN.CaptureInfo(\".\")\n      repo_root = dir_info[\"Repository Root\"]\n      if use_root:\n        url_path = repo_root\n      else:\n        url_path = dir_info[\"URL\"]\n      content = \"\"\n      while True:\n        # Look in the repository at the current level for the file.\n        svn_path = url_path + \"/\" + filename\n        content, rc = RunShellWithReturnCode([\"svn\", \"cat\", svn_path])\n        if not rc:\n          # Exit the loop if the file was found. Override content.\n          break\n        # Make sure to mark settings as empty if not found.\n        content = \"\"\n        if url_path == repo_root:\n          # Reached the root. Abandoning search.\n          break\n        # Go up one level to try again.\n        url_path = os.path.dirname(url_path)\n      # Write a cached version even if there isn't a file, so we don't try to\n      # fetch it each time.\n      gclient_utils.FileWrite(cached_file, content)\n    else:\n      content = gclient_utils.FileRead(cached_file, 'r')\n    # Keep the content cached in memory.\n    FILES_CACHE[filename] = content\n  return FILES_CACHE[filename]\n\n\ndef GetCodeReviewSetting(key):\n  \"\"\"Returns a value for the given key for this repository.\"\"\"\n  # Use '__just_initialized' as a flag to determine if the settings were\n  # already initialized.\n  global CODEREVIEW_SETTINGS\n  if '__just_initialized' not in CODEREVIEW_SETTINGS:\n    settings_file = GetCachedFile(CODEREVIEW_SETTINGS_FILE)\n    if settings_file:\n      for line in settings_file.splitlines():\n        if not line or line.startswith(\"#\"):\n          continue\n        k, v = line.split(\": \", 1)\n        CODEREVIEW_SETTINGS[k] = v\n    CODEREVIEW_SETTINGS.setdefault('__just_initialized', None)\n  return CODEREVIEW_SETTINGS.get(key, \"\")\n\n\ndef Warn(msg):\n  ErrorExit(msg, exit=False)\n\n\ndef ErrorExit(msg, exit=True):\n  \"\"\"Print an error message to stderr and optionally exit.\"\"\"\n  print >>sys.stderr, msg\n  if exit:\n    sys.exit(1)\n\n\ndef RunShellWithReturnCode(command, print_output=False):\n  \"\"\"Executes a command and returns the output and the return code.\"\"\"\n  # Use a shell for subcommands on Windows to get a PATH search, and because svn\n  # may be a batch file.\n  use_shell = sys.platform.startswith(\"win\")\n  p = subprocess.Popen(command, stdout=subprocess.PIPE,\n                       stderr=subprocess.STDOUT, shell=use_shell,\n                       universal_newlines=True)\n  if print_output:\n    output_array = []\n    while True:\n      line = p.stdout.readline()\n      if not line:\n        break\n      if print_output:\n        print line.strip('\\n')\n      output_array.append(line)\n    output = \"\".join(output_array)\n  else:\n    output = p.stdout.read()\n  p.wait()\n  p.stdout.close()\n  return output, p.returncode\n\n\ndef RunShell(command, print_output=False):\n  \"\"\"Executes a command and returns the output.\"\"\"\n  return RunShellWithReturnCode(command, print_output)[0]\n\n\ndef FilterFlag(args, flag):\n  \"\"\"Returns True if the flag is present in args list.\n\n  The flag is removed from args if present.\n  \"\"\"\n  if flag in args:\n    args.remove(flag)\n    return True\n  return False\n\ndef FilterArgument(args, flag):\n  \"\"\" If option is present in the args list, return the argument and\n      filter it out. Returns None otherwise.\n  \"\"\"\n  if flag not in args:\n    return None\n\n  idx = args.index(flag)\n  args.pop(idx)        # get rid of flag\n  return args.pop(idx) # return argument value\n\nclass ChangeInfo(object):\n  \"\"\"Holds information about a changelist.\n\n    name: change name.\n    issue: the Rietveld issue number or 0 if it hasn't been uploaded yet.\n    patchset: the Rietveld latest patchset number or 0.\n    description: the description.\n    files: a list of 2 tuple containing (status, filename) of changed files,\n           with paths being relative to the top repository directory.\n    local_root: Local root directory\n  \"\"\"\n\n  _SEPARATOR = \"\\n-----\\n\"\n  # The info files have the following format:\n  # issue_id, patchset\\n   (, patchset is optional)\n  # _SEPARATOR\\n\n  # filepath1\\n\n  # filepath2\\n\n  # .\n  # .\n  # filepathn\\n\n  # _SEPARATOR\\n\n  # description\n\n  def __init__(self, name, issue, patchset, description, files, local_root,\n               needs_upload=False):\n    self.name = name\n    self.issue = int(issue)\n    self.patchset = int(patchset)\n    self.description = description\n    if files is None:\n      files = []\n    self._files = files\n    self.patch = None\n    self._local_root = local_root\n    self.needs_upload = needs_upload\n\n  def NeedsUpload(self):\n    return self.needs_upload\n\n  def GetFileNames(self):\n    \"\"\"Returns the list of file names included in this change.\"\"\"\n    return [f[1] for f in self._files]\n\n  def GetFiles(self):\n    \"\"\"Returns the list of files included in this change with their status.\"\"\"\n    return self._files\n\n  def GetLocalRoot(self):\n    \"\"\"Returns the local repository checkout root directory.\"\"\"\n    return self._local_root\n\n  def Exists(self):\n    \"\"\"Returns True if this change already exists (i.e., is not new).\"\"\"\n    return (self.issue or self.description or self._files)\n\n  def _NonDeletedFileList(self):\n    \"\"\"Returns a list of files in this change, not including deleted files.\"\"\"\n    return [f[1] for f in self.GetFiles()\n            if not f[0].startswith(\"D\")]\n\n  def _AddedFileList(self):\n    \"\"\"Returns a list of files added in this change.\"\"\"\n    return [f[1] for f in self.GetFiles() if f[0].startswith(\"A\")]\n\n  def Save(self):\n    \"\"\"Writes the changelist information to disk.\"\"\"\n    if self.NeedsUpload():\n      needs_upload = \"dirty\"\n    else:\n      needs_upload = \"clean\"\n    data = ChangeInfo._SEPARATOR.join([\n        \"%d, %d, %s\" % (self.issue, self.patchset, needs_upload),\n        \"\\n\".join([f[0] + f[1] for f in self.GetFiles()]),\n        self.description])\n    gclient_utils.FileWrite(GetChangelistInfoFile(self.name), data)\n\n  def Delete(self):\n    \"\"\"Removes the changelist information from disk.\"\"\"\n    os.remove(GetChangelistInfoFile(self.name))\n\n  def CloseIssue(self):\n    \"\"\"Closes the Rietveld issue for this changelist.\"\"\"\n    data = [(\"description\", self.description),]\n    ctype, body = upload.EncodeMultipartFormData(data, [])\n    SendToRietveld(\"/%d/close\" % self.issue, body, ctype)\n\n  def UpdateRietveldDescription(self):\n    \"\"\"Sets the description for an issue on Rietveld.\"\"\"\n    data = [(\"description\", self.description),]\n    ctype, body = upload.EncodeMultipartFormData(data, [])\n    SendToRietveld(\"/%d/description\" % self.issue, body, ctype)\n\n  def MissingTests(self):\n    \"\"\"Returns True if the change looks like it needs unit tests but has none.\n\n    A change needs unit tests if it contains any new source files or methods.\n    \"\"\"\n    SOURCE_SUFFIXES = [\".cc\", \".cpp\", \".c\", \".m\", \".mm\"]\n    # Ignore third_party entirely.\n    files = [f for f in self._NonDeletedFileList()\n             if f.find(\"third_party\") == -1]\n    added_files = [f for f in self._AddedFileList()\n                   if f.find(\"third_party\") == -1]\n\n    # If the change is entirely in third_party, we're done.\n    if len(files) == 0:\n      return False\n\n    # Any new or modified test files?\n    # A test file's name ends with \"test.*\" or \"tests.*\".\n    test_files = [test for test in files\n                  if os.path.splitext(test)[0].rstrip(\"s\").endswith(\"test\")]\n    if len(test_files) > 0:\n      return False\n\n    # Any new source files?\n    source_files = [item for item in added_files\n                    if os.path.splitext(item)[1] in SOURCE_SUFFIXES]\n    if len(source_files) > 0:\n      return True\n\n    # Do the long test, checking the files for new methods.\n    return self._HasNewMethod()\n\n  def _HasNewMethod(self):\n    \"\"\"Returns True if the changeset contains any new functions, or if a\n    function signature has been changed.\n\n    A function is identified by starting flush left, containing a \"(\" before\n    the next flush-left line, and either ending with \"{\" before the next\n    flush-left line or being followed by an unindented \"{\".\n\n    Currently this returns True for new methods, new static functions, and\n    methods or functions whose signatures have been changed.\n\n    Inline methods added to header files won't be detected by this. That's\n    acceptable for purposes of determining if a unit test is needed, since\n    inline methods should be trivial.\n    \"\"\"\n    # To check for methods added to source or header files, we need the diffs.\n    # We'll generate them all, since there aren't likely to be many files\n    # apart from source and headers; besides, we'll want them all if we're\n    # uploading anyway.\n    if self.patch is None:\n      self.patch = GenerateDiff(self.GetFileNames())\n\n    definition = \"\"\n    for line in self.patch.splitlines():\n      if not line.startswith(\"+\"):\n        continue\n      line = line.strip(\"+\").rstrip(\" \\t\")\n      # Skip empty lines, comments, and preprocessor directives.\n      # TODO(pamg): Handle multiline comments if it turns out to be a problem.\n      if line == \"\" or line.startswith(\"/\") or line.startswith(\"#\"):\n        continue\n\n      # A possible definition ending with \"{\" is complete, so check it.\n      if definition.endswith(\"{\"):\n        if definition.find(\"(\") != -1:\n          return True\n        definition = \"\"\n\n      # A { or an indented line, when we're in a definition, continues it.\n      if (definition != \"\" and\n          (line == \"{\" or line.startswith(\" \") or line.startswith(\"\\t\"))):\n        definition += line\n\n      # A flush-left line starts a new possible function definition.\n      elif not line.startswith(\" \") and not line.startswith(\"\\t\"):\n        definition = line\n\n    return False\n\n  @staticmethod\n  def Load(changename, local_root, fail_on_not_found, update_status):\n    \"\"\"Gets information about a changelist.\n\n    Args:\n      fail_on_not_found: if True, this function will quit the program if the\n        changelist doesn't exist.\n      update_status: if True, the svn status will be updated for all the files\n        and unchanged files will be removed.\n\n    Returns: a ChangeInfo object.\n    \"\"\"\n    info_file = GetChangelistInfoFile(changename)\n    if not os.path.exists(info_file):\n      if fail_on_not_found:\n        ErrorExit(\"Changelist \" + changename + \" not found.\")\n      return ChangeInfo(changename, 0, 0, '', None, local_root,\n                        needs_upload=False)\n    split_data = gclient_utils.FileRead(info_file, 'r').split(\n        ChangeInfo._SEPARATOR, 2)\n    if len(split_data) != 3:\n      ErrorExit(\"Changelist file %s is corrupt\" % info_file)\n    items = split_data[0].split(', ')\n    issue = 0\n    patchset = 0\n    needs_upload = False\n    if items[0]:\n      issue = int(items[0])\n    if len(items) > 1:\n      patchset = int(items[1])\n    if len(items) > 2:\n      needs_upload = (items[2] == \"dirty\")\n    files = []\n    for line in split_data[1].splitlines():\n      status = line[:7]\n      filename = line[7:]\n      files.append((status, filename))\n    description = split_data[2]\n    save = False\n    if update_status:\n      for item in files:\n        filename = os.path.join(local_root, item[1])\n        status_result = SVN.CaptureStatus(filename)\n        if not status_result or not status_result[0][0]:\n          # File has been reverted.\n          save = True\n          files.remove(item)\n          continue\n        status = status_result[0][0]\n        if status != item[0]:\n          save = True\n          files[files.index(item)] = (status, item[1])\n    change_info = ChangeInfo(changename, issue, patchset, description, files,\n                             local_root, needs_upload)\n    if save:\n      change_info.Save()\n    return change_info\n\n\ndef GetChangelistInfoFile(changename):\n  \"\"\"Returns the file that stores information about a changelist.\"\"\"\n  if not changename or re.search(r'[^\\w-]', changename):\n    ErrorExit(\"Invalid changelist name: \" + changename)\n  return os.path.join(GetChangesDir(), changename)\n\n\ndef LoadChangelistInfoForMultiple(changenames, local_root, fail_on_not_found,\n                                  update_status):\n  \"\"\"Loads many changes and merge their files list into one pseudo change.\n\n  This is mainly usefull to concatenate many changes into one for a 'gcl try'.\n  \"\"\"\n  changes = changenames.split(',')\n  aggregate_change_info = ChangeInfo(changenames, 0, 0, '', None, local_root,\n                                     needs_upload=False)\n  for change in changes:\n    aggregate_change_info._files += ChangeInfo.Load(change,\n                                                    local_root,\n                                                    fail_on_not_found,\n                                                    update_status).GetFiles()\n  return aggregate_change_info\n\n\ndef GetCLs():\n  \"\"\"Returns a list of all the changelists in this repository.\"\"\"\n  cls = os.listdir(GetChangesDir())\n  if CODEREVIEW_SETTINGS_FILE in cls:\n    cls.remove(CODEREVIEW_SETTINGS_FILE)\n  return cls\n\n\ndef GenerateChangeName():\n  \"\"\"Generate a random changelist name.\"\"\"\n  random.seed()\n  current_cl_names = GetCLs()\n  while True:\n    cl_name = (random.choice(string.ascii_lowercase) +\n               random.choice(string.digits) +\n               random.choice(string.ascii_lowercase) +\n               random.choice(string.digits))\n    if cl_name not in current_cl_names:\n      return cl_name\n\n\ndef GetModifiedFiles():\n  \"\"\"Returns a set that maps from changelist name to (status,filename) tuples.\n\n  Files not in a changelist have an empty changelist name.  Filenames are in\n  relation to the top level directory of the current repository.  Note that\n  only the current directory and subdirectories are scanned, in order to\n  improve performance while still being flexible.\n  \"\"\"\n  files = {}\n\n  # Since the files are normalized to the root folder of the repositary, figure\n  # out what we need to add to the paths.\n  dir_prefix = os.getcwd()[len(GetRepositoryRoot()):].strip(os.sep)\n\n  # Get a list of all files in changelists.\n  files_in_cl = {}\n  for cl in GetCLs():\n    change_info = ChangeInfo.Load(cl, GetRepositoryRoot(),\n                                  fail_on_not_found=True, update_status=False)\n    for status, filename in change_info.GetFiles():\n      files_in_cl[filename] = change_info.name\n\n  # Get all the modified files.\n  status_result = SVN.CaptureStatus(None)\n  for line in status_result:\n    status = line[0]\n    filename = line[1]\n    if status[0] == \"?\":\n      continue\n    if dir_prefix:\n      filename = os.path.join(dir_prefix, filename)\n    change_list_name = \"\"\n    if filename in files_in_cl:\n      change_list_name = files_in_cl[filename]\n    files.setdefault(change_list_name, []).append((status, filename))\n\n  return files\n\n\ndef GetFilesNotInCL():\n  \"\"\"Returns a list of tuples (status,filename) that aren't in any changelists.\n\n  See docstring of GetModifiedFiles for information about path of files and\n  which directories are scanned.\n  \"\"\"\n  modified_files = GetModifiedFiles()\n  if \"\" not in modified_files:\n    return []\n  return modified_files[\"\"]\n\n\ndef SendToRietveld(request_path, payload=None,\n                   content_type=\"application/octet-stream\", timeout=None):\n  \"\"\"Send a POST/GET to Rietveld.  Returns the response body.\"\"\"\n  server = GetCodeReviewSetting(\"CODE_REVIEW_SERVER\")\n  def GetUserCredentials():\n    \"\"\"Prompts the user for a username and password.\"\"\"\n    email = upload.GetEmail(\"Email (login for uploading to %s)\" % server)\n    password = getpass.getpass(\"Password for %s: \" % email)\n    return email, password\n  rpc_server = upload.HttpRpcServer(server,\n                                    GetUserCredentials,\n                                    save_cookies=True)\n  try:\n    return rpc_server.Send(request_path, payload, content_type, timeout)\n  except urllib2.URLError, theError:\n    if timeout is None:\n      traceback.print_exc()\n      print theError\n      ErrorExit(\"Error accessing url %s\" % request_path)\n    else:\n      return None\n\n\ndef GetIssueDescription(issue):\n  \"\"\"Returns the issue description from Rietveld.\"\"\"\n  return SendToRietveld(\"/%d/description\" % issue)\n\ndef GetIssueDiff(issue):\n  \"\"\"Returns the raw patch set from Rietveld.\"\"\"\n  try:\n    raw_html = SendToRietveld(\"/\" + str(issue) + \"/show\")\n  except urllib2.HTTPError, err:\n    if err.code == 404:\n      # Review not uploaded yet\n      return \"\"\n\n  reg_exp = re.compile('.*?a href=\"(/download/issue\\d+_\\d+.diff)\"', re.DOTALL)\n  match = reg_exp.match(raw_html)\n  if not match:\n    # Happens in the case where there is no global download link\n    # because the patchset is too large.\n    return \"\"\n  diff_url = match.group(1)\n  return SendToRietveld(diff_url)\n\n\ndef Opened(show_unknown_files):\n  \"\"\"Prints a list of modified files in the current directory down.\"\"\"\n  files = GetModifiedFiles()\n  cl_keys = files.keys()\n  cl_keys.sort()\n  for cl_name in cl_keys:\n    if not cl_name:\n      continue\n    note = \"\"\n    change_info = ChangeInfo.Load(cl_name, GetRepositoryRoot(),\n                                  fail_on_not_found=True, update_status=False)\n    if len(change_info.GetFiles()) != len(files[cl_name]):\n      note = \" (Note: this changelist contains files outside this directory)\"\n    print \"\\n--- Changelist \" + cl_name + note + \":\"\n    for filename in files[cl_name]:\n      print \"\".join(filename)\n  if show_unknown_files:\n    unknown_files = UnknownFiles([])\n  if (files.get('') or (show_unknown_files and len(unknown_files))):\n    print \"\\n--- Not in any changelist:\"\n    for item in files.get('', []):\n      print \"\".join(item)\n    if show_unknown_files:\n      for filename in unknown_files:\n        print \"?      %s\" % filename\n\n\ndef Help(argv=None):\n  if argv:\n    if argv[0] == 'try':\n      TryChange(None, ['--help'], swallow_exception=False)\n      return\n    if argv[0] == 'upload':\n      upload.RealMain(['upload3.py', '--help'])\n      return\n\n  print (\n\"\"\"GCL is a wrapper for Subversion that simplifies working with groups of files.\nversion \"\"\" + __version__ + \"\"\"\n\nBasic commands:\n-----------------------------------------\n   gcl change change_name\n      Add/remove files to a changelist. Only scans the current directory and\n      subdirectories.\n\n   gcl upload change_name [-r reviewer1@gmail.com,reviewer2@gmail.com,...]\n                          [--send_mail] [--no_try] [--no_presubmit]\n                          [--no_watchlists] [-m <patchset message text>]\n      Uploads the changelist to the server for review.\n      (You can create the file '.gcl_upload_no_try' in your home dir to\n      skip the automatic tries.)\n\n   gcl commit change_name [--no_presubmit]\n      Commits the changelist to the repository.\n\n   gcl lint change_name\n      Check all the files in the changelist for possible style violations.\n\nAdvanced commands:\n-----------------------------------------\n   gcl delete change_name\n      Deletes a changelist.\n\n   gcl diff change_name\n      Diffs all files in the changelist.\n\n   gcl presubmit change_name\n      Runs presubmit checks without uploading the changelist.\n\n   gcl diff\n      Diffs all files in the current directory and subdirectories that aren't in\n      a changelist.\n\n   gcl diffgcl change_name\n      Diffs files in the changelist against the gcl uploaded version\n\n   gcl changes\n      Lists all the the changelists and the files in them.\n\n   gcl rename <old-name> <new-name>\n      Renames an existing change.\n\n   gcl nothave [optional directory]\n      Lists files unknown to Subversion.\n\n   gcl opened\n      Lists modified files in the current directory and subdirectories.\n\n   gcl settings\n      Print the code review settings for this directory.\n\n   gcl status\n      Lists modified and unknown files in the current directory and\n      subdirectories.\n\n   gcl try change_name [--osver fbsd8]\n      Sends the change to the tryserver so a trybot can do a test run on your\n      code. To send multiple changes as one path, use a comma-separated list\n      of changenames.\n      --> Use 'gcl help try' for more information!\n\n   gcl deleteempties\n      Deletes all changelists that have no files associated with them. Careful,\n      you can lose your descriptions.\n\n   gcl help [command]\n      Print this help menu, or help for the given command if it exists.\n\"\"\")\n\ndef GetEditor():\n  editor = os.environ.get(\"SVN_EDITOR\")\n  if not editor:\n    editor = os.environ.get(\"EDITOR\")\n\n  if not editor:\n    if sys.platform.startswith(\"win\"):\n      editor = \"notepad\"\n    else:\n      editor = \"vi\"\n\n  return editor\n\n\ndef GenerateDiff(files, root=None):\n  return SVN.GenerateDiff(files, root=root)\n\n\ndef OptionallyDoPresubmitChecks(change_info, committing, args):\n  if FilterFlag(args, \"--no_presubmit\") or FilterFlag(args, \"--force\"):\n    return True\n  return DoPresubmitChecks(change_info, committing, True)\n\ndef RunJira(**kwargs):\n  cwd  = \"/systems/bin/jiracli\"\n  cmd  = \"./jira.sh --user gclrobot --password gclr0b0t66 \" \\\n      \"--server https://jira.hudson-trading.com \"\n  cmd += ' '.join([\"--%s '%s'\" % (k, v) for (k, v) in kwargs.items()])\n  return subprocess.check_output(cmd, shell = True, stderr = subprocess.STDOUT,\n                                 cwd = cwd)\n\ndef UploadCL(change_info, args):\n  if not change_info.GetFiles():\n    print \"Nothing to upload, changelist is empty.\"\n    return\n  if not OptionallyDoPresubmitChecks(change_info, False, args):\n    return\n  # Might want to support GetInfoDir()/GetRepositoryRoot() like\n  # CheckHomeForFile() so the skip of tries can be per tree basis instead\n  # of user global.\n  no_try = FilterFlag(args, \"--no_try\") or \\\n           FilterFlag(args, \"--no-try\") or \\\n           not (CheckHomeForFile(\".gcl_upload_no_try\") is None)\n  no_watchlists = FilterFlag(args, \"--no_watchlists\") or \\\n                  FilterFlag(args, \"--no-watchlists\")\n\n  # Map --send-mail to --send_mail\n  if FilterFlag(args, \"--send-mail\"):\n    args.append(\"--send_mail\")\n\n  # Supports --clobber for the try server.\n  clobber = FilterFlag(args, \"--clobber\")\n\n  # Disable try when the server is overridden.\n  server_1 = re.compile(r\"^-s\\b.*\")\n  server_2 = re.compile(r\"^--server\\b.*\")\n  for arg in args:\n    if server_1.match(arg) or server_2.match(arg):\n      no_try = True\n      break\n\n  upload_arg = [\"/abin/upload3.py\", \"-y\"]\n  upload_arg.append(\"--server=\" + GetCodeReviewSetting(\"CODE_REVIEW_SERVER\"))\n  upload_arg.extend(args)\n\n  desc_file = \"\"\n  if change_info.issue:  # Uploading a new patchset.\n    found_message = False\n    for arg in args:\n      if arg.startswith(\"--message\") or arg.startswith(\"-m\"):\n        found_message = True\n        break\n\n    if not found_message:\n      upload_arg.append(\"--message=''\")\n\n    upload_arg.append(\"--issue=%d\" % change_info.issue)\n  else: # First time we upload.\n    handle, desc_file = tempfile.mkstemp(text=True)\n    os.write(handle, change_info.description)\n    os.close(handle)\n\n    cc_list = GetCodeReviewSetting(\"CC_LIST\")\n    if cc_list:\n      upload_arg.append(\"--cc=\" + cc_list)\n    upload_arg.append(\"--description_file=\" + desc_file + \"\")\n    if change_info.description:\n      subject = change_info.description[:77]\n      if subject.find(\"\\r\\n\") != -1:\n        subject = subject[:subject.find(\"\\r\\n\")]\n      if subject.find(\"\\n\") != -1:\n        subject = subject[:subject.find(\"\\n\")]\n      if len(change_info.description) > 77:\n        subject = subject + \"...\"\n      upload_arg.append(\"--message=\" + subject)\n\n    if GetCodeReviewSetting(\"PRIVATE\") == \"True\":\n      upload_arg.append(\"--private\")\n\n  # Get the local root's URL. This will usually be the trunk or atl or\n  # one of the queries.\n  svn_info = SVN.CaptureInfo(change_info._local_root)\n  url = svn_info.get('URL', '')\n\n  # Look at the URL of our working copy to determine whether we're\n  # somewhere in the trunk (eg trunk, trunk/atl, trunk/btrade, etc).\n  if re.search('/trunk', url):\n    # Read the config file. Each line is presumed to be relative to trunk.\n    config = ConfigParser.ConfigParser()\n\n    config.read(DESIGNATED_REVIEWERS_CONF)\n    reviewers_info = dict(config.items(\"conf\"))\n    cc_info = dict(config.items(\"cc\"))\n\n    reviewers = set()\n    cc = set()\n\n    # Filenames in change_info are relative to the local root, so we\n    # construct the full URL of each file and truncate out everything\n    # prior to (and including) the trunk. This will allow us to easily\n    # compare to the paths we have in the config file.\n    for file in change_info.GetFileNames():\n      p = re.sub('.*/trunk/', '', \"%s/%s\" % (url, file))\n      for (path, revs) in reviewers_info.items():\n        if p.startswith(path):\n          reviewers.update(revs.split(','))\n      for (path, revs) in cc_info.items():\n        if p.startswith(path):\n          cc.update(revs.split(','))\n\n    # Add reviewers added on the command line. Preserve ordering in\n    # case that matters.\n    reviewers_arg = FilterArgument(args, \"-r\")\n    if reviewers_arg:\n      upload_arg.append(\"--reviewers=\" + reviewers_arg)\n\n    # Add any designated reviewers to the cc line\n    cc.update(reviewers)\n\n    if cc:\n      upload_arg.append(\"--cc=\" + ','.join(sorted(cc)))\n\n  # Change the current working directory before calling upload.py so that it\n  # shows the correct base.\n  previous_cwd = os.getcwd()\n  os.chdir(change_info.GetLocalRoot())\n\n  # If we have a lot of files with long paths, then we won't be able to fit\n  # the command to \"svn diff\".  Instead, we generate the diff manually for\n  # each file and concatenate them before passing it to upload.py.\n  if change_info.patch is None:\n    change_info.patch = GenerateDiff(change_info.GetFileNames())\n  issue, patchset = upload.RealMain(upload_arg, change_info.patch)\n  if issue and patchset:\n    change_info.issue = int(issue)\n    change_info.patchset = int(patchset)\n    change_info.Save()\n\n  # Check to see if there is a JIRA issue referenced in the\n  # description. If there is, we'll want to mark the JIRA in progress\n  # and append a message to the log with a link to the gcl, but only\n  # if the issue isn't already in review.\n  m = re.findall('^([A-Z]{3,}-[0-9]+)\\s*#resolve', change_info.description,re.M)\n  try:\n    for jira in m:\n      if '\"In Review\"' in RunJira(action = 'getAvailableSteps', issue = jira):\n        RunJira(action = 'progressIssue', issue = jira, step = 'In Review')\n\n        user = pwd.getpwuid(os.getuid())[0]\n        server = \"http://\" + GetCodeReviewSetting(\"CODE_REVIEW_SERVER\")\n        comment = \"%s uploaded a new gcl at: %s/%d\" % (user, server,\n                                                       change_info.issue)\n        RunJira(action = 'addComment', issue = jira, comment = comment)\n  except subprocess.CalledProcessError as e:\n    print \"Warning: Error talking to JIRA: %s\" % e.output.strip()\n\n  if desc_file:\n    os.remove(desc_file)\n\n  # Do background work on Rietveld to lint the file so that the results are\n  # ready when the issue is viewed.\n  SendToRietveld(\"/lint/issue%s_%s\" % (issue, patchset), timeout=0.5)\n\n  # Move back before considering try, so GetCodeReviewSettings is\n  # consistent.\n  os.chdir(previous_cwd)\n\n  # Once uploaded to Rietveld, send it to the try server.\n  if not no_try:\n    try_on_upload = GetCodeReviewSetting('TRY_ON_UPLOAD')\n    if try_on_upload and try_on_upload.lower() == 'true':\n      trychange_args = []\n      if clobber:\n        trychange_args.append('--clobber')\n      TryChange(change_info, trychange_args, swallow_exception=True)\n\n\n\ndef PresubmitCL(change_info):\n  \"\"\"Reports what presubmit checks on the change would report.\"\"\"\n  if not change_info.GetFiles():\n    print \"Nothing to presubmit check, changelist is empty.\"\n    return\n\n  print \"*** Presubmit checks for UPLOAD would report: ***\"\n  DoPresubmitChecks(change_info, False, False)\n\n  print \"\\n*** Presubmit checks for COMMIT would report: ***\"\n  DoPresubmitChecks(change_info, True, False)\n\n\ndef TryChange(change_info, args, swallow_exception):\n  \"\"\"Create a diff file of change_info and send it to the try server.\"\"\"\n  try:\n    import trychange\n  except ImportError:\n    if swallow_exception:\n      return\n    ErrorExit(\"You need to install trychange.py to use the try server.\")\n\n  trychange_args = []\n  if change_info:\n    trychange_args.extend(['--name', change_info.name])\n    if change_info.issue:\n      trychange_args.extend([\"--issue\", str(change_info.issue)])\n    if change_info.patchset:\n      trychange_args.extend([\"--patchset\", str(change_info.patchset)])\n    trychange_args.extend(args)\n    file_list = change_info.GetFileNames()\n  else:\n    trychange_args.extend(args)\n    file_list = None\n  trychange.TryChange(trychange_args,\n                      file_list=file_list,\n                      swallow_exception=swallow_exception,\n                      prog='gcl try')\n\n# Parse out the list of reviewers from the review's webpage's html.\n# It is of the form:\n#      Reviewers: [reviewer1[,...]]<br>\ndef getReviewers(review_url):\n  data = RunShell([\"curl\", \"-s\", review_url])\n  reg = re.compile('.*\\s+Reviewers: (.*?)<', re.DOTALL)\n  match = reg.match(data)\n  return match.group(1)\n\ndef Commit(change_info, args):\n  if not change_info.GetFiles():\n    print \"Nothing to commit, changelist is empty.\"\n    return\n  if not OptionallyDoPresubmitChecks(change_info, True, args):\n    return\n\n  # We face a problem with svn here: Let's say change 'bleh' modifies\n  # svn:ignore on dir1\\. but another unrelated change 'pouet' modifies\n  # dir1\\foo.cc. When the user `gcl commit bleh`, foo.cc is *also committed*.\n  # The only fix is to use --non-recursive but that has its issues too:\n  # Let's say if dir1 is deleted, --non-recursive must *not* be used otherwise\n  # you'll get \"svn: Cannot non-recursively commit a directory deletion of a\n  # directory with child nodes\". Yay...\n  commit_cmd = [\"svn\", \"commit\"]\n  if change_info.issue:\n    # Get the latest description from Rietveld.\n    change_info.description = GetIssueDescription(change_info.issue)\n\n  commit_message = change_info.description.replace('\\r\\n', '\\n')\n  reg_exp = re.compile(\"[^\\s]\")\n  if reg_exp.search(commit_message) is None:\n    print \"Aborting commit:\\n\" \\\n          \"Please provide a commit message !\"\n    return\n\n  if change_info.issue:\n    server = GetCodeReviewSetting(\"CODE_REVIEW_SERVER\")\n    if not server.startswith(\"http://\") and not server.startswith(\"https://\"):\n      server = \"http://\" + server\n    review_url = ('%s/%d' % (server, change_info.issue))\n    reviewers = getReviewers(review_url)\n\n    # Ensure there is always a blank line between the commit message\n    # and the Reviewers or Review URL line.\n    if not commit_message.endswith(\"\\n\"):\n      commit_message += \"\\n\"\n\n    if reviewers:\n      commit_message += ('\\nReviewers: %s'  % reviewers)\n    commit_message += ('\\nReview URL: %s' % review_url)\n\n  handle, commit_filename = tempfile.mkstemp(text=True)\n  os.write(handle, commit_message)\n  os.close(handle)\n\n  handle, targets_filename = tempfile.mkstemp(text=True)\n  os.write(handle, \"\\n\".join(change_info.GetFileNames()))\n  os.close(handle)\n\n  commit_cmd += ['--file=' + commit_filename]\n  commit_cmd += ['--targets=' + targets_filename]\n  # Change the current working directory before calling commit.\n  previous_cwd = os.getcwd()\n  os.chdir(change_info.GetLocalRoot())\n\n  if change_info.issue:\n    # Make sure that what we're about to commit doesn't have a different diff\n    # than what we've uploaded previously.\n    uploaded_diff = GetIssueDiff(change_info.issue)\n    if not uploaded_diff:\n      print \"Warning: patchset is too large, skipping check that working copy\"\\\n            \" is the same as what has been uploaded into gcl. Please only\"\\\n            \" continue if you are sure what you last uploaded is what you\"\\\n            \" are about to commit. If in doubt, re-upload to be sure.\"\n\n      if sys.stdout.isatty():\n        while True:\n          cont = string.lower(raw_input(\"Continue? [y/n] \"))\n          if cont == 'y': break\n          if cont == 'n': sys.exit(\"Aborted\")\n\n    else:\n      current_diff = GenerateDiff(change_info.GetFileNames())\n      if current_diff != uploaded_diff:\n        print \"Aborting commit:\\n\"                                            \\\n            \"Change in current working copy are different than what has been \"\\\n            \"uploaded into gcl.  Please re-run gcl upload before committing. \"\\\n            \"You may run /abin/gcl diffgcl changename to see the diff.\"\n        return\n\n  output = RunShell(commit_cmd, True)\n  os.remove(commit_filename)\n  os.remove(targets_filename)\n  if output.find(\"Committed revision\") != -1:\n    change_info.Delete()\n\n    if change_info.issue:\n      revision = re.compile(\".*?\\nCommitted revision (\\d+)\",\n                            re.DOTALL).match(output).group(1)\n      viewvc_url = GetCodeReviewSetting(\"VIEW_VC\")\n      change_info.description = change_info.description + '\\n'\n      if viewvc_url:\n        change_info.description += \"\\nCommitted: \" + viewvc_url + revision\n      change_info.CloseIssue()\n  os.chdir(previous_cwd)\n\ndef DiffGCL(change_info):\n  \"\"\"Gets the last upload into gcl and diffs that with the current version\"\"\"\n\n  def splitDiff(diff):\n    \"\"\"Split the diffs into diffs for individual files\"\"\"\n    filename = \"\"\n    hash = {}\n    reg_exp = re.compile(\"^Index: (.+)$\")\n    for line in diff.splitlines(True):\n      match = reg_exp.match(line)\n      if match is not None:\n        filename = match.group(1)\n      if not filename in hash:\n        hash[filename] = \"\"\n      hash[filename] += line\n    return hash\n\n  uploaded_hash = splitDiff(GetIssueDiff(change_info.issue))\n\n  # Get a unique set of files\n  files = set()\n  for key in uploaded_hash.keys() + change_info.GetFileNames():\n    files.add(key)\n\n  # Change the current working directory before calling svn commands.\n  os.chdir(GetRepositoryRoot())\n  for file in files:\n    is_added = re.compile(\"^A  [^+]\") # Added without history\n    if is_added.match(RunShell([\"svn\", \"status\", file])):\n      orig_content = \"\"\n    else:\n      orig_content = RunShell([\"svn\", \"cat\", file])\n    orig_handle, orig_filename = tempfile.mkstemp(text=True)\n    os.write(orig_handle, orig_content)\n    os.close(orig_handle)\n\n    # Apply the diff uploaded into gcl to this file to get the state\n    # of the file as gcl knows it.\n    patch_handle, patch_filename = tempfile.mkstemp(text=True)\n    if not file in uploaded_hash:\n      uploaded_hash[file] = \"\"\n    os.write(patch_handle, uploaded_hash[file])\n    os.close(patch_handle)\n\n    RunShell([\"patch\", \"-f\", \"-s\", orig_filename, patch_filename])  # patches orig_filename\n    print \"Index: \" + file\n    print \"===================================================================\"\n    RunShell([\"diff\", \"-Nau\", orig_filename, file], True)\n\n    os.remove(orig_filename)\n    os.remove(patch_filename)\n\n\ndef Change(change_info, args):\n  \"\"\"Creates/edits a changelist.\"\"\"\n  silent = FilterFlag(args, \"--silent\")\n\n  # Verify the user is running the change command from a read-write checkout.\n  svn_info = SVN.CaptureInfo('.')\n  if not svn_info:\n    ErrorExit(\"Current checkout is unversioned.  Please retry with a versioned \"\n              \"directory.\")\n\n  if (len(args) == 1):\n    filename = args[0]\n    f = open(filename, 'rU')\n    override_description = f.read()\n    f.close()\n  else:\n    override_description = None\n\n  if change_info.issue and not change_info.NeedsUpload():\n    try:\n      description = GetIssueDescription(change_info.issue)\n    except urllib2.HTTPError, err:\n      if err.code == 404:\n        # The user deleted the issue in Rietveld, so forget the old issue id.\n        description = change_info.description\n        change_info.issue = 0\n        change_info.Save()\n      else:\n        ErrorExit(\"Error getting the description from Rietveld: \" + err)\n  else:\n    if override_description:\n      description = override_description\n    else:\n      description = change_info.description\n\n  # Exclude the external directory from showing up in the CL popup\n  other_files = [x for x in GetFilesNotInCL() if x[0][0] != 'X']\n\n  # Edited files (as opposed to files with only changed properties) will have\n  # a letter for the first character in the status string.\n  file_re = re.compile(r\"^[a-z].+\\Z\", re.IGNORECASE)\n  affected_files = [x for x in other_files if file_re.match(x[0])]\n  unaffected_files = [x for x in other_files if not file_re.match(x[0])]\n\n  separator1 = (\"\\n---All lines above this line become the description.\\n\"\n                \"---Repository Root: \" + change_info.GetLocalRoot() + \"\\n\"\n                \"---Paths in this changelist (\" + change_info.name + \"):\\n\")\n  separator2 = \"\\n\\n---Paths modified but not in any changelist:\\n\\n\"\n  text = (description + separator1 + '\\n' +\n          '\\n'.join([f[0] + f[1] for f in change_info.GetFiles()]))\n\n  if change_info.Exists():\n    text += (separator2 +\n            '\\n'.join([f[0] + f[1] for f in affected_files]) + '\\n')\n  else:\n    text += ('\\n'.join([f[0] + f[1] for f in affected_files]) + '\\n' +\n            separator2)\n  text += '\\n'.join([f[0] + f[1] for f in unaffected_files]) + '\\n'\n\n  handle, filename = tempfile.mkstemp(text=True)\n  os.write(handle, text)\n  os.close(handle)\n\n  if not silent:\n    os.system(GetEditor() + \" \" + filename)\n\n  result = gclient_utils.FileRead(filename, 'r')\n  os.remove(filename)\n\n  if not result:\n    return\n\n  split_result = result.split(separator1, 1)\n  if len(split_result) != 2:\n    ErrorExit(\"Don't modify the text starting with ---!\\n\\n\" + result)\n\n  # Update the CL description if it has changed.\n  new_description = split_result[0]\n  cl_files_text = split_result[1]\n  if new_description != description or override_description:\n    change_info.description = new_description\n    change_info.needs_upload = True\n\n  new_cl_files = []\n  for line in cl_files_text.splitlines():\n    if not len(line):\n      continue\n    if line.startswith(\"---\"):\n      break\n    status = line[:7]\n    filename = line[7:]\n    new_cl_files.append((status, filename))\n\n  if (not len(change_info._files)) and (not change_info.issue) and \\\n      (not len(new_description) and (not new_cl_files)):\n    ErrorExit(\"Empty changelist not saved\")\n\n  change_info._files = new_cl_files\n  change_info.Save()\n  if svn_info.get('URL', '').startswith('http:'):\n    Warn(\"WARNING: Creating CL in a read-only checkout.  You will not be \"\n         \"able to commit it!\")\n\n  print change_info.name + \" changelist saved.\"\n  if change_info.MissingTests():\n    pass  # we don't care if you don't test your code!\n    # Warn(\"WARNING: \" + MISSING_TEST_MSG)\n\n  # Update the Rietveld issue.\n  if change_info.issue and change_info.NeedsUpload():\n    change_info.UpdateRietveldDescription()\n    change_info.needs_upload = False\n    change_info.Save()\n\n\n# Valid extensions for files we want to lint.\nDEFAULT_LINT_REGEX = r\"(.*\\.cpp|.*\\.cc|.*\\.h)\"\nDEFAULT_LINT_IGNORE_REGEX = r\"$^\"\n\ndef Lint(change_info, args):\n  \"\"\"Runs cpplint.py on all the files in |change_info|\"\"\"\n  try:\n    import cpplint\n  except ImportError:\n    ErrorExit(\"You need to install cpplint.py to lint C++ files.\")\n\n  # Change the current working directory before calling lint so that it\n  # shows the correct base.\n  previous_cwd = os.getcwd()\n  os.chdir(change_info.GetLocalRoot())\n\n  # Process cpplints arguments if any.\n  filenames = cpplint.ParseArguments(args + change_info.GetFileNames())\n\n  white_list = GetCodeReviewSetting(\"LINT_REGEX\")\n  if not white_list:\n    white_list = DEFAULT_LINT_REGEX\n  white_regex = re.compile(white_list)\n  black_list = GetCodeReviewSetting(\"LINT_IGNORE_REGEX\")\n  if not black_list:\n    black_list = DEFAULT_LINT_IGNORE_REGEX\n  black_regex = re.compile(black_list)\n  for filename in filenames:\n    if white_regex.match(filename):\n      if black_regex.match(filename):\n        print \"Ignoring file %s\" % filename\n      else:\n        cpplint.ProcessFile(filename, cpplint._cpplint_state.verbose_level)\n    else:\n      print \"Skipping file %s\" % filename\n\n  print \"Total errors found: %d\\n\" % cpplint._cpplint_state.error_count\n  os.chdir(previous_cwd)\n\n\ndef DoPresubmitChecks(change_info, committing, may_prompt):\n  \"\"\"Imports presubmit, then calls presubmit.DoPresubmitChecks.\"\"\"\n  # HRT: Always return True here since we do no presubmit checks.\n  return True\n\n  # Need to import here to avoid circular dependency.\n  import presubmit_support\n  root_presubmit = GetCachedFile('PRESUBMIT.py', use_root=True)\n  change = presubmit_support.SvnChange(change_info.name,\n                                       change_info.description,\n                                       change_info.GetLocalRoot(),\n                                       change_info.GetFiles(),\n                                       change_info.issue,\n                                       change_info.patchset)\n  result = presubmit_support.DoPresubmitChecks(change=change,\n                                               committing=committing,\n                                               verbose=False,\n                                               output_stream=sys.stdout,\n                                               input_stream=sys.stdin,\n                                               default_presubmit=root_presubmit,\n                                               may_prompt=may_prompt)\n  if not result and may_prompt:\n    print \"\\nPresubmit errors, can't continue (use --no_presubmit to bypass)\"\n  return result\n\n\ndef Changes():\n  \"\"\"Print all the changelists and their files.\"\"\"\n  for cl in GetCLs():\n    change_info = ChangeInfo.Load(cl, GetRepositoryRoot(), True, True)\n    print \"\\n--- Changelist \" + change_info.name + \":\"\n    for filename in change_info.GetFiles():\n      print \"\".join(filename)\n\n\ndef DeleteEmptyChangeLists():\n  \"\"\"Delete all changelists that have no files.\"\"\"\n  print \"\\n--- Deleting:\"\n  for cl in GetCLs():\n    change_info = ChangeInfo.Load(cl, GetRepositoryRoot(), True, True)\n    if not len(change_info._files):\n      print change_info.name\n      change_info.Delete()\n\ndef get_hosts(osver):\n  path = '/atl/make/distcc_%s_hosts' % osver\n  return [l.strip() for l in open(path)]\n\n# Adapted from src/make/build. Modified to use the username as the key\n# so that we keep going to the same host that already has a checkout.\ndef pick_host(osver, exclude_hosts = []):\n  # Load the list of compile hosts for this platform.\n  hosts = [h for h in get_hosts(osver) if h not in exclude_hosts]\n  if len(hosts) < 1:\n    return None\n\n  # user 'atl' (mostly automated builds) always gets the last host in\n  # the list; for everyone else we hash the path to one of the other\n  # hosts, in order to distribute builds across the cluster, but have\n  # each tree always build on the same box, for better use of NFS\n  # cache.\n  user = pwd.getpwuid(os.getuid())[0]\n  if user == 'atl':\n    return hosts[-1]\n\n  # reserve the last host for atl if we have more than one host\n  # to choose from.\n  num_hosts = max(len(hosts) - 1, 1)\n  hash = hashlib.md5(user).hexdigest()\n  number = int(hash[:8], 16)\n  return hosts[number % num_hosts]\n\ndef main(argv=None):\n  if argv is None:\n    argv = sys.argv\n\n  if len(argv) == 1:\n    Help()\n    return 0;\n\n  try:\n    # Create the directories where we store information about changelists if it\n    # doesn't exist.\n    if not os.path.exists(GetInfoDir()):\n      os.mkdir(GetInfoDir())\n    if not os.path.exists(GetChangesDir()):\n      os.mkdir(GetChangesDir())\n    if not os.path.exists(GetCacheDir()):\n      os.mkdir(GetCacheDir())\n  except gclient_utils.Error:\n    # Will throw an exception if not run in a svn checkout.\n    pass\n\n  # Commands that don't require an argument.\n  command = argv[1]\n  if command == \"opened\" or command == \"status\":\n    Opened(command == \"status\")\n    return 0\n  if command == \"nothave\":\n    __pychecker__ = 'no-returnvalues'\n    for filename in UnknownFiles(argv[2:]):\n      print \"?      \" + \"\".join(filename)\n    return 0\n  if command == \"changes\":\n    Changes()\n    return 0\n  if command == \"help\":\n    Help(argv[2:])\n    return 0\n  if command == \"diff\" and len(argv) == 2:\n    files = GetFilesNotInCL()\n    print GenerateDiff([x[1] for x in files])\n    return 0\n  if command == \"settings\":\n    # Force load settings\n    GetCodeReviewSetting(\"UNKNOWN\");\n    del CODEREVIEW_SETTINGS['__just_initialized']\n    print '\\n'.join((\"%s: %s\" % (str(k), str(v))\n                     for (k,v) in CODEREVIEW_SETTINGS.iteritems()))\n    return 0\n  if command == \"deleteempties\":\n    DeleteEmptyChangeLists()\n    return 0\n\n  if command == \"rename\":\n    if len(argv) != 4:\n      ErrorExit(\"Usage: gcl rename <old-name> <new-name>.\")\n    src, dst = argv[2:4]\n    src_file = GetChangelistInfoFile(src)\n    if not os.path.isfile(src_file):\n      ErrorExit(\"Change '%s' does not exist.\" % src)\n    dst_file = GetChangelistInfoFile(dst)\n    if os.path.isfile(dst_file):\n      ErrorExit(\"Change '%s' already exists; pick a new name.\" % dst)\n    os.rename(src_file, dst_file)\n    print \"Change '%s' renamed '%s'.\" % (src, dst)\n    return 0\n  if command == \"change\":\n    if len(argv) == 2:\n      # Force users to specify a changelist name when creating a changelist\n      ErrorExit(\"Need a changelist name.\")\n    elif argv[2] == '--force':\n      changename = GenerateChangeName()\n      # argv[3:] is passed to Change() as |args| later. Change() should receive\n      # |args| which includes '--force'.\n      argv.insert(2, changename)\n    else:\n      changename = argv[2]\n  elif len(argv) == 2:\n    ErrorExit(\"Need a changelist name.\")\n  else:\n    changename = argv[2]\n\n  if command == 'try':\n    # See if --osver has been specified. Default to fbsd8 if it hasn't been\n    osver = \"fbsd8\"\n    if \"--osver\" in argv:\n      osver = argv[argv.index(\"--osver\") + 1]\n\n    # ssh to a distcc machine if need be so that we can do a local build\n    hostname = socket.gethostname()\n    if hostname not in get_hosts(osver):\n      # We have to set ROSVER since (at least) TestTrade.pm expects it.\n      cmd = \"cd %s; env ROSVER=%s %s\" % (os.getcwd(), osver, string.join(argv))\n\n      # If this session is a tty, force the ssh connection to create\n      # one so that the user can see colors and interact with prompts.\n      ssh_cmd = 'ssh -A -o ConnectTimeout=10 '\n      if sys.stdout.isatty():\n        ssh_cmd += '-t ' # Force pseudo-tty allocation\n\n      # Picks a combination of hosts keyed by the username\n      already_visited_hosts = []\n      while True:\n        host = pick_host(osver, already_visited_hosts)\n        if not host: break\n        already_visited_hosts.append(host)\n        try:\n          # Enable ssh forwarding and timeout after 10 seconds\n          print 'Trying: %s' % host\n          fcmd = '%s %s \"%s\"' % (ssh_cmd, host, cmd)\n          subprocess.check_call(fcmd, shell = True)\n          return\n        except subprocess.CalledProcessError as e:\n          # This gets triggered if ssh returns with an error (eg when\n          # there is a connection timeout) or if there is a problem\n          # with the subcommand (eg no such changelist). The ssh\n          # errors are with return code 255 so we only retry on those.\n          if e.returncode != 255:\n            # We have a special return code (42) when the gcl try\n            # fails for a well understood reason (eg, compile failed,\n            # or there was a diff. Do not raise an error in those cases.\n            if e.returncode == 42:\n              return\n            raise\n          print e\n          print \"Failed to ssh to %s! Inform infra/systems.\" % host\n\n      # If we get here, we weren't able to ssh to any hosts, bail.\n      ErrorExit(\"Unable to ssh to any distcc hosts for gcl try! This is bad,\"\n                \"inform infra/systems\")\n\n  # When the command is 'try' and --patchset is used, the patch to try\n  # is on the Rietveld server. 'change' creates a change so it's fine if the\n  # change didn't exist. All other commands require an existing change.\n  fail_on_not_found = command != \"try\" and command != \"change\"\n  if command == \"try\" and changename.find(',') != -1:\n    change_info = LoadChangelistInfoForMultiple(changename, GetRepositoryRoot(),\n                                                True, True)\n  else:\n    change_info = ChangeInfo.Load(changename, GetRepositoryRoot(),\n                                  fail_on_not_found, True)\n\n  if command == \"change\":\n    Change(change_info, argv[3:])\n  elif command == \"lint\":\n    Lint(change_info, argv[3:])\n  elif command == \"upload\":\n    UploadCL(change_info, argv[3:])\n  elif command == \"presubmit\":\n    PresubmitCL(change_info)\n  elif command in (\"commit\", \"submit\", \"ci\"):\n    Commit(change_info, argv[3:])\n  elif command == \"delete\":\n    change_info.Delete()\n  elif command == \"try\":\n    # When the change contains no file, send the \"changename\" positional\n    # argument to trychange.py.\n    if change_info.GetFiles():\n      args = argv[3:]\n    else:\n      change_info = None\n      args = argv[2:]\n    TryChange(change_info, args, swallow_exception=False)\n  elif command == \"diffgcl\":\n    DiffGCL(change_info)\n  elif command == \"diff\":\n    print SVN.GenerateDiff(change_info.GetFileNames(), full_move=True)\n  else:\n    # Everything else that is passed into gcl we redirect to svn, after adding\n    # the files. This allows commands such as 'gcl diff xxx' to work.\n    if command == \"diff\" and not change_info.GetFileNames():\n      return 0\n    args =[\"svn\", command]\n    root = GetRepositoryRoot()\n\n    args.extend([x for x in change_info.GetFileNames()])\n    os.chdir(root)\n    RunShell(args, True)\n  return 0\n\n\nif __name__ == \"__main__\":\n  sys.exit(main())\n",
+			"file": "/abin/gcl",
+			"file_size": 53843,
+			"file_write_time": 130051775620000000,
+			"settings":
+			{
+				"buffer_size": 53868,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/blamesvn/trunk/atl/src/tools/nomorewhites.py",
+			"settings":
+			{
+				"buffer_size": 6799,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/CBOEDriver.cc",
+			"settings":
+			{
+				"buffer_size": 44534,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/LSEMDriver.cc",
+			"settings":
+			{
+				"buffer_size": 47809,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/TDEXDriver.cc",
+			"settings":
+			{
+				"buffer_size": 33312,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/Account.cc",
+			"settings":
+			{
+				"buffer_size": 10598,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/BaseDaemon.cc",
+			"settings":
+			{
+				"buffer_size": 57097,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyServer.h",
+			"settings":
+			{
+				"buffer_size": 7339,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/cashy/CashyPosixLike.cc",
+			"settings":
+			{
+				"buffer_size": 7728,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/InstinetDriver.h",
+			"settings":
+			{
+				"buffer_size": 3375,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/InstinetDriver.cc",
+			"settings":
+			{
+				"buffer_size": 50672,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/tools/trychange.py",
+			"settings":
+			{
+				"buffer_size": 16887,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/test/cashy/CashyTestPerf.h",
+			"settings":
+			{
+				"buffer_size": 14841,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/Admin.cc",
+			"settings":
+			{
+				"buffer_size": 71715,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/DriverBundle.h",
+			"settings":
+			{
+				"buffer_size": 23180,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/TDEXDriver.h",
+			"settings":
+			{
+				"buffer_size": 8545,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/OldLiffeDriver.cc",
+			"settings":
+			{
+				"buffer_size": 62239,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyServer.cc",
+			"settings":
+			{
+				"buffer_size": 20594,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/util/ConfFile.cc",
+			"settings":
+			{
+				"buffer_size": 24090,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/data/DataRepos.cc",
+			"settings":
+			{
+				"buffer_size": 15310,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/data/SymArchive.h",
+			"settings":
+			{
+				"buffer_size": 9956,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/cashy/CashyPosixLike.h",
+			"settings":
+			{
+				"buffer_size": 2716,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/AsiaFuturesAdmin.cc",
+			"settings":
+			{
+				"buffer_size": 3065,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Volumes/Source/trunksvn/atl/src/trip2/AsiaFuturesAdmin.h",
+			"settings":
+			{
+				"buffer_size": 570,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/hrt/hrt.sublime-build",
+	"command_palette":
+	{
+		"height": 47.0,
+		"selected_items":
+		[
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"remoe",
+				"Package Control: Remove Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"edi",
+				"Edit Build Settings"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"edu",
+				"Edit Build Settings"
+			],
+			[
+				"pyth",
+				"Set Syntax: Python"
+			],
+			[
+				"edit",
+				"Edit Build Settings"
+			],
+			[
+				"keyb",
+				"Preferences: Key Bindings - User"
+			],
+			[
+				"user",
+				"Preferences: Settings - User"
+			],
+			[
+				"pytho",
+				"Set Syntax: Python"
+			],
+			[
+				"eidt",
+				"Edit Build Settings"
+			],
+			[
+				"c++",
+				"Set Syntax: C++"
+			],
+			[
+				"ython",
+				"Set Syntax: Python"
+			],
+			[
+				"package",
+				"Preferences: Browse Packages"
+			]
+		],
+		"width": 576.0
+	},
+	"console":
+	{
+		"height": 172.0,
+		"history":
+		[
+			"import urllib2,os; pf='Package Control.sublime-package'; ipp=sublime.installed_packages_path(); os.makedirs(ipp) if not os.path.exists(ipp) else None; urllib2.install_opener(urllib2.build_opener(urllib2.ProxyHandler())); open(os.path.join(ipp,pf),'wb').write(urllib2.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read()); print('Please restart Sublime Text to finish installation')"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/Source/blamesvn/trunk/atl/src/tools/nomorewhites",
+		"/Volumes/Source/trunksvn/atl/src/3ps/git-cl/scm.py",
+		"/Volumes/Source/trunksvn/atl/src/3ps/liffe/LiffeAPI.h",
+		"/Volumes/Source/blamesvn/trunk/atl/src/tools/nomorewhites.py",
+		"/Volumes/Source/blamesvn/trunk/atl/src/tools/metriclog_to_ganglia.py",
+		"/Users/joseph/source/blamesvn/trunk/atl/src/parsers/DAXIndexFile.cc",
+		"/Users/joseph/source/blamesvn/trunk/atl/src/parsers/test/cxxtest_utils.h",
+		"/Volumes/Source/.remote/versioned/bin/build",
+		"/Users/joseph/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Volumes/Source/blamesvn/trunk/atl/src/tools/schedmine.py",
+		"/Volumes/Source/.remote/conf/build.conf",
+		"/Volumes/Source/.remote/versioned/sublime/hrt/hrt.sublime-build",
+		"/Volumes/Source/trunksvn/atl/src/trip2/FuturesAdmin.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/asiatripd.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TripDriver.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TripDriver.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/FuturesAdmin.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/asiafuturestripd.cc",
+		"/Volumes/Source/trunksvn/atl/src/cashy/CashyPosixLike.cc",
+		"/Volumes/Source/trunksvn/atl/src/tools/scm.py",
+		"/abin/gcl",
+		"/Volumes/Source/trunksvn/atl/src/tools/schedmine.py",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TDEXDriver.h",
+		"/Volumes/Source/trunksvn/atl/src/common/MktEnums.he",
+		"/Volumes/Source/trunksvn/atl/src/trip2/tools/tripadmin.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TripAdmin.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/AsiaFuturesAdmin.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/AsiaFuturesAdmin.h",
+		"/Volumes/Source/trunksvn/atl/src/util/LIFFEUtil.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/BaseDaemon.cc",
+		"/Volumes/Source/joseph/scripts/test.conf/tripd.conf",
+		"/Volumes/Source/trunksvn/atl/src/data/Events.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/LIFFEOrder.h",
+		"/Volumes/Source/trunksvn/atl/src/util/ConfFile.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/OUCHDriver.cc",
+		"/Volumes/Source/trunksvn/atl/src/util/Redis.h",
+		"/Volumes/Source/trunksvn/atl/src/data/DataRepos.cc",
+		"/Volumes/Source/trunksvn/atl/src/data/DataRepos.h",
+		"/Volumes/Source/trunksvn/atl/src/util/Profile.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/ESpeedDriver.cc",
+		"/Volumes/Source/trunksvn/atl/src/test/risk/PricerBase_test.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TSEDriver.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TSEDriver.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TDEXDriver.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/StateFile.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TripPositionsFile.cc",
+		"/Volumes/Source/trunksvn/atl/src/common/MultiTrader.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/triphelper.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/tripd.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TripMap.cc",
+		"/Volumes/Source/trunksvn/atl/src/common/PriceTableBase.h",
+		"/Volumes/Source/trunksvn/atl/src/common/FuturesPriceTable.h",
+		"/Volumes/Source/trunksvn/atl/src/risk/RiskManagerBase.cc",
+		"/Volumes/Source/trunksvn/atl/src/tools/toucan.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/ClientLis.h",
+		"/Volumes/Source/joseph/scripts/test.conf/highmargin.conf",
+		"/Volumes/Source/trunksvn/atl/src/risk/FuturesRiskManager.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/tools/rawproc.cc",
+		"/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyBlockIOManager.cc",
+		"/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyFile.h",
+		"/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyRedis.cc",
+		"/Volumes/Source/trunksvn/atl/src/data/SymArchive.h",
+		"/Volumes/Source/trunksvn/atl/src/data/SymArchive.cc",
+		"/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyMemory.cc",
+		"/Volumes/Source/trunksvn/atl/src/cashy/Cashy.cc",
+		"/Volumes/Source/trunksvn/atl/src/cashy/CashyPosixLike.h",
+		"/Volumes/Source/trunksvn/atl/src/common/TradeSet.cc",
+		"/Volumes/Source/trunksvn/atl/src/common/TradeSet.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/InstinetDriver.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/Account.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/asiafuturestripd.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TripAdmin.h",
+		"/Volumes/Source/trunksvn/atl/src/common/LIFFEMessage.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/ESpeedDriver.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/NOMFIXDriver.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/CBOEDriver.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/StateConf.cc",
+		"/Volumes/Source/joseph/scripts/mk",
+		"/Volumes/Source/trunksvn/atl/src/tools/selftrades.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/BaseOrder.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/BaseDaemon.h",
+		"/Volumes/Source/trunksvn/atl/src/util/KPoller.h",
+		"/Volumes/Source/trunksvn/atl/src/util/KPoller.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/BaseAdmin.cc",
+		"/Volumes/Source/OldLiffeDriver.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/BaseOrder.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/CBOEMessage.h",
+		"/Volumes/Source/trunksvn/atl/src/feed/ITCHMsg.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/Account.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/LSEMDriver.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/StateConf.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/LSEMDriver.cc",
+		"/Volumes/Source/trunksvn/itrade/test-conf/spars/eu-eq/a5115/BME.Madrid.ITXe.a5115",
+		"/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyFile.cc",
+		"/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyServer.h",
+		"/Users/joseph/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Volumes/Source/trunksvn/atl/src/util/ConfFile.cc",
+		"/Volumes/Source/trunksvn/atl/src/util/LogLevel.h",
+		"/Volumes/Source/trunksvn/atl/src/util/Profile.h",
+		"/Volumes/Source/trunksvn/atl/src/util/ProfileInternal.h",
+		"/Volumes/Source/trunksvn/atl/src/common/SymType.cc",
+		"/Volumes/Source/trunksvn/atl/src/conf/tripd.conf",
+		"/Volumes/Source/trunksvn/atl/src/util/Symbol.h",
+		"/Volumes/Source/trunksvn/atl/src/common/LIFFEData.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/CSDriver.cc",
+		"/Volumes/Source/trunksvn/atl/src/trip2/AsiaFuturesOrder.h",
+		"/Volumes/Source/trunksvn/atl/src/common/EuroPriceTable.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/TripMap.h",
+		"/Volumes/Source/trunksvn/atl/src/feed/LIFFEParser.h",
+		"/Volumes/Source/trunksvn/atl/src/feed/LIFFEParser.cc",
+		"/Volumes/Source/trunksvn/btrade/conf/templates/ordex/tradeout/tdex.conf",
+		"/Volumes/Source/trunksvn/atl/src/common/ClientID.h",
+		"/Volumes/Source/trunksvn/atl/src/client/OrderManager.cc",
+		"/Volumes/Source/trunksvn/atl/src/client/OrderManager.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/asiatripd.h",
+		"/Volumes/Source/trunksvn/atl/src/trip2/ClientLis.cc",
+		"/Volumes/Source/trunksvn/atl/src/feed/tdexfeed.cc",
+		"/Volumes/Source/trunksvn/atl/src/feed/liffefeed.cc",
+		"/Volumes/Source/trunksvn/atl/src/data/DataFile.h",
+		"/Users/joseph/Library/Application Support/Sublime Text 3/Packages/Package Control/Package Control.py",
+		"/Users/joseph/Library/Application Support/Sublime Text 3/Packages/Package Control/Default.sublime-commands",
+		"/Volumes/Source/trunksvn/atl/src/trip2/AlphaDriver.h",
+		"/Volumes/Source/trunksvn/atl/src/util/SharedQueueLogDest.h",
+		"/Volumes/Source/joseph/scripts/tripd.conf",
+		"/atl/live/conf/asiatripd.drivers.conf",
+		"/Volumes/Source/trunksvn/atl/src/trip2/CMEDriver.cc",
+		"/Users/joseph/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Volumes/Source/joseph/sublime/User/joe.py"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"",
+			"-.tags*",
+			"-.tags",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"RATE",
+			"LIFFE_OUTSIDE_PRICE_LIMITS",
+			"trim",
+			"revisionsDict",
+			"path",
+			"lineOwners",
+			"file",
+			"GenerateDiff",
+			"upload",
+			"LIFFE::TraderSuspend",
+			"details",
+			"LiffeOrderPrice",
+			"LiffeOrderEntry",
+			"processExec",
+			"clientOID",
+			"TZD",
+			"marketTime",
+			"registerIDPair",
+			"status",
+			"LIFFE_CONSTANT_RANGE__ERROR_VALUES",
+			"itchRefNum",
+			"sendCancel",
+			"cancel",
+			"PULL_ORDER",
+			"LIFFE_OP_UNKNOWN",
+			"lastConnect",
+			"recreateOrderFromMessage",
+			"registerIDPair",
+			"            msg.orderId,\nregisterIDPair",
+			"registerIDPair",
+			"ReplayResponse",
+			"Replay",
+			"replay",
+			"TradeReplay",
+			"Replay",
+			"getOrderFromMessage",
+			"recreateOrderFromMessage",
+			"register",
+			"eTradeStatus",
+			"eBuySell",
+			"getOrderFromMessage",
+			"Adding unknown order ",
+			"getClientOIDFromOID",
+			"No ClientID for unknown order",
+			"register",
+			"findOrderFromExternalID",
+			"map",
+			"findOrderFromExternalID",
+			"TradeReplay",
+			"registerIDPair",
+			"findOrderFromExternalID",
+			"registerIDPair",
+			"marketTime",
+			"TZD",
+			"mkt",
+			"TZD",
+			"marketTime",
+			"mkt",
+			"time",
+			"AsiaFuturesTripAdminClient",
+			"throw",
+			"TDEX",
+			"usePosixLike",
+			"posixLike",
+			"TRYTRUNK",
+			"import",
+			"import trychange",
+			"try",
+			"delete this",
+			"int fd",
+			"shmObj",
+			"shm",
+			"registerIDPair",
+			"writeState",
+			"HB",
+			"completeReplay",
+			"lastConnect",
+			"completeReplay",
+			"lastSent",
+			"allowedProductIDs",
+			"admNextOID",
+			"resetNextOID",
+			"symbolRef.",
+			"nextSeq",
+			"nextHammerOID",
+			"allocOID",
+			"recreate",
+			"nextSeqNum",
+			"lastSent",
+			"lastSeqNum",
+			"nextSeqNum",
+			"lastReceived",
+			"inSim",
+			"mcastCancelled",
+			"TradeResponse",
+			"sharesGone",
+			"            \n",
+			"atoiN",
+			"canSend",
+			"completeReplay",
+			"pullresponse",
+			"completeReplay",
+			"::onTimeout",
+			"lastCo",
+			"timeout",
+			"receivedReplay",
+			"completeReplay",
+			"replayComplete",
+			")\n",
+			"addClient",
+			"onTimeout",
+			"replayComplete",
+			"lastSent",
+			"serverOID",
+			"lastConnect",
+			"canSend",
+			"::cancel",
+			"cancel",
+			"lastConnect",
+			"cancelOpenOrders",
+			"process",
+			"process(",
+			"    LIFFE::TradeReplayRequest req;\nTradeReplayRequest",
+			"TradeReplayRequest",
+			"requestReplay",
+			"idFromString",
+			"intToExtIDMap",
+			"recreateOrderFromMessage"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": true,
+		"regex": false,
+		"replace_history":
+		[
+			"symbolRef->",
+			"\\nLIFFE",
+			"",
+			"cashyEnabled",
+			"if (!cashyEnabled)",
+			"if (!forwarding)",
+			"/usr/scratch/joe",
+			"MsgReaderTDEX::",
+			"TDEX",
+			"sock",
+			"msg.",
+			"TDEX::",
+			"BaseOrder * o",
+			"LIFFE::Message * msg",
+			"riskManager",
+			"riskManager.",
+			"trip->riskManager",
+			"optional",
+			"connected",
+			"string",
+			"BaseOrder"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "/Volumes/Source/trunksvn/atl"
+		},
+		{
+			"path": "/Volumes/Source/trunksvn/itrade"
+		},
+		{
+			"path": "/Volumes/Source/trunksvn/btrade"
+		},
+		{
+			"path": "/Volumes/Source/joseph/scripts"
+		}
+	],
+	"groups":
+	[
+		{
+			"selected": 8,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Volumes/Source/trunksvn/atl/src/tools/gcl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 52473,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								51342,
+								51342
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 21475.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Volumes/Source/trunksvn/atl/src/test/cashy/CashyTestRunner_test.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5573,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2885,
+								2885
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1028.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Volumes/Source/joseph/scripts/test.conf/tripd.conf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 57357,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								39357,
+								39357
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 23498.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Volumes/Source/joseph/scripts/mk",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8416,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								747,
+								747
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/LIFFEOrder.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12064,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1451,
+								1466
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 134.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/ESpeedDriver.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3804,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2983,
+								2983
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 824.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/ESpeedDriver.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22816,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13378,
+								13378
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5437.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/abin/gcl",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 53868,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								25143,
+								25143
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 10677.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/Volumes/Source/blamesvn/trunk/atl/src/tools/nomorewhites.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6799,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1967,
+								1967
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 755.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/CBOEDriver.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 44534,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								40004,
+								40004
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 14827.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/LSEMDriver.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 47809,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								21515,
+								21515
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 8610.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/TDEXDriver.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 33312,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19804,
+								19804
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 8643.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/Account.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10598,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9544,
+								9544
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3013.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/BaseDaemon.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 57097,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								49123,
+								49123
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 19272.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 14,
+					"file": "/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyServer.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7339,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4208,
+								4208
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1066.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "/Volumes/Source/trunksvn/atl/src/cashy/CashyPosixLike.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7728,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4362,
+								4362
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1805.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/InstinetDriver.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3375,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1561,
+								1575
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 506.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/InstinetDriver.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 50672,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 4.0,
+						"translation.y": 5874.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "/Volumes/Source/trunksvn/atl/src/tools/trychange.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16887,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9350,
+								9350
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3768.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Volumes/Source/trunksvn/atl/src/test/cashy/CashyTestRunner_test.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5573,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3589,
+								3589
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1321.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "/Volumes/Source/trunksvn/atl/src/test/cashy/CashyTestPerf.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14841,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4277,
+								4277
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1172.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 20,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/Admin.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 71715,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8561,
+								8561
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2002.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/TDEXDriver.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 33312,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								29986,
+								29986
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 13205.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 21,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/DriverBundle.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23180,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10848,
+								10848
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4020.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 22,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/TDEXDriver.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8545,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4327,
+								4340
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 894.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 23,
+					"file": "/Volumes/Source/OldLiffeDriver.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 62239,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								53553,
+								53553
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 21985.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 24,
+					"file": "/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyServer.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 20594,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19151,
+								19151
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 8548.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 25,
+					"file": "/Volumes/Source/trunksvn/atl/src/util/ConfFile.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 24090,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4220,
+								4220
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 933.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 26,
+					"file": "/Volumes/Source/trunksvn/atl/src/data/DataRepos.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15310,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3420,
+								3420
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1154.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 27,
+					"file": "/Volumes/Source/trunksvn/atl/src/data/SymArchive.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9956,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5847,
+								5847
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1358.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "/Volumes/Source/trunksvn/atl/src/cashy/internal/CashyServer.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7339,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3981,
+								3981
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1033.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 28,
+					"file": "/Volumes/Source/trunksvn/atl/src/cashy/CashyPosixLike.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2716,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1668,
+								1668
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 62.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "/Volumes/Source/trunksvn/atl/src/test/cashy/CashyTestPerf.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14841,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3794,
+								3794
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1211.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 29,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/AsiaFuturesAdmin.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3065,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								785,
+								785
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 30,
+					"file": "/Volumes/Source/trunksvn/atl/src/trip2/AsiaFuturesAdmin.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 570,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								299,
+								299
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			],
+			[
+				2,
+				0,
+				3,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.318230254569,
+			0.676208047759,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 405.0
+	},
+	"project": "",
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"instinet",
+				"atl/src/trip2/InstinetDriver.h"
+			],
+			[
+				"triptdex",
+				"atl/src/trip2/TDEXDriver.cc"
+			],
+			[
+				"tripbundl",
+				"atl/src/trip2/DriverBundle.h"
+			],
+			[
+				"liffeorde",
+				"atl/src/trip2/LIFFEOrder.h"
+			],
+			[
+				"liffeapi",
+				"atl/src/3ps/liffe/LiffeAPI.h"
+			],
+			[
+				"tripaccou",
+				"atl/src/trip2/Account.cc"
+			],
+			[
+				"espeed",
+				"atl/src/trip2/ESpeedDriver.cc"
+			],
+			[
+				"",
+				"atl/src/3ps/liffe/LiffeAPI.h"
+			],
+			[
+				"liffeo",
+				"atl/src/trip2/LIFFEOrder.h"
+			],
+			[
+				"espeedd",
+				"atl/src/trip2/ESpeedDriver.cc"
+			],
+			[
+				"tdexdr",
+				"atl/src/trip2/TDEXDriver.cc"
+			],
+			[
+				"futuresa",
+				"atl/src/trip2/FuturesAdmin.cc"
+			],
+			[
+				"asiatrip",
+				"atl/src/trip2/asiatripd.cc"
+			],
+			[
+				"lsem",
+				"atl/src/trip2/LSEMDriver.cc"
+			],
+			[
+				"cboed",
+				"atl/src/trip2/CBOEDriver.cc"
+			],
+			[
+				"liffeord",
+				"atl/src/trip2/LIFFEOrder.h"
+			],
+			[
+				"mk",
+				"scripts/mk"
+			],
+			[
+				"tripdri",
+				"atl/src/trip2/TripDriver.h"
+			],
+			[
+				"liffeor",
+				"atl/src/trip2/LIFFEOrder.h"
+			],
+			[
+				"tdexd",
+				"atl/src/trip2/TDEXDriver.cc"
+			],
+			[
+				"cashypos",
+				"atl/src/cashy/CashyPosixLike.cc"
+			],
+			[
+				"futuresadmi",
+				"atl/src/trip2/FuturesAdmin.cc"
+			],
+			[
+				"asiafuture",
+				"atl/src/trip2/AsiaFuturesAdmin.cc"
+			],
+			[
+				"trip",
+				"scripts/test.conf/tripd.conf"
+			],
+			[
+				"trip2adm",
+				"atl/src/trip2/Admin.cc"
+			],
+			[
+				"cashytestpe",
+				"atl/src/test/cashy/CashyTestPerf.h"
+			],
+			[
+				"cashytestr",
+				"atl/src/test/cashy/CashyTestRunner_test.h"
+			],
+			[
+				"cashytestru",
+				"atl/src/test/cashy/CashyTestRunner_test.h"
+			],
+			[
+				"cashyser",
+				"atl/src/cashy/internal/CashyServer.h"
+			],
+			[
+				"symarchi",
+				"atl/src/data/SymArchive.h"
+			],
+			[
+				"datare",
+				"atl/src/data/DataRepos.cc"
+			],
+			[
+				"conffil",
+				"atl/src/util/ConfFile.cc"
+			],
+			[
+				"tripd.co",
+				"scripts/test.conf/tripd.conf"
+			],
+			[
+				"k",
+				"atl/src/util/KPoller.h"
+			],
+			[
+				"kpoller",
+				"atl/src/util/KPoller.h"
+			],
+			[
+				"baseda",
+				"atl/src/trip2/BaseDaemon.cc"
+			],
+			[
+				"tripdi",
+				"atl/src/trip2/TripDriver.h"
+			],
+			[
+				"statefi",
+				"atl/src/trip2/StateFile.cc"
+			],
+			[
+				"tdexdri",
+				"atl/src/trip2/TDEXDriver.cc"
+			],
+			[
+				"espeeddr",
+				"atl/src/trip2/ESpeedDriver.h"
+			],
+			[
+				"tdexdriver",
+				"atl/src/trip2/TDEXDriver.h"
+			],
+			[
+				"tsedri",
+				"atl/src/trip2/TSEDriver.cc"
+			],
+			[
+				"tripdrive",
+				"atl/src/trip2/TripDriver.h"
+			],
+			[
+				"tripbase",
+				"atl/src/test/risk/PricerBase_test.h"
+			],
+			[
+				"baseo",
+				"atl/src/trip2/BaseOrder.h"
+			],
+			[
+				"baseorder",
+				"atl/src/trip2/BaseOrder.h"
+			],
+			[
+				"tripd",
+				"atl/src/trip2/TripDriver.h"
+			],
+			[
+				"basedae",
+				"atl/src/trip2/BaseDaemon.h"
+			],
+			[
+				"lifeo",
+				"atl/src/trip2/LIFFEOrder.h"
+			],
+			[
+				"cboemes",
+				"atl/src/trip2/CBOEMessage.h"
+			],
+			[
+				"cboe",
+				"atl/src/trip2/CBOEDriver.cc"
+			],
+			[
+				"espeedr",
+				"atl/src/trip2/ESpeedDriver.cc"
+			],
+			[
+				"mkten",
+				"atl/src/common/MktEnums.he"
+			],
+			[
+				"liffea",
+				"atl/src/3ps/liffe/LiffeAPI.h"
+			],
+			[
+				"tdex",
+				"atl/src/trip2/TDEXDriver.cc"
+			],
+			[
+				"instine",
+				"atl/src/trip2/InstinetDriver.h"
+			],
+			[
+				"baseor",
+				"atl/src/trip2/BaseOrder.h"
+			],
+			[
+				"selftra",
+				"atl/src/tools/selftrades.cc"
+			],
+			[
+				"tradeset.cc",
+				"atl/src/common/TradeSet.cc"
+			],
+			[
+				"statefile",
+				"atl/src/trip2/StateFile.cc"
+			],
+			[
+				"tripd.con",
+				"scripts/test.conf/tripd.conf"
+			],
+			[
+				"mkte",
+				"atl/src/common/MktEnums.he"
+			],
+			[
+				"stateconf",
+				"atl/src/trip2/StateConf.cc"
+			],
+			[
+				"sttecon",
+				"atl/src/trip2/StateConf.cc"
+			],
+			[
+				"lsemdr",
+				"atl/src/trip2/LSEMDriver.cc"
+			],
+			[
+				"tdexdi",
+				"atl/src/trip2/TDEXDriver.cc"
+			],
+			[
+				"utilconf",
+				"atl/src/util/ConfFile.cc"
+			],
+			[
+				"cashy.cc",
+				"atl/src/cashy/Cashy.cc"
+			],
+			[
+				"cashy",
+				"atl/src/cashy/Cashy.cc"
+			],
+			[
+				"cashypox",
+				"atl/src/cashy/CashyPosixLike.cc"
+			],
+			[
+				"cashymem",
+				"atl/src/cashy/internal/CashyMemory.cc"
+			],
+			[
+				"cashyre",
+				"atl/src/cashy/internal/CashyRedis.cc"
+			],
+			[
+				"cashyfile",
+				"atl/src/cashy/internal/CashyFile.cc"
+			],
+			[
+				"profile.cc",
+				"atl/src/util/Profile.cc"
+			],
+			[
+				"profile.",
+				"atl/src/util/Profile.cc"
+			],
+			[
+				"datarepo",
+				"atl/src/data/DataRepos.h"
+			],
+			[
+				"datarep",
+				"atl/src/data/DataRepos.cc"
+			],
+			[
+				"symarchiv",
+				"atl/src/data/SymArchive.h"
+			],
+			[
+				"datarepos",
+				"atl/src/data/DataRepos.cc"
+			],
+			[
+				"redis",
+				"atl/src/util/Redis.h"
+			],
+			[
+				"cashyredis",
+				"atl/src/cashy/internal/CashyRedis.cc"
+			],
+			[
+				"cashyredi",
+				"atl/src/cashy/internal/CashyRedis.cc"
+			],
+			[
+				"cashyfile.",
+				"atl/src/cashy/internal/CashyFile.h"
+			],
+			[
+				"profilein",
+				"atl/src/util/ProfileInternal.h"
+			],
+			[
+				"profile",
+				"atl/src/util/Profile.h"
+			],
+			[
+				"cashybo",
+				"atl/src/cashy/internal/CashyBlockIOManager.cc"
+			],
+			[
+				"symtype",
+				"atl/src/common/SymType.cc"
+			],
+			[
+				"liffeli",
+				"atl/src/util/LIFFEUtil.cc"
+			],
+			[
+				"tdconf",
+				"scripts/test.conf/tripd.conf"
+			],
+			[
+				"sy",
+				"atl/src/util/Symbol.h"
+			],
+			[
+				"baseord",
+				"atl/src/trip2/BaseOrder.h"
+			],
+			[
+				"symbol",
+				"atl/src/util/Symbol.h"
+			],
+			[
+				"liffeu",
+				"atl/src/util/LIFFEUtil.cc"
+			],
+			[
+				"cboedr",
+				"atl/src/trip2/CBOEDriver.cc"
+			],
+			[
+				"fixdri",
+				"atl/src/trip2/NOMFIXDriver.cc"
+			],
+			[
+				"ouchdr",
+				"atl/src/trip2/OUCHDriver.cc"
+			],
+			[
+				"ouchdi",
+				"atl/src/trip2/OUCHDriver.cc"
+			],
+			[
+				"lifeor",
+				"atl/src/trip2/LIFFEOrder.h"
+			],
+			[
+				"lifedata",
+				"atl/src/common/LIFFEData.h"
+			],
+			[
+				"ouchdriv",
+				"atl/src/trip2/OUCHDriver.cc"
+			],
+			[
+				"tripd.",
+				"scripts/test.conf/tripd.conf"
+			],
+			[
+				"conf",
+				"atl/src/util/ConfFile.h"
+			],
+			[
+				"tripdco",
+				"scripts/test.conf/tripd.conf"
+			],
+			[
+				"asiaftureo",
+				"atl/src/trip2/AsiaFuturesOrder.h"
+			],
+			[
+				"tripdriver",
+				"atl/src/trip2/TripDriver.h"
+			],
+			[
+				"asia",
+				"atl/src/trip2/asiafuturestripd.h"
+			],
+			[
+				"liffeda",
+				"atl/src/common/LIFFEData.h"
+			],
+			[
+				"liffemessa",
+				"atl/src/common/LIFFEMessage.h"
+			],
+			[
+				"event",
+				"atl/src/data/Events.h"
+			],
+			[
+				"events.h",
+				"atl/src/data/Events.h"
+			],
+			[
+				"tdex.con",
+				"btrade/conf/templates/ordex/tradeout/tdex.conf"
+			],
+			[
+				"rawproc",
+				"atl/src/trip2/tools/rawproc.cc"
+			],
+			[
+				"futuresriskma",
+				"atl/src/risk/FuturesRiskManager.cc"
+			],
+			[
+				"highmar",
+				"scripts/test.conf/highmargin.conf"
+			],
+			[
+				"liffe",
+				"atl/src/util/LIFFEUtil.cc"
+			],
+			[
+				"liffeutil.cc",
+				"atl/src/util/LIFFEUtil.cc"
+			],
+			[
+				"mke",
+				"atl/src/common/MktEnums.he"
+			],
+			[
+				"mktenu",
+				"atl/src/common/MktEnums.he"
+			],
+			[
+				"mkenu",
+				"atl/src/common/MktEnums.he"
+			],
+			[
+				"tdexdriv",
+				"atl/src/trip2/TDEXDriver.cc"
+			],
+			[
+				"tripmap.h",
+				"atl/src/trip2/TripMap.h"
+			],
+			[
+				"tripmap",
+				"atl/src/trip2/TripMap.h"
+			],
+			[
+				"asiafuturestrip",
+				"atl/src/trip2/asiafuturestripd.cc"
+			],
+			[
+				"asiafuturetrip",
+				"atl/src/trip2/asiafuturestripd.cc"
+			],
+			[
+				"clietnid",
+				"atl/src/common/ClientID.h"
+			],
+			[
+				"clientid",
+				"atl/src/common/ClientID.h"
+			],
+			[
+				"tdexfeed",
+				"atl/src/feed/tdexfeed.cc"
+			],
+			[
+				"ouchdrive",
+				"atl/src/trip2/OUCHDriver.cc"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 187.0,
+		"selected_items":
+		[
+			[
+				"processExec",
+				"processExec"
+			],
+			[
+				"LiffeOrderPrice",
+				"_tagLiffeOrderPrice"
+			],
+			[
+				"TripOrderHandler",
+				"TripOrderHandler"
+			],
+			[
+				"TripBase",
+				"TripBase"
+			],
+			[
+				"FuturesMarketInfo",
+				"FuturesMarketInfo"
+			],
+			[
+				"BaseDae",
+				"BaseDataFile"
+			],
+			[
+				"LSEM",
+				"LsemEvent"
+			],
+			[
+				"BaseDam",
+				"~BaseDaemon"
+			]
+		],
+		"width": 576.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 262.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
