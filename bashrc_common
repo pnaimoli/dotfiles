@@ -49,7 +49,7 @@ case $(uname -s) in
         alias ls="gls -hFG --color --time-style='+%Y%m%d %T'"
     ;;
     Linux)
-        alias ls="ls -hFG --color --time-style='+%Y%m%d %T'"
+        alias ls="ls -hF --color --time-style='+%Y%m%d %T'"
     ;;
 esac
 
@@ -83,7 +83,8 @@ alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
 alias  more='less'
 export PAGER=less
 export LESSKEY='~/.lesskey'
-export LESSOPEN='| ~/.dotfiles/pygments-main/external/autopygmentize %s'
+# this is too slow to be useful
+#export LESSOPEN='| ~/.dotfiles/pygments-main/external/autopygmentize %s'
 export LESS='--ignore-case --hilite-unread  --window=-4 --LONG-PROMPT -R -X -P%t?f%f :stdin .?pb%pb\%:?lbLine %lb:?bbByte %bb:-...' # Use this if lesspipe.sh exists.
 
 umask 022
