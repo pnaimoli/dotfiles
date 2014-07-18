@@ -7,4 +7,4 @@ export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:~/bin:/usr/loc
 export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl -w"
 alias st="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 export s="/Users/joseph/source"
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:$HOME/.rvm/bin:'/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'

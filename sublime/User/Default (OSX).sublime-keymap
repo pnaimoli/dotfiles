@@ -16,13 +16,14 @@
 	{ "keys": ["super+shift+right"], "command": "move_to", "args": {"to": "eol", "extend": true} },
 	{ "keys": ["super+shift+left"], "command": "move_to", "args": {"to": "bol", "extend": true} },
 
-	{ "keys": ["super+r"],  "command": "build", "args": {"variant": "Run"} },
 	{ "keys": ["super+shift+b"], "command": "build" },
 
 	{ "keys": ["super+shift+s"], "command": "search_anywhere_from_input" },
 	{ "keys": ["super+shift+alt+s"], "command": "search_anywhere_from_selection" },
 
-	{ "keys": ["super+shift+n"], "command": "next_result" },
+  { "keys": ["super+shift+b"], "command": "show_panel", "args": {"panel": "output.exec"} },
+  { "keys": ["super+shift+k"], "command": "prev_result" },
+	{ "keys": ["super+shift+j"], "command": "next_result" },
 	{ "keys": ["super+ctrl+a"], "command": "alignment" },
 
 	{ "keys": ["super+alt+up"], "command": "select_lines", "args": {"forward": false} },
@@ -42,29 +43,30 @@
     { "keys": ["super+shift+."], "command": "jump_to_header"},
     { "keys": ["super+k","super+c"], "command": "toggle_comment"},
 
-  // {
-  //   "command": "clang_goto_implementation",
-  //   "context": [{"key": "clang_supported_language"}],
-  //   "keys": ["super+shift+."]
-  // },
-  {
-    "command": "clang_go_back",
-    "context": [{"key": "clang_supported_language"}],
-    "keys": ["alt+left"]
-  },
-
   { "keys": ["super+alt+right"], "command": "travel_to_pane", "args": {"direction": "right"} },
   { "keys": ["super+alt+left"], "command": "travel_to_pane", "args": {"direction": "left"} },
 
   { "keys": ["super+shift+,"], "command" : "toggle_format" },
   { "keys": ["super+enter"], "command" : "continue_with_comment" },
   { "keys": ["super+k", "super+k"], "command" : "doxygenize" },
-
+  { "keys": ["super+g"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
   { "keys": ["super+alt+left"], "command": "focus_neighboring_group", "args": {"forward": false} },
   { "keys": ["super+alt+right"], "command": "focus_neighboring_group" },
   { "keys": ["super+alt+shift+left"], "command": "move_to_neighboring_group", "args": {"forward": false} },
   { "keys": ["super+alt+shift+right"], "command": "move_to_neighboring_group" },
-  { "keys": ["super+."], "command": "goto_definition" },
-  { "keys": ["super+,"], "command": "jump_back" },
-  { "keys": ["super+/"], "command": "jump_forward" }
+  //{ "keys": ["super+."], "command": "goto_definition" },
+  //{ "keys": ["super+,"], "command": "jump_back" },
+  //{ "keys": ["super+/"], "command": "jump_forward" },
+  //{ "keys": ["super+1"], "command": "focus_group", "args": { "group": 0 } },
+  //{ "keys": ["super+2"], "command": "focus_group", "args": { "group": 1 } },
+  //{ "keys": ["super+3"], "command": "focus_group", "args": { "group": 2 } },
+  //{ "keys": ["super+4"], "command": "focus_group", "args": { "group": 3 } },
+  //{ "keys": ["super+5"], "command": "focus_group", "args": { "group": 4 } },
+  //{ "keys": ["super+6"], "command": "focus_group", "args": { "group": 5 } },
+  //{ "keys": ["super+7"], "command": "focus_group", "args": { "group": 6 } },
+  //{ "keys": ["super+8"], "command": "focus_group", "args": { "group": 7 } },
+  //{ "keys": ["super+9"], "command": "focus_group", "args": { "group": 8 } }
+  { "keys": ["super+h"], "command": "dash_doc"},
+  { "keys": ["super+alt+h"], "command": "dash_doc",
+                            "args": { "flip_syntax_sensitive": true } }
 ]
