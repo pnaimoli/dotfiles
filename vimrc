@@ -220,11 +220,12 @@ nnoremap <leader>e :e $VIMRC
 """""""""""""""""""""""""""""""""""""""
 set background=dark       " hilight colors for a dark background
 if has('gui_running')
-    colorscheme advantage
     hi SpaceError guibg=#FF8800
     match SpaceError /\s\+$/
     if has("macunix")
+        set guifont=Inconsolata\ for\ Powerline:h13
     else
+        colorscheme advantage
         set guifont=Fixed\ 13
     endif
 else
