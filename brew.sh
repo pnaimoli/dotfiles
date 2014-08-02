@@ -24,6 +24,7 @@ brew install coreutils
 #brew install reattach-to-user-namespace
 brew install hg
 brew install xpdf
+brew install tree
 
 # install casks
 brew cask install adium
@@ -49,6 +50,7 @@ brew cask install xquartz
 #brew cask install little-snitch
 brew cask install nvalt
 brew cask install android-file-transfer
+brew cask install spotify
 brew cask install pycharm-ce
 
 # must be after x-quartz
