@@ -86,9 +86,6 @@ if has('autocmd')
     " When entering a buffer, cd to the file's directory
     if isdirectory(expand('%:p:h'))
         autocmd BufEnter * silent! lcd %:p:h
-        autocmd BufEnter * execute ':setlocal path=' . origpath . ',' .
-\           substitute(substitute(expand('%:p:h'), '/src/.*', '/src', ''),
-\                      ' ', '\\ ', 'g')
     endif
 
 "    " Magic!!!
@@ -116,17 +113,6 @@ if has('title') && (has('gui_running') || &title)
     set titlestring+=\ -\ %{v:progname}                               " program name
     set titlestring+=\ -\ %{substitute(getcwd(),\ $HOME,\ '~',\ '')}  " working directory
 endif
-
-""""""""""""""""""""""""""""""""""""""
-" ===== Set up makeprg for scons =====
-""""""""""""""""""""""""""""""""""""""
-"set makeprg=/usr/local/bin/scons\ -j8\ -u\ \.
-"function! Compile()
-"    cd $HOME/training
-"    make
-"endfunction
-"noremap <F9> :call Compile()<CR>
-"imap <F9> <C-O><F9>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " ===== TODO: Organize this at a later point =====
@@ -163,17 +149,6 @@ nnoremap Y y$
 " visual shifting (does not exit Visual mode)
 vnoremap < <gv
 vnoremap > >gv
-
-" jon likes this
-" nnoremap n nzz
-
-"nnoremap <silent> xx <Del>
-"nnoremap <silent> xc xph
-"nnoremap <silent> xw "_yiw:s/\(\%#\w\+\)\(\W\+\)\(\w\+\)/\3\2\1/<cr><c-o><c-l>:nohlsearch<CR>
-"nnoremap <silent> xb "_yiw:.s/\(\%#\w\+\)\(\_W\+\)\(\w\+\)/\3\2\1/<cr><c-o>/\w\+\_W\+<CR><c-l>:nohlsearch<CR>
-
-" Set up directories to search when cd'ing
-" set cdpath=.,$HOME,$HOME/atl,$HOME/atl/src,/,/home
 
 "Set up path to search for .h files
 let origpath='.,/usr/local/include,/usr/include'
