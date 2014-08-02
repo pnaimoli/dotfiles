@@ -78,6 +78,7 @@ alias mkdir='mkdir -p'
 alias R='R --no-save'
 alias shuf="perl -MList::Util=shuffle -e'print shuffle<>'"
 alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
+alias xargso="xargs sh -c 'vim \"\$@\" </dev/tty' vim"
 
 # tailoring 'less'
 alias  more='less'
