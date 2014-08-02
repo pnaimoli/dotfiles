@@ -10,3 +10,6 @@
 [submodule "vim/bundle-available/colorschemes"]
 	path = vim/bundle-available/colorschemes
 	url = https://github.com/flazz/vim-colorschemes.git
+[submodule "vim/bundle-available/fugitive"]
+	path = vim/bundle-available/fugitive
+	url = git://github.com/tpope/vim-fugitive.git
