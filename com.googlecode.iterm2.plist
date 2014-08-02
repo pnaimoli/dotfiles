@@ -5276,15 +5276,15 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>702 83 613 270 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>450 393 924 485 0 0 1440 878 </string>
+	<string>455 341 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>4 0 1436 878 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>4 476 492 399 0 0 1440 878 </string>
+	<string>4 0 1436 878 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>4 477 492 399 0 0 1440 878 </string>
+	<string>5 1 1434 875 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>4 439 1436 439 0 0 1440 878 </string>
+	<string>4 0 1436 878 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
 	<string>4 479 492 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
@@ -5507,7 +5507,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>env MOSH_TITLE_NOPREFIX=1 /usr/local/bin/mosh --client=/usr/local/bin/mosh-client shalgo6.hudson-trading.com -- tmux new-session</string>
+			<string>env MOSH_TITLE_NOPREFIX=1 /usr/local/bin/mosh --client=/usr/local/bin/mosh-client shalgo5.hudson-trading.com -- tmux -2 new-session</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -5865,7 +5865,7 @@
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
-			<string>shalgo6 (mosh)</string>
+			<string>shalgo (mosh)</string>
 			<key>Non Ascii Font</key>
 			<string>InconsolataForPowerline 12</string>
 			<key>Non-ASCII Anti Aliased</key>
@@ -7360,7 +7360,7 @@
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
-			<string>shalgo6 (ssh)</string>
+			<string>shalgo (ssh)</string>
 			<key>Non Ascii Font</key>
 			<string>InconsolataForPowerline 12</string>
 			<key>Non-ASCII Anti Aliased</key>
@@ -10602,7 +10602,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-04-17T17:54:03Z</date>
+	<date>2014-07-11T15:55:15Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -13849,6 +13849,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20140112</string>
+	<string>1.0.0.20140629</string>
 </dict>
 </plist>
