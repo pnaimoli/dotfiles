@@ -309,6 +309,11 @@ let g:ctrlp_custom_ignore = {
     \ 'link': 'pipeline',
     \ 'file': '\v\.(exe|so|dll|pyc)$',
     \ }
+let g:ctrlp_user_command = {
+    \ 'types': {
+        \ 1: ['.git', 'cd %s && git ls-files | egrep -v "btrade/conf/"'],
+        \ },
+    \ }
 
 """"""""""""""""""""""""""""""
 " ====== PLUGIN OPTIONS ======

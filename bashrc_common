@@ -145,6 +145,12 @@ function swap()         # swap 2 filenames around
     mv $TMPFILE "$2"
 }
 
+function despace()      # remove spaces from filename
+{
+    newname=$(echo $1 | tr ' ' _)
+    mv "$1" $newname
+}
+
 function cd()
 {
    MAX=20

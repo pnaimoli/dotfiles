@@ -1,6 +1,5 @@
 [core]
 	excludesfile = ~/.dotfiles/gitignore_global
-	whitespace = nowarn
 [user]
 	name = Peter Naimoli
 	email = pnaimoli@gmail.com

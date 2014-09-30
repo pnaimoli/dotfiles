@@ -4,4 +4,4 @@
 *.pyo
 .idea
 .autotest_failures
-autotest.out*
+autotest.log*
