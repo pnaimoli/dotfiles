@@ -2,9 +2,9 @@ source ~/.dotfiles/.bashrc_common
 
 alias bsd='ssh -Y infralab19'
 alias rmount='remote.py --mount ~/Documents/stuff --at /Volumes/Source'
-alias r='/usr/local/bin/mosh --client=/usr/local/bin/mosh-client shalgo8.hudson-trading.com -- tmux new-session'
+alias r='/usr/local/bin/mosh --client=/usr/local/bin/mosh-client infralab19.hudson-trading.com -- tmux new-session'
 export PATH=/Library/Frameworks/Python.framework/Versions/2.7/bin:~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/games/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:~/source/joseph/scripts:~/source/.remote/versioned/bin
 export EDITOR="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl -w"
 alias st="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
 export s="/Users/joseph/source"
-PATH=$PATH:$HOME/.rvm/bin:'/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+PATH=$PATH:$HOME/.rvm/bin:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl # Add RVM to PATH for scripting

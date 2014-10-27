@@ -28,6 +28,10 @@
 
 	{ "keys": ["super+alt+up"], "command": "select_lines", "args": {"forward": false} },
 	{ "keys": ["super+alt+down"], "command": "select_lines", "args": {"forward": true} },
+  { "keys": ["super+alt+k"], "command": "select_lines", "args": {"forward": false} },
+  { "keys": ["super+alt+j"], "command": "select_lines", "args": {"forward": true} },
+  { "keys": ["super+shift+h"], "command": "prev_view" },
+  { "keys": ["super+shift+l"], "command": "next_view" },
 
     { "keys": ["ctrl+r"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
 
@@ -43,15 +47,14 @@
     { "keys": ["super+shift+."], "command": "jump_to_header"},
     { "keys": ["super+k","super+c"], "command": "toggle_comment"},
 
-  { "keys": ["super+alt+right"], "command": "travel_to_pane", "args": {"direction": "right"} },
-  { "keys": ["super+alt+left"], "command": "travel_to_pane", "args": {"direction": "left"} },
-
   { "keys": ["super+shift+,"], "command" : "toggle_format" },
   { "keys": ["super+enter"], "command" : "continue_with_comment" },
   { "keys": ["super+k", "super+k"], "command" : "doxygenize" },
   { "keys": ["super+g"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
   { "keys": ["super+alt+left"], "command": "focus_neighboring_group", "args": {"forward": false} },
   { "keys": ["super+alt+right"], "command": "focus_neighboring_group" },
+  { "keys": ["super+alt+h"], "command": "focus_neighboring_group", "args": {"forward": false} },
+  { "keys": ["super+alt+l"], "command": "focus_neighboring_group" },
   { "keys": ["super+alt+shift+left"], "command": "move_to_neighboring_group", "args": {"forward": false} },
   { "keys": ["super+alt+shift+right"], "command": "move_to_neighboring_group" },
   //{ "keys": ["super+."], "command": "goto_definition" },
@@ -66,7 +69,5 @@
   //{ "keys": ["super+7"], "command": "focus_group", "args": { "group": 6 } },
   //{ "keys": ["super+8"], "command": "focus_group", "args": { "group": 7 } },
   //{ "keys": ["super+9"], "command": "focus_group", "args": { "group": 8 } }
-  { "keys": ["super+h"], "command": "dash_doc"},
-  { "keys": ["super+alt+h"], "command": "dash_doc",
-                            "args": { "flip_syntax_sensitive": true } }
+  { "keys": ["super+h"], "command": "dash_doc"}
 ]
