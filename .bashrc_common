@@ -24,7 +24,7 @@ shopt -s cmdhist
 #-------------------
 
 #export BASH_ENV='~/.bashrc' # so piping to 'bash' doesn't require 'bash -l'
-export PATH=/usr/local/share/git-core/contrib/workdir:$PATH
+export PATH=$HOME/.dotfiles/bin:/usr/local/share/git-core/contrib/workdir:$PATH
 export VIMDIR='~/.vim/'
 if [ -z "$SCHED_JID" ]; then
   export MALLOC_OPTIONS='J'
@@ -83,6 +83,7 @@ alias myxargs='tr "\n" "\0" | xargs -0'
 alias shuf="perl -MList::Util=shuffle -e'print shuffle<>'"
 alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
 alias ediff='$HOME/.dotfiles/ediff.sh'
+alias pspy='ps wwwaux | grep joseph | grep python'
 
 
 # tailoring 'less'
@@ -130,9 +131,7 @@ alias 17='cd `dirs -l +17`; d'
 alias 18='cd `dirs -l +18`; d'
 alias 19='cd `dirs -l +19`; d'
 
-export r='/scratchq/joseph/remote'
-export a='/scratchq/joseph/archived'
-export p='/scratchq/joseph/pipeout'
+export p='/scratch/joseph/pipeout'
 
 #--------------
 # Magic
@@ -226,14 +225,13 @@ function parse_git_color () {
     fi
 }
 
-#PS1_git='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]:^)"; else echo -n "\[${RED}\]ಠ_ಠ"; fi;
-#echo -n "\[${PURPLE}\][\[${RED}\]";
-#if [[ "$(whoami)" != "joseph" ]]; then echo -n "\[${RED}\]\u@"; fi;
-#echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w \[\$(parse_git_color)\]$(parse_git_branch)\[${NONE}\] > "`'
+PS1_git='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]:^)"; else echo -n "\[${RED}\]ಠ_ಠ"; fi;
+echo -n "\[${PURPLE}\][\[${RED}\]";
+if [[ "$(whoami)" != "joseph" ]]; then echo -n "\[${RED}\]\u@"; fi;
+echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
 
-#PS1=$PS1_git
+PS1=$PS1_git
 
-. ~/.dotfiles/powerline/powerline/bindings/bash/powerline.sh
 
 #-----------------------------------
 # Git completion:
@@ -347,6 +345,10 @@ function cd()
    fi
 }
 
+function fe () {
+awk "{ print \$${1};}" | xargs -n1
+}	 
+
 # https://chris-lamb.co.uk/2010/04/22/locating-source-any-python-module/
 function cdp () {
 cd "$(python -c "import sys, imp, os
@@ -357,10 +359,21 @@ print path")"
 }
 
 . $HOME/.dotfiles/z.sh
-
 function t {
     echo -ne "\033]0;"$*"\007"
 }
 
-read title
-echo -ne "\033]0;"$title"\007"
+. $HOME/.dotfiles/alias.sh
+
+function mem () {
+echo alias $1="\"$(fc -ln -2 | head -1 | sed -e 's/\$/\\\$/')\"" >> $HOME/.dotfiles/alias.sh
+. $HOME/.dotfiles/alias.sh
+}
+
+function title {
+    echo -ne "\033]0;"$*"\007"
+}
+
+function dbg () { 
+    emacs --eval "(gdb \"gdb --annotate=3 --args $*\")";
+}
