@@ -347,7 +347,7 @@ function cd()
 
 function fe () {
 awk "{ print \$${1};}" | xargs -n1
-}	 
+}
 
 # https://chris-lamb.co.uk/2010/04/22/locating-source-any-python-module/
 function cdp () {
@@ -359,21 +359,18 @@ print path")"
 }
 
 . $HOME/.dotfiles/z.sh
+. $HOME/.dotfiles/alias.sh
+
 function t {
     echo -ne "\033]0;"$*"\007"
 }
 
-. $HOME/.dotfiles/alias.sh
 
 function mem () {
 echo alias $1="\"$(fc -ln -2 | head -1 | sed -e 's/\$/\\\$/')\"" >> $HOME/.dotfiles/alias.sh
 . $HOME/.dotfiles/alias.sh
 }
 
-function title {
-    echo -ne "\033]0;"$*"\007"
-}
-
-function dbg () { 
+function dbg () {
     emacs --eval "(gdb \"gdb --annotate=3 --args $*\")";
 }
