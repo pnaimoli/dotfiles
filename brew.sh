@@ -47,11 +47,9 @@ brew cask install transmission
 brew cask install vlc
 brew cask install witch
 brew cask install xquartz
-#brew cask install little-snitch
 brew cask install nvalt
 brew cask install android-file-transfer
 brew cask install spotify
-brew cask install pycharm-ce
 
 # must be after x-quartz
 brew tap homebrew/science
