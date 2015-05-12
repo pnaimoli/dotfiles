@@ -5280,11 +5280,11 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 294 592 584 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>4 1 1436 875 0 0 1440 878 </string>
-	<key>NSWindow Frame iTerm Window 1</key>
 	<string>4 0 1436 878 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>4 476 492 399 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>4 477 492 399 0 0 1440 878 </string>
+	<string>4 1 1436 876 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
 	<string>4 1 1436 876 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
@@ -7755,7 +7755,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" -- shapeter1 ssh -t npnl.hudson-trading.com /bbin/mypnl.py etf -- --comma</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" -- shapeter1.hudson-trading.com ssh -t npnl.hudson-trading.com /bbin/mypnl.py etf -- --comma</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -8502,7 +8502,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" -- shapeter1 ssh -t npnl.hudson-trading.com /bbin/mypnl.py everyone -- --comma</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" -- shapeter1.hudson-trading.com ssh -t npnl.hudson-trading.com /bbin/mypnl.py everyone -- --comma</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -9249,7 +9249,7 @@
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
-			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" -- shapeter1 ssh -t npnl.hudson-trading.com /home/max/showpnl/add.cmd</string>
+			<string>/usr/local/bin/mosh --client=/usr/local/bin/mosh-client --ssh="ssh" -- shapeter1.hudson-trading.com ssh -t npnl.hudson-trading.com /home/max/showpnl/add.cmd</string>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -9861,7 +9861,9 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-04-30T18:41:43Z</date>
+	<date>2015-05-12T17:09:44Z</date>
+	<key>SUSkippedVersion</key>
+	<string>2.1</string>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
