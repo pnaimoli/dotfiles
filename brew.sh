@@ -31,7 +31,7 @@ brew cask install adium
 brew cask install day-o
 brew cask install dropbox
 brew cask install firefox
-brew cask install github
+brew cask install github-desktop
 brew cask install google-chrome
 brew cask install iterm2
 brew cask install kindle
@@ -47,9 +47,10 @@ brew cask install transmission
 brew cask install vlc
 brew cask install witch
 brew cask install xquartz
-brew cask install nvalt
+#brew cask install nvalt
 brew cask install android-file-transfer
 brew cask install spotify
+brew cask install playonmac
 
 # must be after x-quartz
 brew tap homebrew/science
