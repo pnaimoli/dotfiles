@@ -25,6 +25,7 @@ brew install coreutils
 brew install hg
 brew install xpdf
 brew install tree
+brew install st
 
 # install casks
 brew cask install adium
