@@ -29,7 +29,9 @@ set matchtime=0           " prevent matching delay
 set ic                    " force case-sensitive
 set nu                    " show line numbers
 set nomousehide           " OMG FBSD8 BUG!!!!!!!
-set re=1                  " http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting
+if exists("&re")
+    set re=1                  " http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting
+endif
 set scrolloff=2           " keep 2 lives visible above/below the cursor
 set shortmess+=IA         " suppress intro and swap file messages
 set showbreak=>>          " show a > at each broken line
@@ -208,7 +210,7 @@ else
     if has("macunix")
         set background=light
     else
-        colorscheme neon
+        " colorscheme neon
     endif
 endif
 
@@ -267,6 +269,7 @@ endfun
 noremap <silent> <leader># :call <SID>CoolComment("#")<CR>
 noremap <silent> <leader>" :call <SID>CoolComment("\"")<CR>
 noremap <silent> <leader>/ :call <SID>CoolComment("//")<CR>
+noremap <silent> <leader>- :call <SID>CoolComment("--")<CR>
 noremap <silent> <leader>c :call <SID>ClearComment()<CR>
 
 """""""""""""""""""""""""""""""""""""
