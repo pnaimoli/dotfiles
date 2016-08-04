@@ -1,7 +1,5 @@
 source ~/.dotfiles/bashrc_common
 
-alias bsd='ssh -Y peterbsd'
-alias s3='ssh -Y shalgo3'
 alias v='mvim -v'
 alias vi='mvim -v'
 alias vim='mvim -v'
