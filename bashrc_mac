@@ -6,5 +6,6 @@ alias vim='mvim -v'
 
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/games/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/share/python
 export EDITOR='mvim -v'
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
