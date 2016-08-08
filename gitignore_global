@@ -1,7 +1,0 @@
-.warppipe
-*.sw?
-*.pyc
-*.pyo
-.idea
-.autotest_failures
-autotest.log*
