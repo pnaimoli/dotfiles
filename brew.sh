@@ -2,9 +2,6 @@
 
 # make sure we're updated
 brew update
-brew install brew-cask
-brew upgrade brew-cask
-brew tap caskroom/cask
 brew tap caskroom/versions
 
 # install brew stuff
@@ -38,14 +35,13 @@ brew cask install iterm2
 brew cask install java
 brew cask install kindle
 brew cask install ksdiff
-brew cask install lastpass-universal
+brew cask install lastpass
 brew cask install macvim
-brew cask install multibit
+#brew cask install multibit #broken atm
 brew cask install openemu-experimental
 brew cask install playonmac
 brew cask install rstudio
-brew cask install seashore
-brew cask install silverlight
+#brew cask install silverlight #doesn't work with chrome
 brew cask install sizeup
 brew cask install skype
 brew cask install spotify
@@ -58,4 +54,4 @@ brew cask install xquartz
 
 # must be after x-quartz
 brew tap homebrew/science
-brew install gfortran R
+brew install gcc r
