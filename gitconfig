@@ -3,7 +3,7 @@
 #	whitespace = nowarn
 [user]
 	name = Peter Naimoli
-	email = pnaimoli@gmail.com
+	email = pnaimoli@users.noreply.github.com
 [push]
 	default = simple
 [credential]

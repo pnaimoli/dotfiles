@@ -8,4 +8,4 @@ export PATH=~/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/games/bin:/bin:/u
 export EDITOR='mvim -v'
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:$HOME/.rvm/bin:$HOME/Library/Python/2.7/bin:$HOME/Library/Python/3.5/bin:$HOME/Library/Python/3.4/bin # Add RVM to PATH for scripting
