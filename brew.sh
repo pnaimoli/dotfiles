@@ -3,6 +3,7 @@
 # make sure we're updated
 brew update
 brew tap caskroom/versions
+brew tap pnaiomli/homebrew-personal
 
 # install brew stuff
 brew install autojump
@@ -16,6 +17,7 @@ brew install gawk
 brew install gs imagemagick
 brew install hg
 brew install mobile-shell
+brew install node
 brew install p7zip
 brew install st
 brew install svn
@@ -25,8 +27,8 @@ brew install xpdf
 
 # install casks
 brew cask install adium
-brew cask install android-file-transfer
 brew cask install day-o
+brew cask install discord
 brew cask install dropbox
 brew cask install firefox
 brew cask install github-desktop
@@ -49,8 +51,11 @@ brew cask install steam
 brew cask install the-unarchiver
 brew cask install transmission
 brew cask install vlc
-brew cask install witch
+brew cask install witch3
 brew cask install xquartz
+brew cask install docker
+brew cask install google-cloud-sdk
+brew cask install multipatch # snes ips patcher
 
 # must be after x-quartz
 brew tap homebrew/science

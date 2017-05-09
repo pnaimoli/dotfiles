@@ -306,7 +306,7 @@ iab #I #include ""<Left>
 set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-set wildignore=*btrade/conf/*
+"set wildignore=*asdf/asdf*
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '(Doxygen*|linux*|fbsd8*|last)$',
     \ 'link': 'pipeline',
@@ -314,7 +314,7 @@ let g:ctrlp_custom_ignore = {
     \ }
 let g:ctrlp_user_command = {
     \ 'types': {
-        \ 1: ['.git', 'cd %s && git ls-files | egrep -v "btrade/conf/"'],
+        \ 1: ['.git', 'cd %s && git ls-files'],
         \ },
     \ }
 
