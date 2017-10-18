@@ -56,6 +56,7 @@ brew cask install xquartz
 brew cask install docker
 brew cask install google-cloud-sdk
 brew cask install multipatch # snes ips patcher
+brew cask install rcdefaultapp # for changing ssh:// etc... handlers
 
 # must be after x-quartz
 brew tap homebrew/science

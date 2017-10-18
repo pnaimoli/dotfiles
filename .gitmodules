@@ -1,9 +1,3 @@
-[submodule "powerline-fonts"]
-	path = powerline-fonts
-	url = https://github.com/Lokaltog/powerline-fonts
-[submodule ".vim/bundle-available/powerline"]
-	path = powerline
-	url = https://github.com/Lokaltog/powerline.git
 [submodule ".vim/bundle-available/ctrlp.vim"]
 	path = vim/bundle-available/ctrlp.vim
 	url = https://github.com/kien/ctrlp.vim.git
@@ -16,3 +10,6 @@
 [submodule "vim/vim-yaml"]
 	path = vim/vim-yaml
 	url = https://github.com/stephpy/vim-yaml.git
+[submodule "powerline-fonts"]
+	path = powerline-fonts
+	url = https://github.com/powerline/fonts.git

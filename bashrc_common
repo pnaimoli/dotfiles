@@ -24,14 +24,9 @@ shopt -s cmdhist
 # Environment variables
 #-------------------
 
-#export BASH_ENV='~/.bashrc' # so piping to 'bash' doesn't require 'bash -l'
-export PATH=/usr/local/share/git-core/contrib/workdir:$PATH
 export VIMDIR='~/.vim/'
 export EDITOR='vim'
 export CVSEDITOR='vim'
-#if [ -z "$SCHED_JID" ]; then
-#  export MALLOC_CONF=junk:true
-#fi
 #export PYTHONDONTWRITEBYTECODE='1'
 #export PYTHONUNBUFFERED='1'
 export HISTIGNORE='&: *:l:ll:history*:ls:cd:clear:..:...:....:p:dirs:1:2:3:4:5:6:7:8:9'
@@ -208,22 +203,4 @@ then
     esac
 fi
 
-
-#---------------
-# Shell Prompt
-#---------------
-
-red=$'\e[0;31m'
-RED=$'\e[1;31m'
-YELLOW=$'\e[1;33m'
-BLUE=$'\e[1;34m'
-CYAN=$'\e[1;36m'
-PURPLE=$'\e[1;35m'
-GREEN=$'\e[1;32m'
-NONE=$'\e[0m'
-
-source ~/.dotfiles/powerline/powerline/bindings/bash/powerline.sh
-#PS1='`if [ $? -eq 0 ]; then echo -n "\[${GREEN}\]^_^"; else echo -n "\[${RED}\]x_x"; fi;
-#echo -n "\[${PURPLE}\][\[${RED}\]";
-#if [[ "$(whoami)" != "peter" ]]; then echo -n "\[${RED}\]\u@"; fi;
-#echo -n "\[${CYAN}\]\h\[${PURPLE}\]] \[${GREEN}\]\w\[${NONE}\] > "`'
+source ~/Library/Python/3.5/lib/python/site-packages/powerline/bindings/bash/powerline.sh
