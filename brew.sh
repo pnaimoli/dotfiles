@@ -18,14 +18,15 @@ brew install hg
 brew install mobile-shell
 brew install node
 brew install p7zip
-brew install st
-brew install svn
+brew install st # statistics from the command line
 brew install tree
+brew install vim # +clipboard is nice
 brew install wireshark
 brew install xpdf
 
 # install casks
 brew cask install adium
+#brew cask install copay #cask doesn't exist
 brew cask install day-o
 brew cask install discord
 brew cask install dropbox
@@ -38,7 +39,6 @@ brew cask install kindle
 brew cask install ksdiff
 brew cask install lastpass
 brew cask install macvim
-#brew cask install multibit #broken atm
 brew cask install openemu-experimental
 brew cask install playonmac
 brew cask install rstudio

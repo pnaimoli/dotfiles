@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.dotfiles/oh-my-zsh
@@ -8,7 +8,7 @@ export ZSH=~/.dotfiles/oh-my-zsh
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
-DEFAULT_USER=peter
+DEFAULT_USER="peter"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
