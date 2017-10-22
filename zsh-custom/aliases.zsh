@@ -1,3 +1,4 @@
+alias l='ls -lFh'     #size,show type,human readable
 alias sz="source ~/.zshrc"
 alias g='egrep --color=auto'
 alias findvis="find . \( ! -regex '.*/\..*' \) -type f"

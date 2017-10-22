@@ -55,7 +55,7 @@ ZSH_CUSTOM=~/.dotfiles/zsh-custom
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(history)
+plugins=(history autojump)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -71,3 +71,5 @@ source $ZSH/oh-my-zsh.sh
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"

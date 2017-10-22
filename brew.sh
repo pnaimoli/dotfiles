@@ -7,7 +7,6 @@ brew tap pnaiomli/homebrew-personal
 
 # install brew stuff
 brew install autojump
-brew install bash
 brew install coreutils
 brew install cowsay
 brew install doxygen
