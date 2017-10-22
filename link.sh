@@ -1,5 +1,4 @@
 ln -snf ~/.dotfiles/Rprofile ~/.Rprofile
-ln -snf ~/.dotfiles/gitconfig ~/.gitconfig
 ln -snf ~/.dotfiles/gvimrc ~/.gvimrc
 ln -snf ~/.dotfiles/synergy.conf ~/.synergy.conf
 ln -snf ~/.dotfiles/vimrc ~/.vimrc
