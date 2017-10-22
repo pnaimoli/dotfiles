@@ -1,0 +1,3 @@
+# Since many programs add things to .config, just ignore everything.
+# Whitelist by git add'ing
+*
