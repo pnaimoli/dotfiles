@@ -5,23 +5,22 @@ brew update
 brew tap caskroom/versions
 brew tap pnaiomli/homebrew-personal
 
+# this has to happen before gcc
+xcode-select --install
+
 # install brew stuff
 brew install autojump
+brew install bash
 brew install coreutils
-brew install cowsay
-brew install doxygen
-brew install ec2-api-tools
 brew install findutils
 brew install gawk
+brew install gcc
 brew install gs imagemagick
-brew install hg
-brew install mobile-shell
-brew install node
+brew install hg # mercurial
+brew install mobile-shell # mosh
 brew install p7zip
 brew install st # statistics from the command line
-brew install tree
 brew install vim # +clipboard is nice
-brew install wireshark
 brew install xpdf
 
 # install casks
