@@ -78,9 +78,9 @@ brew cask install multipatch # snes ips patcher
 brew cask install rcdefaultapp # for changing ssh:// etc... handlers
 
 # must be after x-quartz
-brew tap homebrew/science
 brew install gcc r
 
 echo "Cleaning up brew"
 brew cask cleanup
 brew cleanup
+brew prune
