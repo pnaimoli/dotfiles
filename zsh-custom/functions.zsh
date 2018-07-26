@@ -12,17 +12,13 @@ function swap()
 
 # https://chris-lamb.co.uk/2010/04/22/locating-source-any-python-module/
 function cdp () {
-cd "$(python2 -c "import sys, imp, os
-path = sys.path
-for i in '${1}'.split('.'): path = [imp.find_module(iath)[1],]
-path = path[0] if os.path.isdir(path[0]) else os.path.dirname(path[0])
-print path")"
+    cd "$(python2.7 -c "import os.path as _, ${1}; \
+            print(_.dirname(_.realpath(${1}.__file__[:-1])))"
+        )"
 }
 
 function cdp3 () {
-cd "$(python3 -c "import sys, imp, os
-path = sys.path
-for i in '${1}'.split('.'): path = [imp.find_module(iath)[1],]
-path = path[0] if os.path.isdir(path[0]) else os.path.dirname(path[0])
-print path")"
+    cd "$(python3 -c "import os.path as _, ${1}; \
+            print(_.dirname(_.realpath(${1}.__file__[:-1])))"
+        )"
 }

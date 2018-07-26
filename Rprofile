@@ -12,11 +12,11 @@ options(digits=10)
 #########################################
 
 try({
-require(Defaults)
+#require(Defaults)
 require(utils)
 require(stats)
-setDefaults(approx, method="constant", ties="ordered", rule=2)
-setDefaults(page, method="print")
+#setDefaults(approx, method="constant", ties="ordered", rule=2)
+#setDefaults(page, method="print")
 })
 
 #########################################

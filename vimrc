@@ -55,11 +55,11 @@ endif
 set winheight=3           " Never let a window be less than 3 lines
 set winminheight=3        " Never let a window be less than 3 lines
 
-if exists("+colorcolumn")
-    "set tw=0                 " set to 80 for atl style line width
-    "set wrap                  "  text wrapping w/ above
-    set colorcolumn=81
-endif
+"if exists("+colorcolumn")
+"    "set tw=0                 " set to 80 for atl style line width
+"    "set wrap                  "  text wrapping w/ above
+"    set colorcolumn=81
+"endif
 
 set autoindent            " indent like the last line, by default
 set cindent               " indent for c syntax
