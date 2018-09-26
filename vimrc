@@ -10,7 +10,7 @@ let $VIMRC = '~/.vimrc'   " for portability
 set nocompatible          " use VIM as VIM, not VI
 
 syntax on                 " enable default syntax highlighting
-filetype on               " enable filetype detection
+filetype plugin indent on " enable filetype detection
 
 set autoread              " auto read when a file is changed outside
 set backspace=2           " Allow backspacing over indents, line breaks, and start of insert
@@ -40,6 +40,7 @@ set showcmd               " show command on last line
 set showmatch             " briefly jump to matching bracket when bracket inserted
 set noshowmode            " no show mode
 set smartcase             " overrides ignorecase if uppercase used
+set laststatus=2          " always show a status line
 set timeoutlen=1000       " vvvvvvvvvv This and the line below are to make
 set ttimeoutlen=0         " <Esc> in visual mode work immediately. Side Effects?
 set t_Co=256              " 256 colors
@@ -63,6 +64,7 @@ set winminheight=3        " Never let a window be less than 3 lines
 
 set autoindent            " indent like the last line, by default
 set cindent               " indent for c syntax
+set smartindent           " how does this work with the last two lines?
 set cinkeys-=0#           " I should look up what this does again
 set cinoptions+=g2        " indent scope declarations by 2
 set cinoptions+=h2        " indent statements after scope declarations by 2
@@ -82,10 +84,10 @@ if has('autocmd')
     au BufNewFile,BufRead *.{r,R}             set ft=r
     au BufNewFile,BufRead *.{sig,reg,freq}    set ft=config
     au BufNewFile,BufRead *.{conf,config}     set ft=config
-    au BufNewFile,BufRead *.slaqur            set filetype=yaml
 
-    " Set up CPP specific autocommands
+    " Set up filetype specific autocommands
     au FileType c,cpp,cc,h,he setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,bO:///,O://
+    au FileType html setlocal shiftwidth=2
 
     " When entering a buffer, cd to the file's directory
     if isdirectory(expand('%:p:h'))
@@ -159,9 +161,6 @@ let origpath='.,/usr/local/include,/usr/include'
 set path=origpath
 " build -Ibuild/gccext -Ibuild/include -Irepo/build -Irepo/build/gccext -Irepo/build/include -I/usr/local/include
 
-" Load filetype plugins
-filetype plugin on
-
 " Also, set our tags path to be useful
 " find projects/atl/src projects/btrade/src -name "*.cc" -print -or -name "*.h" -print | etags -
 set tags=$HOME/.TAGS
@@ -172,21 +171,6 @@ set tags=$HOME/.TAGS
 " set up align =
 nnoremap <leader>= :Align =<CR>
 vnoremap <leader>= :Align =<CR>
-
-"""""""""""""""""""""""""""""""""""""""
-" ===== Status Line configuration =====
-"""""""""""""""""""""""""""""""""""""""
-set laststatus=2                           " always show a status line
-"set statusline=
-"set statusline+=%2*%-3.3n%0*               " buffer number
-"set statusline+=%1*%f%0*                   " filename
-"set statusline+=%h%5*%m%r%w%0*             " flags
-"set statusline+=[
-"set statusline+=%{strlen(&ft)?&ft:'none'}, " filetype
-"set statusline+=%{&fileformat}]            " file format
-"set statusline+=%=                         " right align
-"set statusline+=%2*0x%-8B\                 " current char
-"set statusline+=%-14.(%l,%c%V%)\ %<%P      " offset
 
 """"""""""""""""""""""""""""""""""
 " ===== Edit & Reload .vimrc =====
@@ -294,12 +278,6 @@ iab intmain int main (int argc, char **argv) {<CR>x;<CR>return 0;<CR>}<CR><C-O>?
 iab #d #define
 iab #i #include <><Left>
 iab #I #include ""<Left>
-
-"""""""""""""""""""""""""""""""""""""""""""""
-" ===== To save current state on exit ===== "
-"""""""""""""""""""""""""""""""""""""""""""""
-"au vimrc BufWinLeave ?* mkview
-"au vimrc BufWinEnter ?* silent loadview
 
 """""""""""""""""""""""""""""""""""""""""""""
 " ===== CtrlP stuff ===== "

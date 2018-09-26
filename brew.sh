@@ -1,5 +1,8 @@
 #!/bin/bash
 
+chsh -s /bin/zsh
+touch .hushlogin
+
 echo "Setting some Mac settings..."
 # Disable diacritical marks on key long-press, enable key repeat
 defaults write -g ApplePressAndHoldEnabled -bool false
@@ -13,6 +16,26 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+# Don't show Siri in the menu bar
+defaults write com.apple.Siri StatusMenuVisible -bool false
+
+# Make the dock hidden and on the left
+defaults write com.apple.dock orientation left
+defaults write com.apple.dock autohide -bool true
+killall Dock
+
+# Change Touch Bar control strip actions
+defaults write com.apple.controlstrip '{ MiniCustomized = (
+  "com.apple.system.volume",
+  "com.apple.system.mute",
+  "com.apple.system.brightness",
+  "com.apple.system.show-desktop"
+ ); }'
+killall ControlStrip
+
+# Disable mouse acceleration - does this work??
+defaults write .GlobalPreferences com.apple.mouse.scaling -1
+defaults write .GlobalPreferences com.apple.trackpad.scaling -1
 
 # this has to happen before gcc
 echo "Installing xcode-stuff..."
