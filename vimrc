@@ -24,7 +24,6 @@ set hid                   " don't auto-remove hidden buffers
 set history=1000          " 1000 commands stored in history
 set hlsearch              " highlight all search pattern matches
 set incsearch             " incremental search
-set isk+=%,#              " none of these should be word dividers
 set linebreak             " enable smart linebreaking
 set matchtime=0           " prevent matching delay
 set ic                    " force case-sensitive
@@ -49,7 +48,7 @@ set wig=*.o,*.pyc         " Ignore these files for wildmenu completion
 set wildmenu              " Better command-line completion
 set wildmode=longest:list,full " Makes tab completion smarter
 set mouse=a               " enable mouse usage
-"set ttymouse=xterm        " enable mouse usage
+set ttymouse=xterm        " enable mouse usage
 if exists("&wildignorecase")
     set wildignorecase        " Make tab completion case insensitive
 endif
@@ -87,7 +86,7 @@ if has('autocmd')
 
     " Set up filetype specific autocommands
     au FileType c,cpp,cc,h,he setlocal comments=sO:*\ -,mO:*\ \ ,exO:*/,s1:/*,mb:*,ex:*/,bO:///,O://
-    au FileType html setlocal shiftwidth=2
+    au FileType html setlocal shiftwidth=2 tabstop=2
 
     " When entering a buffer, cd to the file's directory
     if isdirectory(expand('%:p:h'))
@@ -99,6 +98,21 @@ if has('autocmd')
 
     " Auto source the vimrc file when it is saved
     au! BufWritePost [\._]vimrc source $VIMRC
+
+    " Set the title of the Terminal to the currently open file
+    function! SetTerminalTitle()
+        let titleString = expand('%:t')
+        if len(titleString) > 0
+            let &titlestring = expand('%:t')
+            " this is the format iTerm2 expects when setting the window title
+            let args = "\033];vim ".&titlestring."\007"
+            let cmd = 'silent !echo -e "'.args.'"'
+            execute cmd
+            redraw!
+        endif
+    endfunction
+
+    autocmd BufEnter * call SetTerminalTitle()
 
     augroup END
 endif

@@ -57,6 +57,7 @@ brew tap pnaimoli/homebrew-personal
 brew install autojump
 brew install bash
 brew install coreutils
+brew install csvkit
 brew install findutils
 brew install gawk
 brew install gcc
@@ -89,7 +90,6 @@ brew cask install playonmac
 brew cask install rstudio
 #brew cask install silverlight #doesn't work with chrome
 brew cask install sizeup
-brew cask install skype
 brew cask install spotify
 brew cask install steam
 brew cask install the-unarchiver
