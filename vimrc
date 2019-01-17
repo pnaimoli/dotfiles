@@ -81,7 +81,6 @@ if has('autocmd')
 
     au BufNewFile,BufRead *.{c,cpp,cc,he,h}   set ft=cpp
     au BufNewFile,BufRead *.{r,R}             set ft=r
-    au BufNewFile,BufRead *.{sig,reg,freq}    set ft=config
     au BufNewFile,BufRead *.{conf,config}     set ft=config
 
     " Set up filetype specific autocommands
@@ -92,9 +91,6 @@ if has('autocmd')
     if isdirectory(expand('%:p:h'))
         autocmd BufEnter * silent! lcd %:p:h
     endif
-
-"    " Magic!!!
-"    autocmd FuncUndefined * exe 'runtime autoload/' . expand('<afile>') . '.vim'
 
     " Auto source the vimrc file when it is saved
     au! BufWritePost [\._]vimrc source $VIMRC
@@ -112,6 +108,12 @@ if has('autocmd')
         endif
     endfunction
 
+    " For some reason this causes a weird "highlight" at the beginning
+    " of the second line of the first file opened.  I can reproduce this
+    " with just the following vimrc file:
+    "   set laststatus=2
+    "   set nu
+    "   autocmd BufEnter * redraw!
     autocmd BufEnter * call SetTerminalTitle()
 
     augroup END
