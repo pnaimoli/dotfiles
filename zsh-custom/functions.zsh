@@ -22,3 +22,14 @@ function cdp3 () {
             print(_.dirname(_.realpath(${1}.__file__[:-1])))"
         )"
 }
+
+function zsh-bindkey-help {
+    zle -M \
+"Keybinding cheat sheet:
+Alt-F/B:   forward/backword-word   Alt-A/E:   beginning/end of line
+Ctrl-U:    kill-whole-line         Ctrl-K:    kill-line
+Alt-D:     kill-word               Ctrl-W:    backword-kill-word
+Ctrl--:    Undo"
+}
+zle -N zsh-bindkey-help
+bindkey '^[h' zsh-bindkey-help
