@@ -68,7 +68,6 @@ brew install mobile-shell # mosh
 brew install p7zip
 brew install st # statistics from the command line
 brew install vim # +clipboard is nice
-brew install xpdf
 
 # install casks
 brew cask install adium
@@ -79,6 +78,8 @@ brew cask install dropbox
 brew cask install firefox
 brew cask install github-desktop
 brew cask install google-chrome
+brew cask install hammerspoon
+defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 brew cask install iterm2
 brew cask install java
 brew cask install kindle
