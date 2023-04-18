@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/Library/Python/3.7/bin:$HOME/bin:/usr/local/bin:$PATH
+export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.dotfiles/oh-my-zsh

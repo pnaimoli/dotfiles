@@ -26,7 +26,7 @@ function cdp3 () {
 function zsh-bindkey-help {
     zle -M \
 "Keybinding cheat sheet:
-Alt-F/B:   forward/backword-word   Alt-A/E:   beginning/end of line
+Alt-F/B:   forward/backword-word   Ctrl-A/E:   beginning/end of line
 Ctrl-U:    kill-whole-line         Ctrl-K:    kill-line
 Alt-D:     kill-word               Ctrl-W:    backword-kill-word
 Ctrl--:    Undo"
