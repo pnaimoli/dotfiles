@@ -28,7 +28,6 @@ set linebreak             " enable smart linebreaking
 set matchtime=0           " prevent matching delay
 set ic                    " force case-sensitive
 set nu                    " show line numbers
-set nomousehide           " OMG FBSD8 BUG!!!!!!!
 if exists("&re")
     set re=1                  " http://stackoverflow.com/questions/16902317/vim-slow-with-ruby-syntax-highlighting
 endif
@@ -48,7 +47,7 @@ set wig=*.o,*.pyc         " Ignore these files for wildmenu completion
 set wildmenu              " Better command-line completion
 set wildmode=longest:list,full " Makes tab completion smarter
 set mouse=a               " enable mouse usage
-set ttymouse=xterm        " enable mouse usage
+set ttymouse=sgr          " enable mouse usage
 if exists("&wildignorecase")
     set wildignorecase        " Make tab completion case insensitive
 endif
