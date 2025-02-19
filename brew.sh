@@ -47,21 +47,44 @@ brew update
 brew tap pnaimoli/homebrew-personal
 
 # Install Homebrew packages
-brew install autojump
-brew install bash
-brew install coreutils
-brew install csvkit
-brew install findutils
-brew install gawk
-brew install gcc
-brew install git
-brew install grep
-brew install gs imagemagick
-brew install mobile-shell # mosh
-brew install r
-brew install p7zip
-brew install st # statistics from the command line
-brew install vim # +clipboard is nice
+brew install autojump       # Navigate directories faster
+brew install bash           # GNU Bourne Again Shell
+brew install boost          # C++ libraries for performance
+brew install bsdiff         # Binary diff/patch utility
+brew install cfr-decompiler # Java decompiler
+brew install cmake          # Cross-platform build system
+brew install coreutils      # GNU core utilities
+brew install csvkit         # Tools for working with CSV files
+brew install docutils       # Python documentation utilities
+brew install dvdbackup      # Backup DVDs to disk
+brew install exiftool       # Metadata reader and editor
+brew install exiv2          # Image metadata manipulation tool
+brew install ffmpeg         # Play, record, convert, and stream audio and video
+brew install findutils      # GNU find, locate, updatedb, xargs
+brew install gawk           # GNU awk programming language
+brew install gh             # GitHub CLI
+brew install git            # Version control system
+brew install grep           # GNU grep, better than macOS version
+brew install imagemagick    # Image manipulation tools
+brew install lftp           # Sophisticated file transfer program
+brew install lsusb          # USB device listing
+brew install macvim         # Vim with macOS enhancements
+brew install mosh           # Mobile shell replacement for SSH
+brew install nmap           # Network scanner
+brew install node           # JavaScript runtime
+brew install offlineimap    # IMAP synchronization tool
+brew install p7zip          # 7-Zip command-line tool
+brew install procs          # Modern replacement for ps
+brew install sphinx-doc     # Python documentation generator
+brew install st             # statistics from the command line
+brew install telnet         # Classic Telnet client
+brew install tidy-html5     # HTML, XML, and XHTML validator
+brew install tree           # Display directories as trees
+brew install vim            # Vi Improved text editor, +clipboard is nice
+brew install wget           # Retrieve files from the web
+brew install wget2          # Improved version of wget
+brew install xpdf           # PDF viewer and utilities, like pdftotext, etc...
+brew install yt-dlp         # YouTube and media downloader
 
 # Install Homebrew Casks
 brew install alt-tab                # Better version of Witch3 for window management
