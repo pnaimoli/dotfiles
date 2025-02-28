@@ -10,9 +10,6 @@
 [submodule "vim/vim-yaml"]
 	path = vim/vim-yaml
 	url = https://github.com/stephpy/vim-yaml.git
-[submodule "powerline-fonts"]
-	path = powerline-fonts
-	url = https://github.com/powerline/fonts.git
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
