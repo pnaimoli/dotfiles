@@ -68,7 +68,6 @@ brew install grep           # GNU grep, better than macOS version
 brew install imagemagick    # Image manipulation tools
 brew install lftp           # Sophisticated file transfer program
 brew install lsusb          # USB device listing
-brew install macvim         # Vim with macOS enhancements
 brew install mosh           # Mobile shell replacement for SSH
 brew install nmap           # Network scanner
 brew install node           # JavaScript runtime
@@ -80,7 +79,6 @@ brew install st             # statistics from the command line
 brew install telnet         # Classic Telnet client
 brew install tidy-html5     # HTML, XML, and XHTML validator
 brew install tree           # Display directories as trees
-brew install vim            # Vi Improved text editor, +clipboard is nice
 brew install wget           # Retrieve files from the web
 brew install wget2          # Improved version of wget
 brew install xpdf           # PDF viewer and utilities, like pdftotext, etc...

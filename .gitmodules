@@ -1,15 +1,3 @@
-[submodule ".vim/bundle-available/ctrlp.vim"]
-	path = vim/bundle-available/ctrlp.vim
-	url = https://github.com/kien/ctrlp.vim.git
-[submodule "vim/bundle-available/colorschemes"]
-	path = vim/bundle-available/colorschemes
-	url = https://github.com/flazz/vim-colorschemes.git
-[submodule "vim/bundle-available/fugitive"]
-	path = vim/bundle-available/fugitive
-	url = git://github.com/tpope/vim-fugitive.git
-[submodule "vim/vim-yaml"]
-	path = vim/vim-yaml
-	url = https://github.com/stephpy/vim-yaml.git
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git

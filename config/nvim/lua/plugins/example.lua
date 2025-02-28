@@ -19,9 +19,6 @@ return {
     opts = { use_diagnostic_signs = true },
   },
 
-  -- disable trouble
-  { "folke/trouble.nvim", enabled = false },
-
   -- override nvim-cmp and add cmp-emoji
   {
     "hrsh7th/nvim-cmp",

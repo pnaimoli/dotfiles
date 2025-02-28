@@ -1,1 +1,0 @@
-../../vim-yaml/after/syntax/yaml.vim
