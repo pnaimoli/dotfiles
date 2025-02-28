@@ -37,9 +37,9 @@ sudo xcodebuild -license accept
 sudo softwareupdate --install-rosetta --agree-to-license
 
 # Install Homebrew if not already installed
-if ! command -v brew &> /dev/null; then
-    echo "Installing Homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if ! command -v brew &>/dev/null; then
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 echo "Updating Homebrew..."
@@ -129,6 +129,10 @@ brew install wireshark              # Network packet analyzer
 brew install xquartz                # X11 windowing system for macOS
 brew install yacreader              # Comic and manga reader
 brew install zoom                   # Video conferencing app
+
+# Fonts
+brew install font-iosevka-nerd-font
+brew install font-noto-nerd-font
 
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
