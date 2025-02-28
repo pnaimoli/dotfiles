@@ -27,9 +27,6 @@ DEFAULT_USER="peter"
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
 
-# This needs to happen before we source oh-my-zsh
-eval `gdircolors ~/.dotfiles/dircolors-solarized/dircolors.ansi-dark`
-
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
 
@@ -51,6 +48,9 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=~/.dotfiles/zsh-custom
+
+# This needs to happen before we source oh-my-zsh
+eval `gdircolors $ZSH_CUSTOM/plugins/zsh-dircolors-solarized/dircolors-solarized/dircolors.ansi-dark`
 
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/

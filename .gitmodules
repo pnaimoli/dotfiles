@@ -1,6 +1,6 @@
 [submodule "oh-my-zsh"]
 	path = oh-my-zsh
 	url = https://github.com/robbyrussell/oh-my-zsh.git
-[submodule "dircolors-solarized"]
-	path = dircolors-solarized
-	url = https://github.com/seebi/dircolors-solarized
+[submodule "zsh-custom/plugins/zsh-dircolors-solarized"]
+	path = zsh-custom/plugins/zsh-dircolors-solarized
+	url = https://github.com/joel-porquet/zsh-dircolors-solarized
