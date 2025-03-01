@@ -2,7 +2,7 @@
 return {
   "Vonr/align.nvim",
   branch = "v2",
-  lazy = true,
+  event = { "CursorMoved" },
   init = function()
     -- Create your mappings here
     local NS = { noremap = true, silent = true }
