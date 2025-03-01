@@ -44,7 +44,6 @@ fi
 
 echo "Updating Homebrew..."
 brew update
-brew tap pnaimoli/homebrew-personal
 
 # Install Homebrew packages
 brew install autojump       # Navigate directories faster
