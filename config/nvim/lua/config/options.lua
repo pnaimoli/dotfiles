@@ -9,3 +9,4 @@ vim.o.ignorecase = true -- Ignore case when searching
 vim.o.smartcase = true -- Override ignorecase if search includes uppercase
 vim.o.title = true -- Update terminal window title to show the current file
 vim.o.showbreak = ">>" -- Mark wrapped lines
+vim.o.undofile = false -- Don't automatically save undo history
