@@ -1,6 +1,6 @@
 alias l='ls -lFh'     #size,show type,human readable
-alias sz="source ~/.zshrc"
-alias g='ggrep --color=auto'
+alias sz='source ~/.zshrc'
+alias g='grep'
 alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
 alias shuf="perl -MList::Util=shuffle -e'print shuffle<>'"
 alias bc='bc -l'

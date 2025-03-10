@@ -1,5 +1,4 @@
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/Library/Python/3.7/bin:$HOME/bin:/usr/local/bin:$PATH
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
 
 # Path to your oh-my-zsh installation.
@@ -49,14 +48,14 @@ HIST_STAMPS="yyyy-mm-dd"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=~/.dotfiles/zsh-custom
 
-# This needs to happen before we source oh-my-zsh
-eval `gdircolors $ZSH_CUSTOM/plugins/zsh-dircolors-solarized/dircolors-solarized/dircolors.ansi-dark`
-
 # Which plugins would you like to load? (plugins can be found in $ZSH/plugins/*)
 # Custom plugins may be added to $ZSH/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(history autojump)
+plugins=(gnu-utils history autojump)
+
+# This needs to happen before we source oh-my-zsh
+eval `gdircolors $ZSH_CUSTOM/plugins/zsh-dircolors-solarized/dircolors-solarized/dircolors.ansi-dark`
 
 source $ZSH/oh-my-zsh.sh
 
@@ -72,5 +71,22 @@ source $ZSH/oh-my-zsh.sh
 
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+## uv
+eval "$(uv generate-shell-completion zsh)" # you should already have these two lines
+eval "$(uvx --generate-shell-completion zsh)"
+
+# you will need to add the lines below
+# https://github.com/astral-sh/uv/issues/8432#issuecomment-2453494736
+_uv_run_mod() {
+    if [[ "$words[2]" == "run" && "$words[CURRENT]" != -* ]]; then
+        _arguments '*:filename:_files'
+    else
+        _uv "$@"
+    fi
+}
+compdef _uv_run_mod uv
+
+zstyle ':omz:alpha:lib:git' async-prompt yes
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
