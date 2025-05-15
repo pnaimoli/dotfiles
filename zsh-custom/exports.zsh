@@ -9,3 +9,4 @@ export LESS='--ignore-case --hilite-unread --window=-4 --LONG-PROMPT -R -X -P%t?
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export ANDROID_SDK_ROOT="/usr/local/share/android-sdk"
 export HOMEBREW_FORCE_BREWED_CURL=1
+export MANPATH="$HOME/.local/share/man:$MANPATH"

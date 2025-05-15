@@ -1,4 +1,5 @@
-alias l='ls -lFh'     #size,show type,human readable
+alias ls='ls -v --color=tty'
+alias l='ll'
 alias sz='source ~/.zshrc'
 alias g='grep'
 alias findvis="find . \( ! -regex '.*/\..*' \) -type f"
