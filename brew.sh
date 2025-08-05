@@ -46,42 +46,43 @@ echo "Updating Homebrew..."
 brew update
 
 # Install Homebrew packages
-brew install autojump       # Navigate directories faster
-brew install bash           # GNU Bourne Again Shell
-brew install boost          # C++ libraries for performance
-brew install bsdiff         # Binary diff/patch utility
-brew install cfr-decompiler # Java decompiler
-brew install cmake          # Cross-platform build system
-brew install coreutils      # GNU core utilities
-brew install csvkit         # Tools for working with CSV files
-brew install docutils       # Python documentation utilities
-brew install dvdbackup      # Backup DVDs to disk
-brew install exiftool       # Metadata reader and editor
-brew install exiv2          # Image metadata manipulation tool
-brew install ffmpeg         # Play, record, convert, and stream audio and video
-brew install findutils      # GNU find, locate, updatedb, xargs
-brew install gawk           # GNU awk programming language
-brew install gh             # GitHub CLI
-brew install git            # Version control system
-brew install grep           # GNU grep, better than macOS version
-brew install imagemagick    # Image manipulation tools
-brew install lftp           # Sophisticated file transfer program
-brew install lsusb          # USB device listing
-brew install mosh           # Mobile shell replacement for SSH
-brew install nmap           # Network scanner
-brew install node           # JavaScript runtime
-brew install offlineimap    # IMAP synchronization tool
-brew install p7zip          # 7-Zip command-line tool
-brew install procs          # Modern replacement for ps
-brew install sphinx-doc     # Python documentation generator
-brew install st             # statistics from the command line
-brew install telnet         # Classic Telnet client
-brew install tidy-html5     # HTML, XML, and XHTML validator
-brew install tree           # Display directories as trees
-brew install wget           # Retrieve files from the web
-brew install wget2          # Improved version of wget
-brew install xpdf           # PDF viewer and utilities, like pdftotext, etc...
-brew install yt-dlp         # YouTube and media downloader
+brew install autojump    # Navigate directories faster
+brew install boost       # C++ libraries for performance
+brew install cmake       # Cross-platform build system
+brew install coreutils   # GNU core utilities
+brew install csvkit      # Tools for working with CSV files
+brew install docutils    # Python documentation utilities
+brew install dvdbackup   # Backup DVDs to disk
+brew install exiftool    # Metadata reader and editor
+brew install exiv2       # Image metadata manipulation tool
+brew install ffmpeg      # Play, record, convert, and stream audio and video
+brew install findutils   # GNU find, locate, updatedb, xargs
+brew install gawk        # GNU awk programming language
+brew install gh          # GitHub CLI
+brew install git         # Version control system
+brew install grep        # GNU grep, better than macOS version
+brew install imagemagick # Image manipulation tools
+brew install lftp        # Sophisticated file transfer program
+brew install mosh        # Mobile shell replacement for SSH
+brew install nmap        # Network scanner
+brew install node        # JavaScript runtime
+brew install offlineimap # IMAP synchronization tool
+brew install p7zip       # 7-Zip command-line tool
+brew install procs       # Modern replacement for ps
+brew install rsync
+brew install sphinx-doc # Python documentation generator
+brew install st         # statistics from the command line
+brew install telnet     # Classic Telnet client
+brew install tidy-html5 # HTML, XML, and XHTML validator
+brew install tree       # Display directories as trees
+brew install wget2      # Improved version of wget
+brew install xpdf       # PDF viewer and utilities, like pdftotext, etc...
+brew install yt-dlp     # YouTube and media downloader
+brew install ripgrep
+brew install uv
+brew install nginx
+brew install jq
+brew install asymptote
 
 # Install Homebrew Casks
 brew install alt-tab                # Better version of Witch3 for window management
@@ -89,8 +90,8 @@ brew install android-platform-tools # ADB (Android Debug Bridge) tools
 brew install blackhole-2ch          # Virtual audio driver to capture sound
 brew install calibre                # E-book reader and library manager
 brew install crossover              # Tool to run Windows software on macOS
-brew install diffusionbee           # AI-powered image generation tool
 brew install discord                # Chat and voice communication app
+brew install docker-desktop         #
 brew install dropbox                # Cloud storage and file synchronization
 brew install firefox                # Web browser
 brew install github                 # GitHub CLI tool
@@ -103,33 +104,30 @@ brew install karabiner-elements     # Powerful keyboard customizer for macOS
 brew install keyboardcleantool      # Temporarily disable keyboard for cleaning
 brew install ksdiff                 # File comparison tool
 brew install mactex                 # TeX distribution for macOS
-brew install macvim                 # macOS-specific version of Vim
-brew install microsoft-teams        # Microsoft collaboration and chat app
-brew install mullvadvpn             # Privacy-focused VPN service
-brew install musescore              # Open-source music notation software
-brew install musicbrainz-picard     # Music tagger using MusicBrainz database
-brew install openemu                # Multi-console emulator for macOS
-brew install oversight              # Alerts you when the microphone or camera is accessed
-brew install qbittorrent            # Open-source BitTorrent client
-brew install qflipper               # Utility for managing Flipper Zero devices
-brew install rcdefaultapp           # Tool for changing default app handlers like ssh://
-brew install rectangle              # Window management tool
-brew install rstudio                # IDE for R programming
-brew install sizeup                 # Window management tool
-brew install spotify                # Music streaming service
-brew install steam                  # Gaming platform
-brew install sublime-text           # Text editor
-brew install synthesia              # Piano learning software
-brew install the-unarchiver         # Archive extraction tool
-brew install vlc                    # Open-source media player
-brew install wireshark              # Network packet analyzer
-brew install xquartz                # X11 windowing system for macOS
-brew install yacreader              # Comic and manga reader
-brew install zoom                   # Video conferencing app
+brew install neovim
+brew install microsoft-teams    # Microsoft collaboration and chat app
+brew install mullvad-vpn        # Privacy-focused VPN service
+brew install musescore          # Open-source music notation software
+brew install musicbrainz-picard # Music tagger using MusicBrainz database
+brew install openemu            # Multi-console emulator for macOS
+brew install oversight          # Alerts you when the microphone or camera is accessed
+brew install qbittorrent        # Open-source BitTorrent client
+brew install qflipper           # Utility for managing Flipper Zero devices
+brew install rectangle          # Window management tool
+brew install spotify            # Music streaming service
+brew install steam              # Gaming platform
+brew install sublime-text       # Text editor
+brew install the-unarchiver     # Archive extraction tool
+brew install vlc                # Open-source media player
+brew install wireshark          # Network packet analyzer
+brew install xquartz            # X11 windowing system for macOS
+brew install yacreader          # Comic and manga reader
+brew install zoom               # Video conferencing app
 
 # Fonts
 brew install font-iosevka-nerd-font
 brew install font-noto-nerd-font
+brew install font-montserrat
 
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
