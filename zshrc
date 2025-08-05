@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Path to your oh-my-zsh installation.
 export ZSH=~/.dotfiles/oh-my-zsh
