@@ -29,3 +29,5 @@ Temporary Items
 *.pyc
 *.pyo
 .idea
+
+**/.claude/settings.local.json
